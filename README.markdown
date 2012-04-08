@@ -16,15 +16,18 @@ Now you got two options:
 2. Use jar that was built in directory **target/**
 
 ## Usage
-
-    Trello trello = new TrelloImpl("myApiKey", "myToken");  // myToken is optional, set to null if you are accessing public data
-    List<Organization> = trello.getOrganization("fogcreek");	// just an 
+	
+	// myToken is optional, set to null if you are accessing public data
+    Trello trello = new TrelloImpl("myApiKey", "myToken");  
+	
+	// example: get organization by its name
+    List<Organization> = trello.getOrganization("fogcreek");
 
 
 ## Roadmap
 
 * 1.0 - *core* read-only API methods
-* 1.1 - fully support all read-only methods (i.e. all GET methods)
+* 1.1 - fully support read-only methods (i.e. all GET methods)
 * 2.0 - support create, update and delete
 
 <table>
