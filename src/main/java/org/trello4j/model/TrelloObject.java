@@ -12,4 +12,11 @@ public abstract class TrelloObject {
 		this.id = id;
 	}
 	
+	@Override
+	public String toString() {
+		return new StringBuilder(getClass().getSimpleName())
+			.append(" ")
+			.append(id)
+			.toString();
+	}
 }

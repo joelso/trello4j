@@ -3,6 +3,9 @@ package org.trello4j;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.trello4j.model.Action;
@@ -101,5 +104,33 @@ public class TrelloIntegrationTest {
 		assertNotNull("Status not set", member.getStatus());
 		assertEquals("Incorrect URL", "https://trello.com/joelsoderstrom", member.getUrl());
 		assertEquals("Incorrect username", username, member.getUsername());
+	}
+	
+	@Test
+	public void shouldReturnBoardsByOrganization() {
+		// GIVEN
+		String organizationName = "fogcreek";	 
+		String trelloDevBoardId = "4d5ea62fd76aa1136000000c";	 
+		
+		// WHEN
+		List<Board> boards = new TrelloImpl(key, null).getBoardsByOrganization(organizationName);
+		
+		// THEN
+		assertTrue("Organization should have at least one board", boards.size() > 0);
+		assertTrue("Organization FogCreek should have Trello Development board", hasBoardWithId(boards, trelloDevBoardId));
+		
+	}
+	
+	
+	
+	private boolean hasBoardWithId(List<Board> boards, String id) {
+		boolean res = false;
+		for (Board board : boards) {
+			if(board.getId().equals(id)) {
+				res = true;
+				break;
+			}
+		}
+		return res;
 	}
 }

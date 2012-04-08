@@ -3,41 +3,32 @@ package org.trello4j;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.trello4j.gson.PermissionTypeDeserializer;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
-import org.trello4j.model.Board.PERMISSION_TYPE;
 import org.trello4j.model.Member;
 import org.trello4j.model.Organization;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 public class TrelloImpl implements Trello {
 	private static final Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
-	private static final Charset UTF_8_CHAR_SET = Charset.forName("UTF-8");
 	private static final String GZIP_ENCODING = "gzip";
-	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"; 
 
-	private final JsonParser parser = new JsonParser();
 	
 	private String apiKey = null;
 	private String secret = null;
 	
 	private String authQueryString = null;
+	
+	private TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
 	
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -54,39 +45,35 @@ public class TrelloImpl implements Trello {
 		this.authQueryString = createAuthQueryString();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.trello4j.TrelloI#getBoard(java.lang.String)
-	 */
 	@Override
 	public Board getBoard(String boardId) {
-		JsonObject json = unmarshall( doApiGet( buildUrl(TrelloURL.BOARD_URL, boardId) ) );
-		return unmarshall(new TypeToken<Board>(){}, json);
+		final String url = buildUrl(TrelloURL.BOARD_URL, boardId);
+		return trelloObjFactory.createObject(new TypeToken<Board>(){}, doApiGet(url));
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.trello4j.TrelloI#getAction(java.lang.String)
-	 */
 	@Override
 	public Action getAction(String actionId) {
-		JsonObject json = unmarshall( doApiGet( buildUrl(TrelloURL.ACTION_URL, actionId) ) );
-		return unmarshall(new TypeToken<Action>(){}, json);
+		final String url = buildUrl(TrelloURL.ACTION_URL, actionId);
+		return trelloObjFactory.createObject(new TypeToken<Action>(){}, doApiGet(url));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.trello4j.TrelloI#getOrganization(java.lang.String)
-	 */
 	@Override
 	public Organization getOrganization(String organizationName) {
-		JsonObject json = unmarshall( doApiGet( buildUrl(TrelloURL.ORGANIZATION_URL, organizationName) ) );
-		return unmarshall(new TypeToken<Organization>(){}, json);
+		final String url = buildUrl(TrelloURL.ORGANIZATION_URL, organizationName);
+		return trelloObjFactory.createObject(new TypeToken<Organization>(){}, doApiGet(url));
 	}
 	
 	@Override
 	public Member getMember(String username) {
-		JsonObject json = unmarshall( doApiGet( buildUrl(TrelloURL.MEMBER_URL, username) ) );
-		return unmarshall(new TypeToken<Member>(){}, json);
+		final String url = buildUrl(TrelloURL.MEMBER_URL, username);
+		return trelloObjFactory.createObject(new TypeToken<Member>(){}, doApiGet(url));
 	}
 
+	@Override
+	public List<Board> getBoardsByOrganization(String organizationName) {
+		final String url = buildUrl(TrelloURL.ORGANIZATION_BOARDS_URL, organizationName);
+		return trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, doApiGet(url));
+	}
 	
 	private InputStream doApiGet(String url) {
 		try {
@@ -101,16 +88,6 @@ public class TrelloImpl implements Trello {
 		} catch (IOException e) {
 			throw new TrelloException(e.getMessage());
 		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	private <T> T unmarshall(TypeToken<T> typeToken, JsonElement response) {
-		Gson gson = new GsonBuilder()
-			.setDateFormat(DATE_FORMAT)
-			.registerTypeAdapter(PERMISSION_TYPE.class, new PermissionTypeDeserializer())
-			.create();
-
-		return (T) gson.fromJson(response, typeToken.getType());
 	}
 	
 	private InputStream getWrappedInputStream(InputStream is, boolean gzip) throws IOException {
@@ -133,31 +110,6 @@ public class TrelloImpl implements Trello {
 		}
 	}
 
-	private JsonObject unmarshall(InputStream jsonContent) {
-		try {
-			JsonElement element = parser.parse(new InputStreamReader(jsonContent, UTF_8_CHAR_SET));
-			if (element.isJsonObject()) {
-				return element.getAsJsonObject();
-			} else {
-				throw new IllegalStateException("Unknown content found in response." + element);
-			}
-		} catch (Exception e) {
-			throw new TrelloException();
-		} finally {
-			closeStream(jsonContent);
-		}
-	}
-
-	private void closeStream(InputStream is) {
-		try {
-			if (is != null) {
-				is.close();
-			}
-		} catch (IOException e) {
-			new TrelloException();
-		}
-	}
-	
 	private String createAuthQueryString() {
 		StringBuilder sb = new StringBuilder("?key=").append(apiKey);
 		

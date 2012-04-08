@@ -29,12 +29,12 @@ package org.trello4j.model;
  */
 public class Board extends TrelloObject {
 	
-	// TODO: Write custom mapper to upper case 
 	public enum PERMISSION_TYPE { PUBLIC, ORGANIZATION, MEMBERS }
 	
 	private String name;
 	private String desc;
 	private boolean closed;
+	private boolean invited = false;
 	private String idOrganization;
 	private String url;
 	private Prefs prefs;
@@ -88,6 +88,13 @@ public class Board extends TrelloObject {
 		this.prefs = prefs;
 	}
 	
+	public boolean isInvited() {
+		return invited;
+	}
+	
+	public void setInvited(boolean invited) {
+		this.invited = invited;
+	}
 
 	public class Prefs {
 		
