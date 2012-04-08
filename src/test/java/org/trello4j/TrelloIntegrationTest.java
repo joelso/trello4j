@@ -17,7 +17,7 @@ import org.trello4j.model.Organization;
 
 public class TrelloIntegrationTest {
 	
-	private String key = "32073f4d5c225b73443e37e9b41795d1";
+	private String key = "23ec668887f03d4c71c7f74fb0ae30a4";
 	
 	@Test(expected=TrelloException.class)
 	public void missingApiKey_shouldThrowException() {
