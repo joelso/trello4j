@@ -29,6 +29,9 @@ package org.trello4j.model;
  */
 public class Board extends TrelloObject {
 	
+	// TODO: memberships
+	// TODO: invitations
+	
 	public enum PERMISSION_TYPE { PUBLIC, ORGANIZATION, MEMBERS }
 	
 	private String name;

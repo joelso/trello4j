@@ -118,7 +118,19 @@ public class TrelloIntegrationTest {
 		// THEN
 		assertTrue("Organization should have at least one board", boards.size() > 0);
 		assertTrue("Organization FogCreek should have Trello Development board", hasBoardWithId(boards, trelloDevBoardId));
+	}
+
+	@Test
+	public void shouldReturnActionsByBoard() {
+		// GIVEN
+		String trelloDevBoardId = "4d5ea62fd76aa1136000000c";	 
 		
+		// WHEN
+		List<Action> actions = new TrelloImpl(key, null).getActionsByBoard(trelloDevBoardId);
+		
+		// THEN
+		assertTrue("Board should have at least one action", actions.size() > 0);
+		assertEquals("Board id and action.data.board.id should be equal", trelloDevBoardId, actions.get(0).getData().getBoard().getId());
 	}
 	
 	

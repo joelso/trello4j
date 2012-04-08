@@ -4,16 +4,8 @@ import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Member;
 
-public interface Trello extends OrganizationService {
+public interface Trello extends OrganizationService, NotificationService, BoardService {
 	
-	/**
-	 * Get board of given ID
-	 * 
-	 * @param boardId
-	 * @return
-	 */
-	Board getBoard(String boardId);
-
 	/**
 	 * Get action of current ID
 	 * @param actionId

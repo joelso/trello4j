@@ -21,7 +21,9 @@ import com.google.gson.reflect.TypeToken;
 public class TrelloImpl implements Trello {
 	private static final Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
 	private static final String GZIP_ENCODING = "gzip";
-
+	private final static String PATH_PARAM_ARG_PREFIX = "\\{";
+	private final static String PATH_PARAM_ARG_SUFFIX = "\\}";
+	
 	
 	private String apiKey = null;
 	private String secret = null;
@@ -49,6 +51,12 @@ public class TrelloImpl implements Trello {
 	public Board getBoard(String boardId) {
 		final String url = buildUrl(TrelloURL.BOARD_URL, boardId);
 		return trelloObjFactory.createObject(new TypeToken<Board>(){}, doApiGet(url));
+	}
+	
+	@Override
+	public List<Action> getActionsByBoard(String boardId) {
+		final String url = buildUrl(TrelloURL.BOARD_ACTIONS_URL, boardId);
+		return trelloObjFactory.createObject(new TypeToken<List<Action>>(){}, doApiGet(url));
 	}
 	
 	@Override
@@ -80,9 +88,9 @@ public class TrelloImpl implements Trello {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
 			
-			logger.debug("Connecting...");
+			logger.debug("Requesting resource {}...", url);
 			conn.connect();
-			logger.debug("Connected...");
+			logger.debug("api.trello.com answered {} {}", conn.getResponseCode(), conn.getResponseMessage());
 
 			return getWrappedInputStream(conn.getInputStream(), GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding()));
 		} catch (IOException e) {
@@ -93,12 +101,12 @@ public class TrelloImpl implements Trello {
 	private InputStream getWrappedInputStream(InputStream is, boolean gzip) throws IOException {
 		/*
 		 * TODO: What about this? 
-		 * ----------------
-		 * Java clients which use java.util.zip.GZIPInputStream() and wrap it 
-		 * with a java.io.BufferedReader() to read streaming API data will 
-		 * encounter buffering on low volume streams, since GZIPInputStream's 
-		 * available() method is not suitable for streaming purposes. To fix this, 
-		 * create a subclass of GZIPInputStream() which overrides the available() method.
+		 * ----------------------
+		 * "Java clients which use java.util.zip.GZIPInputStream() and wrap it 
+		 * with a java.io.BufferedReader() to read streaming API data will encounter 
+		 * buffering on low volume streams, since GZIPInputStream's available() 
+		 * method is not suitable for streaming purposes. To fix this, create a 
+		 * subclass of GZIPInputStream() which overrides the available() method."
 		 * 
 		 * https://dev.twitter.com/docs/streaming-api/concepts#gzip-compression
 		 * 
@@ -121,10 +129,9 @@ public class TrelloImpl implements Trello {
 	
 	private String buildUrl(String boardUrl, String... pathParams) {
 		for (int i = 0; i < pathParams.length; i++) {
-			boardUrl = boardUrl.replaceAll("\\{" + i + "\\}", pathParams[i]);
+			boardUrl = boardUrl.replaceAll(PATH_PARAM_ARG_PREFIX + i + PATH_PARAM_ARG_SUFFIX, pathParams[i]);
 		}
 		boardUrl += authQueryString;
-		logger.debug("Built url {}", boardUrl);
 		return boardUrl;
 	}
 

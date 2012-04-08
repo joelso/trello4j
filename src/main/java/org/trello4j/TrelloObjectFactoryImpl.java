@@ -11,7 +11,6 @@ import org.trello4j.model.Board.PERMISSION_TYPE;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,12 +25,16 @@ public class TrelloObjectFactoryImpl {
 		return unmarshallToObj(typeToken, unmarshallToJson(jsonContent));
 	}
 	
-	private JsonObject unmarshallToJson(InputStream jsonContent) {
+	private JsonElement unmarshallToJson(InputStream jsonContent) {
 		try {
 			JsonElement element = parser.parse(new InputStreamReader(jsonContent, UTF_8_CHAR_SET));
 			if (element.isJsonObject()) {
 				return element.getAsJsonObject();
-			} else {
+			} 
+			else if(element.isJsonArray()) {
+				return element.getAsJsonArray();
+			}
+			else {
 				throw new IllegalStateException("Unknown content found in response." + element);
 			}
 		} catch (Exception e) {
