@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
+import org.trello4j.model.Card;
 import org.trello4j.model.Member;
 import org.trello4j.model.Organization;
 
@@ -81,6 +82,12 @@ public class TrelloImpl implements Trello {
 	public List<Board> getBoardsByOrganization(String organizationName) {
 		final String url = buildUrl(TrelloURL.ORGANIZATION_BOARDS_URL, organizationName);
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, doApiGet(url));
+	}
+	
+	@Override
+	public Card getCard(String cardId) {
+		final String url = buildUrl(TrelloURL.CARD_URL, cardId);
+		return trelloObjFactory.createObject(new TypeToken<Card>(){}, doApiGet(url));
 	}
 	
 	private InputStream doApiGet(String url) {

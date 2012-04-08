@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Board.PERMISSION_TYPE;
+import org.trello4j.model.Card;
 import org.trello4j.model.Member;
 import org.trello4j.model.Organization;
 
@@ -130,6 +131,23 @@ public class TrelloIntegrationTest {
 		// THEN
 		assertTrue("Board should have at least one action", actions.size() > 0);
 		assertEquals("Board id and action.data.board.id should be equal", trelloDevBoardId, actions.get(0).getData().getBoard().getId());
+	}
+
+	@Test
+	public void shouldReturnCard() {
+		// GIVEN
+		String cardId = "4f6b93de58843df908f6266a";
+		
+		// WHEN
+		Card card = new TrelloImpl(key, null).getCard(cardId);
+		
+		// THEN
+		assertNotNull("Oops, card is null", card);
+		assertEquals("Card id should be equal", cardId, card.getId());
+		
+		if(!card.getAttachments().isEmpty()) {
+			assertNotNull("Attachment should be set", card.getAttachments().get(0).get_id());
+		}
 	}
 
 	private boolean hasBoardWithId(List<Board> boards, String id) {
