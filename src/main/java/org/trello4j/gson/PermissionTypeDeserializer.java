@@ -11,9 +11,7 @@ import com.google.gson.JsonParseException;
 
 /**
  * We need extra handling of permission types "public, organization, members"
- * since "public" is a reserver word in java. 
- * 
- * Simple solution is to use upper case enum, but then we also need to make
+ * since "public" is a reserved word in java. 
  * 
  * @author joel
  *
