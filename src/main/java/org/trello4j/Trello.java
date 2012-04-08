@@ -1,7 +1,6 @@
 package org.trello4j;
 
 import org.trello4j.model.Action;
-import org.trello4j.model.Board;
 import org.trello4j.model.Member;
 
 public interface Trello extends OrganizationService, NotificationService, BoardService {
