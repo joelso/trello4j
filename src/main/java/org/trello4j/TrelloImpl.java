@@ -20,11 +20,11 @@ import org.trello4j.model.Organization;
 import com.google.gson.reflect.TypeToken;
 
 public class TrelloImpl implements Trello {
+	
 	private static final Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
 	private static final String GZIP_ENCODING = "gzip";
-	private final static String PATH_PARAM_ARG_PREFIX = "\\{";
-	private final static String PATH_PARAM_ARG_SUFFIX = "\\}";
-	
+	private static final String PATH_PARAM_ARG_PREFIX = "\\{";
+	private static final String PATH_PARAM_ARG_SUFFIX = "\\}";
 	
 	private String apiKey = null;
 	private String secret = null;
