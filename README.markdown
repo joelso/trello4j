@@ -34,7 +34,7 @@ Now you got two options:
   <tr><th>Method</th><th>Version</th></tr>
   
 <tr><th colspan="2">Actions</th></tr>
-<tr><td>GET /1/actions/[action_id]</td><td>**1.0 - IMPLEMENTED**</td>                      </tr>
+<tr><td>GET /1/actions/[action_id]</td><td>1.0 - IMPLEMENTED</td>                      </tr>
 <tr><td>GET /1/actions/[action_id]/[field]</td><td>1.1</td>              </tr>  
 <tr><td>GET /1/actions/[action_id]/board</td><td>1.1</td>                </tr>  
 <tr><td>GET /1/actions/[action_id]/board/[field]</td><td>1.1</td>        </tr>  
@@ -50,9 +50,9 @@ Now you got two options:
 <tr><td>GET /1/actions/[action_id]/organization/[field]</td><td>1.1</td> </tr>  
 
 <tr><th colspan="2">Boards</th></tr>
-<tr><td>GET /1/boards/[board_id]                       </td><td>**1.0 - IMPLEMENTED**</td></tr>
+<tr><td>GET /1/boards/[board_id]                       </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/[field]               </td><td>1.1</td></tr>
-<tr><td>GET /1/boards/[board_id]/actions               </td><td>**1.0 - IMPLEMENTED**</td></tr>
+<tr><td>GET /1/boards/[board_id]/actions               </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/cards                 </td><td>1.1</td></tr>
 <tr><td>GET /1/boards/[board_id]/cards/[filter]        </td><td>1.1</td></tr>
 <tr><td>GET /1/boards/[board_id]/cards/[idCard]        </td><td>1.1</td></tr>
@@ -76,7 +76,7 @@ Now you got two options:
 <tr><td>POST /1/boards/[board_id]/myPrefs              </td><td>2.0</td></tr>
 
 <tr><th colspan="2">Cards</th></tr>
-<tr><td>GET /1/cards/[card_id]                             </td><td>**1.0 - IMPLEMENTED**</td></tr>
+<tr><td>GET /1/cards/[card_id]                             </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/cards/[card_id]/[field]                     </td><td>1.1</td></tr>
 <tr><td>GET /1/cards/[card_id]/actions                     </td><td>1.1</td></tr>
 <tr><td>GET /1/cards/[card_id]/attachments                 </td><td>1.1</td></tr>
@@ -121,7 +121,7 @@ Now you got two options:
 <tr><td>DELETE /1/checklists/[checklist_id]/checkItems/[idCheckItem]          </td><td>2.0</td></tr>
 
 <tr><th colspan="2">Lists</th></tr>
-<tr><td>GET /1/lists/[list_id]                                                </td><td>**1.0 - IMPLEMENTED**</td></tr>
+<tr><td>GET /1/lists/[list_id]                                                </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/lists/[list_id]/[field]                                        </td><td>1.1</td></tr>
 <tr><td>GET /1/lists/[list_id]/actions                                        </td><td>1.1</td></tr>
 <tr><td>GET /1/lists/[list_id]/board                                          </td><td>1.1</td></tr>
@@ -172,10 +172,10 @@ Now you got two options:
 <tr><td>GET /1/notifications/[notification_id]/organization/[field]           </td><td>1.1</td></tr>
 
 <tr><th colspan="2">Organizations</th></tr>
-<tr><td>GET /1/organizations/[org_id or name]                                 </td><td>**1.0 - IMPLEMENTED**</td></tr>
+<tr><td>GET /1/organizations/[org_id or name]                                 </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/[field]                         </td><td>1.1</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/actions                         </td><td>1.1</td></tr>
-<tr><td>GET /1/organizations/[org_id or name]/boards                          </td><td>**1.0 - IMPLEMENTED**</td></tr>
+<tr><td>GET /1/organizations/[org_id or name]/boards                          </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/boards/[filter]                 </td><td>1.1</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/members                         </td><td>1.1</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/members/[filter]                </td><td>1.1</td></tr>
