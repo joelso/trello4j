@@ -112,7 +112,7 @@ public class TrelloIntegrationTest {
 	}
 
 	@Test
-	public void shouldReturnMember() {
+	public void shouldReturnMemberByUsername() {
 		// GIVEN
 		String username = "joelsoderstrom";
 
@@ -130,6 +130,19 @@ public class TrelloIntegrationTest {
 		assertNotNull("Status not set", member.getStatus());
 		assertEquals("Incorrect URL", "https://trello.com/joelsoderstrom", member.getUrl());
 		assertEquals("Incorrect username", username, member.getUsername());
+	}
+
+	@Test
+	public void shouldReturnMemberById() {
+		// GIVEN
+		String memberId = "4e918355e52581aa44eb0754";
+		
+		// WHEN
+		Member member = new TrelloImpl(key, null).getMember(memberId);
+		
+		// THEN
+		assertNotNull("Oops, member is null", member);
+		assertEquals("Incorrect username", "joelsoderstrom", member.getUsername());
 	}
 
 	@Test

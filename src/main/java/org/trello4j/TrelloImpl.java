@@ -76,8 +76,8 @@ public class TrelloImpl implements Trello {
 	}
 	
 	@Override
-	public Member getMember(String username) {
-		final String url = buildUrl(TrelloURL.MEMBER_URL, username);
+	public Member getMember(String usernameOrId) {
+		final String url = buildUrl(TrelloURL.MEMBER_URL, usernameOrId);
 		return trelloObjFactory.createObject(new TypeToken<Member>(){}, doApiGet(url));
 	}
 

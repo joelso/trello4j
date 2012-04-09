@@ -135,7 +135,7 @@ Now you got two options:
 <tr><td>POST /1/lists/[list_id]/cards                                         </td><td>2.0</td></tr>
 
 <tr><th colspan="2">Members</th></tr>
-<tr><td>GET /1/members/[member_id or username]                                </td><td>1.0</td></tr>
+<tr><td>GET /1/members/[member_id or username]                                </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/[field]                        </td><td>1.1</td></tr>
 <tr><td>GET /1/members/[member_id or username]/actions                        </td><td>1.1</td></tr>
 <tr><td>GET /1/members/[member_id or username]/boards                         </td><td>1.1</td></tr>

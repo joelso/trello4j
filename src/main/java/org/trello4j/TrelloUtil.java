@@ -3,6 +3,9 @@ package org.trello4j;
 public class TrelloUtil {
 	
 	/**
+	 * "Stolen" from:
+	 * https://github.com/mongodb/mongo-java-driver
+	 * 
 	 * @param s
 	 * @return
 	 */
