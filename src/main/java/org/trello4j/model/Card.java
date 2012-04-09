@@ -64,7 +64,7 @@ public class Card extends TrelloObject {
 	private List<Attachment> attachments;
 	private List<Label> labels;
 	private String url;
-	private Long pos;
+	private double pos;
 	
 	public String getName() {
 		return name;
@@ -130,11 +130,11 @@ public class Card extends TrelloObject {
 		this.url = url;
 	}
 	
-	public Long getPos() {
+	public double getPos() {
 		return pos;
 	}
 
-	public void setPos(Long pos) {
+	public void setPos(double pos) {
 		this.pos = pos;
 	}
 	

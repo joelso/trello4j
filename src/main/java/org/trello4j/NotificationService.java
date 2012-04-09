@@ -1,5 +1,7 @@
 package org.trello4j;
 
+import org.trello4j.model.Notification;
+
 
 /**
  * To be implemented:
@@ -25,5 +27,6 @@ package org.trello4j;
  */
 public interface NotificationService {
 
-
+	Notification getNotification(String notificationId);
+		
 }

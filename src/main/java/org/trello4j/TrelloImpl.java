@@ -15,6 +15,7 @@ import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
 import org.trello4j.model.Member;
+import org.trello4j.model.Notification;
 import org.trello4j.model.Organization;
 
 import com.google.gson.reflect.TypeToken;
@@ -27,7 +28,7 @@ public class TrelloImpl implements Trello {
 	private static final String PATH_PARAM_ARG_SUFFIX = "\\}";
 	
 	private String apiKey = null;
-	private String secret = null;
+	private String token = null;
 	
 	private String authQueryString = null;
 	
@@ -37,9 +38,9 @@ public class TrelloImpl implements Trello {
 		this(apiKey, null);
 	}
 
-	public TrelloImpl(String apiKey, String secret) {
+	public TrelloImpl(String apiKey, String token) {
 		this.apiKey = apiKey;
-		this.secret = secret;
+		this.token = token;
 		
 		if(this.apiKey == null) {
 			throw new TrelloException("API key must be set, get one here: https://trello.com/1/appKey/generate");
@@ -101,6 +102,13 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>(){}, doApiGet(url));
 	}
 	
+	@Override
+	public Notification getNotification(String notificationId) {
+		validateObjectId(notificationId);
+		final String url = buildUrl(TrelloURL.NOTIFICATION_URL, notificationId);
+		return trelloObjFactory.createObject(new TypeToken<Notification>(){}, doApiGet(url));
+	}
+	
 	private InputStream doApiGet(String url) {
 		try {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
@@ -146,8 +154,8 @@ public class TrelloImpl implements Trello {
 	private String createAuthQueryString() {
 		StringBuilder sb = new StringBuilder("?key=").append(apiKey);
 		
-		if(this.secret != null) {
-			sb.append("&").append(this.secret);
+		if(this.token != null) {
+			sb.append("&token=").append(this.token);
 		}
 		return sb.toString();
 	}

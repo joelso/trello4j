@@ -13,10 +13,11 @@ import java.util.Date;
  * 			"name":"Trello Development",
  * 			"id":"4d5ea62fd76aa1136000000c"
  * 		},
- * 	"card":{
- * 		"name":"Assign people and due dates to specific checklist items.",
- * 		"id":"4f455a15dfe503f23316557f"}
- * 		},
+ * 		"card":{
+ * 			"name":"Assign people and due dates to specific checklist items.",
+ * 			"id":"4f455a15dfe503f23316557f"
+ * 		}
+ * 	},
  * 	"type":"commentCard",
  * 	"date":"2012-04-06T18:38:01.791Z",
  * 	"memberCreator":{
@@ -82,6 +83,7 @@ public class Action extends TrelloObject {
 	public class Data {
 		private String text;
 		private Board board;
+		private Card card;
 		
 		public String getText() {
 			return text;
@@ -97,6 +99,14 @@ public class Action extends TrelloObject {
 		
 		public void setBoard(Board board) {
 			this.board = board;
+		}
+		
+		public Card getCard() {
+			return card;
+		}
+		
+		public void setCard(Card card) {
+			this.card = card;
 		}
 	}
 	

@@ -156,7 +156,7 @@ Now you got two options:
 <tr><td>PUT /1/members/[member_id or username]/initials                       </td><td>2.0</td></tr>
 
 <tr><th colspan="2">Notifications</th></tr>
-<tr><td>GET /1/notifications/[notification_id]                                </td><td>1.0</td></tr>
+<tr><td>GET /1/notifications/[notification_id]                                </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/notifications/[notification_id]/[field]                        </td><td>1.1</td></tr>
 <tr><td>GET /1/notifications/[notification_id]/board                          </td><td>1.1</td></tr>
 <tr><td>GET /1/notifications/[notification_id]/board/[field]                  </td><td>1.1</td></tr>
