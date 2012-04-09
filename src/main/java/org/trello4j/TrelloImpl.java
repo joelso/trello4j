@@ -56,14 +56,14 @@ public class TrelloImpl implements Trello {
 	}
 	
 	@Override
-	public List<Action> getActionsByBoard(String boardId) {
+	public List<Action> getActionsByBoard(final String boardId) {
 		validateObjectId(boardId);
 		final String url = buildUrl(TrelloURL.BOARD_ACTIONS_URL, boardId);
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>(){}, doApiGet(url));
 	}
 	
 	@Override
-	public Action getAction(String actionId) {
+	public Action getAction(final String actionId) {
 		validateObjectId(actionId);
 		final String url = buildUrl(TrelloURL.ACTION_URL, actionId);
 		return trelloObjFactory.createObject(new TypeToken<Action>(){}, doApiGet(url));
@@ -88,13 +88,15 @@ public class TrelloImpl implements Trello {
 	}
 	
 	@Override
-	public Card getCard(String cardId) {
+	public Card getCard(final String cardId) {
+		validateObjectId(cardId);
 		final String url = buildUrl(TrelloURL.CARD_URL, cardId);
 		return trelloObjFactory.createObject(new TypeToken<Card>(){}, doApiGet(url));
 	}
 	
 	@Override
-	public org.trello4j.model.List getList(String listId) {
+	public org.trello4j.model.List getList(final String listId) {
+		validateObjectId(listId);
 		final String url = buildUrl(TrelloURL.LIST_URL, listId);
 		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>(){}, doApiGet(url));
 	}
