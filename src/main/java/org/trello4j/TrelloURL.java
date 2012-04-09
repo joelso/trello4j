@@ -16,4 +16,6 @@ public class TrelloURL {
 
 	public static final String CARD_URL = "https://api.trello.com/1/cards/{0}";
 
+	public static final String LIST_URL = "https://api.trello.com/1/lists/{0}";;
+
 }

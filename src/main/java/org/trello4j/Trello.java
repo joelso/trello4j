@@ -7,6 +7,7 @@ public interface Trello extends
 		BoardService, 
 		CardService,
 		ActionService,
+		ListService,
 		MemberService {
 	
 }

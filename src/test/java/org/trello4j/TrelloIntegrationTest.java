@@ -3,6 +3,7 @@ package org.trello4j;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -22,6 +23,31 @@ public class TrelloIntegrationTest {
 	@Test(expected = TrelloException.class)
 	public void missingApiKey_shouldThrowException() {
 		new TrelloImpl(null);
+	}
+
+	@Test(expected=TrelloException.class)
+	public void testInvalidObjectId() {
+		// GIVEN		
+		String boardId = "INVALID_ID"; 
+		
+		// WHEN
+		Board board = new TrelloImpl(key, null).getBoard(boardId);
+		
+		// THEN
+		assertNull("Oops, board is null", board);
+	}
+
+	// TODO
+	@Test
+	public void test404_shouldReturnNull() {
+		// GIVEN		
+		String boardId = "00000000000000000000000c"; 
+		
+		// WHEN
+		Board board = new TrelloImpl(key, null).getBoard(boardId);
+		
+		// THEN
+		assertNull("Oops, board is null", board);
 	}
 
 	@Test
@@ -148,6 +174,20 @@ public class TrelloIntegrationTest {
 		if(!card.getAttachments().isEmpty()) {
 			assertNotNull("Attachment should be set", card.getAttachments().get(0).get_id());
 		}
+	}
+
+	@Test
+	public void shouldReturnList() {
+		// GIVEN
+		String listId = "4e7b86d7ce194786721560b8";
+		
+		// WHEN
+		org.trello4j.model.List list = new TrelloImpl(key, null).getList(listId);
+		
+		// THEN
+		assertNotNull("Oops, list is null", list);
+		assertEquals("Card id should be equal", listId, list.getId());
+		
 	}
 
 	private boolean hasBoardWithId(List<Board> boards, String id) {

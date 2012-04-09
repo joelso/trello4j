@@ -22,7 +22,7 @@ public class TrelloObjectFactoryImpl {
 	private final JsonParser parser = new JsonParser();
 
 	public <T> T createObject(TypeToken<T> typeToken, InputStream jsonContent) {
-		return unmarshallToObj(typeToken, unmarshallToJson(jsonContent));
+		return jsonContent != null ? unmarshallToObj(typeToken, unmarshallToJson(jsonContent)) : null;
 	}
 	
 	private JsonElement unmarshallToJson(InputStream jsonContent) {

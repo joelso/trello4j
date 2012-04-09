@@ -49,19 +49,22 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
-	public Board getBoard(String boardId) {
+	public Board getBoard(final String boardId) {
+		validateObjectId(boardId);
 		final String url = buildUrl(TrelloURL.BOARD_URL, boardId);
 		return trelloObjFactory.createObject(new TypeToken<Board>(){}, doApiGet(url));
 	}
 	
 	@Override
 	public List<Action> getActionsByBoard(String boardId) {
+		validateObjectId(boardId);
 		final String url = buildUrl(TrelloURL.BOARD_ACTIONS_URL, boardId);
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>(){}, doApiGet(url));
 	}
 	
 	@Override
 	public Action getAction(String actionId) {
+		validateObjectId(actionId);
 		final String url = buildUrl(TrelloURL.ACTION_URL, actionId);
 		return trelloObjFactory.createObject(new TypeToken<Action>(){}, doApiGet(url));
 	}
@@ -90,16 +93,29 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(new TypeToken<Card>(){}, doApiGet(url));
 	}
 	
+	@Override
+	public org.trello4j.model.List getList(String listId) {
+		final String url = buildUrl(TrelloURL.LIST_URL, listId);
+		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>(){}, doApiGet(url));
+	}
+	
 	private InputStream doApiGet(String url) {
 		try {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
 			
 			logger.debug("Requesting resource {}...", url);
+			
 			conn.connect();
+			
 			logger.debug("api.trello.com answered {} {}", conn.getResponseCode(), conn.getResponseMessage());
-
-			return getWrappedInputStream(conn.getInputStream(), GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding()));
+			
+			// Return null if we get an error response
+			if(conn.getResponseCode() > 399) {
+				return null;
+			} else {
+				return getWrappedInputStream(conn.getInputStream(), GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding()));
+			}
 		} catch (IOException e) {
 			throw new TrelloException(e.getMessage());
 		}
@@ -132,6 +148,12 @@ public class TrelloImpl implements Trello {
 			sb.append("&").append(this.secret);
 		}
 		return sb.toString();
+	}
+	
+	private void validateObjectId(String id) {
+		if(!TrelloUtil.isObjectIdValid(id)) {
+			throw new TrelloException("Invalid object id: " + id);
+		}
 	}
 	
 	private String buildUrl(String boardUrl, String... pathParams) {
