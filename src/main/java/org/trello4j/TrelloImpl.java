@@ -9,8 +9,6 @@ import java.util.zip.GZIPInputStream;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
@@ -24,7 +22,6 @@ public class TrelloImpl implements Trello {
 	
 	// TODO: Return empty list instead of null for empty collection reponses
 	
-	private static final Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
 	private static final String GZIP_ENCODING = "gzip";
 	private static final String PATH_PARAM_ARG_PREFIX = "\\{";
 	private static final String PATH_PARAM_ARG_SUFFIX = "\\}";
@@ -127,12 +124,7 @@ public class TrelloImpl implements Trello {
 		try {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
-			
-			logger.debug("Requesting resource {}...", url);
-			
 			conn.connect();
-			
-			logger.debug("api.trello.com answered {} {}", conn.getResponseCode(), conn.getResponseMessage());
 			
 			// Return null if we get an error response
 			if(conn.getResponseCode() > 399) {
