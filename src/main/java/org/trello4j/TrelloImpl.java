@@ -82,7 +82,13 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(new TypeToken<Member>(){}, doApiGet(url));
 	}
 
-	@Override
+    @Override
+    public List<Board> getBoardsByMember(String usernameOrId) {
+        final String url = buildUrl(TrelloURL.MEMBER_BOARDS_URL, usernameOrId);
+        return trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, doApiGet(url));
+    }
+
+    @Override
 	public List<Board> getBoardsByOrganization(String organizationName) {
 		final String url = buildUrl(TrelloURL.ORGANIZATION_BOARDS_URL, organizationName);
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, doApiGet(url));

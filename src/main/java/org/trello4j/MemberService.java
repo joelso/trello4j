@@ -1,6 +1,9 @@
 package org.trello4j;
 
+import org.trello4j.model.Board;
 import org.trello4j.model.Member;
+
+import java.util.List;
 
 
 /**
@@ -11,11 +14,17 @@ import org.trello4j.model.Member;
 public interface MemberService {
 	
 	/**
-	/**
 	 * Get member of given username.
-	 * @param username
+	 * @param usernameOrId
 	 * @return
 	 */
-	Member getMember(String username);
+	Member getMember(String usernameOrId);
+
+    /**
+     * Get list of boards that member is member of.
+     * @param usernameOrId
+     * @return
+     */
+    List<Board> getBoardsByMember(String usernameOrId);
 
 }

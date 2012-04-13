@@ -17,10 +17,10 @@ import org.trello4j.model.Member;
 import org.trello4j.model.Notification;
 import org.trello4j.model.Organization;
 
-public class TrelloIntegrationTest {
+public class TrelloImplIntegrationTest {
 
 	private static final String API_KEY = "23ec668887f03d4c71c7f74fb0ae30a4";
-	private static final String API_TOKEN = "1a7880b0b6cf1631144ca672e5892dfa94f2e6e1d041cfdf86483a96418f2faf";
+	private static final String API_TOKEN = "ede7758ace3911eb83585b15d9cbb14a02542e4556d14e7314d0e24228c578ae";
 
 	@Test(expected = TrelloException.class)
 	public void missingApiKey_shouldThrowException() {
@@ -216,6 +216,19 @@ public class TrelloIntegrationTest {
 		assertNotNull("Oops, notification is null", notification);
 		assertEquals("Notification id should be equal", notificationId, notification.getId());
 	}
+
+    @Test
+    public void shouldReturnBoardsByMember() {
+        // GIVEN
+        String userId = "userj";
+
+        // WHEN
+        List<Board> boards = new TrelloImpl(API_KEY, API_TOKEN).getBoardsByMember(userId);
+
+        // THEN
+        assertNotNull("Oops, board list is null", boards);
+        assertTrue("Member should have at least one board", boards.size() > 0);
+    }
 
 	private boolean hasBoardWithId(List<Board> boards, String id) {
 		boolean res = false;
