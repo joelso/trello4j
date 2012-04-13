@@ -138,7 +138,7 @@ Now you got two options:
 <tr><td>GET /1/members/[member_id or username]                                </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/[field]                        </td><td>1.1</td></tr>
 <tr><td>GET /1/members/[member_id or username]/actions                        </td><td>1.1</td></tr>
-<tr><td>GET /1/members/[member_id or username]/boards                         </td><td>1.1</td></tr>
+<tr><td>GET /1/members/[member_id or username]/boards                         </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/boards/[filter]                </td><td>1.1</td></tr>
 <tr><td>GET /1/members/[member_id or username]/boardsInvited                  </td><td>1.1</td></tr>
 <tr><td>GET /1/members/[member_id or username]/boardsInvited/[field]          </td><td>1.1</td></tr>
