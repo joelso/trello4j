@@ -22,6 +22,8 @@ import com.google.gson.reflect.TypeToken;
 
 public class TrelloImpl implements Trello {
 	
+	// TODO: Return empty list instead of null for empty collection reponses
+	
 	private static final Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
 	private static final String GZIP_ENCODING = "gzip";
 	private static final String PATH_PARAM_ARG_PREFIX = "\\{";
@@ -93,8 +95,14 @@ public class TrelloImpl implements Trello {
 		final String url = buildUrl(TrelloURL.ORGANIZATION_BOARDS_URL, organizationName);
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, doApiGet(url));
 	}
-	
-	@Override
+
+    @Override
+    public List<Action> getActionsByOrganization(String organizationNameOrId) {
+        final String url = buildUrl(TrelloURL.ORGANIZATION_ACTIONS_URL, organizationNameOrId);
+        return trelloObjFactory.createObject(new TypeToken<List<Action>>(){}, doApiGet(url));    
+    }
+
+    @Override
 	public Card getCard(final String cardId) {
 		validateObjectId(cardId);
 		final String url = buildUrl(TrelloURL.CARD_URL, cardId);

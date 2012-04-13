@@ -127,7 +127,7 @@ public class TrelloImplIntegrationTest {
 		assertEquals("Incorrect full name", "Joel Söderström", 	member.getFullName());
 		assertNotNull("ID not set", member.getId());
 		assertEquals("Invalid count of boards", 0, member.getIdBoards().size());
-		assertEquals("Invalid count of organizations", 0, member.getIdOrganizations().size());
+		assertTrue("Invalid count of organizations", member.getIdOrganizations().size() > 0);
 		assertEquals("Incorrect initials", "JS", member.getInitials());
 		assertNotNull("Status not set", member.getStatus());
 		assertEquals("Incorrect URL", "https://trello.com/joelsoderstrom", member.getUrl());
@@ -228,6 +228,19 @@ public class TrelloImplIntegrationTest {
         // THEN
         assertNotNull("Oops, board list is null", boards);
         assertTrue("Member should have at least one board", boards.size() > 0);
+    }
+
+    @Test
+    public void shouldReturnActionsByOrganization() {
+        // GIVEN
+        String organizationName = "fogcreek";
+
+        // WHEN
+        List<Action> actions = new TrelloImpl(API_KEY, API_TOKEN).getActionsByOrganization(organizationName);
+
+        // THEN
+        assertNotNull("Oops, action list is null", actions);
+        assertTrue("Organization should have at least one action", actions.size() > 0);
     }
 
 	private boolean hasBoardWithId(List<Board> boards, String id) {

@@ -25,6 +25,12 @@ public class TrelloObjectFactoryImpl {
 		return jsonContent != null ? unmarshallToObj(typeToken, unmarshallToJson(jsonContent)) : null;
 	}
 	
+//	private <T> T nullOrEmptyList(TypeToken<T> typeToken) {
+//	    if (Collection.class.isAssignableFrom(typeToken.getRawType())) {
+//	        return List<T> list = Collections.emptyList();
+//	    }
+//	}
+	
 	private JsonElement unmarshallToJson(InputStream jsonContent) {
 		try {
 			JsonElement element = parser.parse(new InputStreamReader(jsonContent, UTF_8_CHAR_SET));

@@ -1,9 +1,10 @@
 package org.trello4j;
 
-import java.util.List;
-
+import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Organization;
+
+import java.util.List;
 
 /**
  * Implemented methods:
@@ -44,9 +45,16 @@ public interface OrganizationService {
 	/**
 	 * Get list of boards that belong to organization.
 	 * 
-	 * @param organizationName
+	 * @param organizationNameOrId
 	 * @return list of boards
 	 */
-	List<Board> getBoardsByOrganization(String organizationName);
+	List<Board> getBoardsByOrganization(String organizationNameOrId);
+
+    /**
+     *
+     * @param organizationNameOrId
+     * @return
+     */
+    List<Action> getActionsByOrganization(String organizationNameOrId);
 
 }
