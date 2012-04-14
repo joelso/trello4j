@@ -3,7 +3,12 @@ package org.trello4j;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import org.trello4j.gson.PermissionTypeDeserializer;
 import org.trello4j.model.Board.PERMISSION_TYPE;
@@ -21,15 +26,13 @@ public class TrelloObjectFactoryImpl {
 
 	private final JsonParser parser = new JsonParser();
 
+    @SuppressWarnings("unchecked")
 	public <T> T createObject(TypeToken<T> typeToken, InputStream jsonContent) {
-		return jsonContent != null ? unmarshallToObj(typeToken, unmarshallToJson(jsonContent)) : null;
+        if(jsonContent == null) {
+            return isList(typeToken) ? (T) Collections.emptyList() : null;
+        }
+		return unmarshallToObj(typeToken, unmarshallToJson(jsonContent));
 	}
-	
-//	private <T> T nullOrEmptyList(TypeToken<T> typeToken) {
-//	    if (Collection.class.isAssignableFrom(typeToken.getRawType())) {
-//	        return List<T> list = Collections.emptyList();
-//	    }
-//	}
 	
 	private JsonElement unmarshallToJson(InputStream jsonContent) {
 		try {
@@ -70,5 +73,9 @@ public class TrelloObjectFactoryImpl {
 			new TrelloException();
 		}
 	}
+
+    private boolean isList(TypeToken typeToken) {
+        return List.class.isAssignableFrom(typeToken.getRawType());
+    }
 	
 }

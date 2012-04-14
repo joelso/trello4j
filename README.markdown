@@ -174,7 +174,7 @@ Now you got two options:
 <tr><th colspan="2">Organizations</th></tr>
 <tr><td>GET /1/organizations/[org_id or name]                                 </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/[field]                         </td><td>1.1</td></tr>
-<tr><td>GET /1/organizations/[org_id or name]/actions                         </td><td>1.1</td></tr>
+<tr><td>GET /1/organizations/[org_id or name]/actions                         </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/boards                          </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/boards/[filter]                 </td><td>1.1</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/members                         </td><td>1.1</td></tr>

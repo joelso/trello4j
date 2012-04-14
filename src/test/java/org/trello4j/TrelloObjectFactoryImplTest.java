@@ -1,6 +1,7 @@
 package org.trello4j;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.io.InputStream;
 import java.util.List;
@@ -10,7 +11,7 @@ import org.trello4j.model.Board;
 
 import com.google.gson.reflect.TypeToken;
 
-public class TrelloObjectFactoryTest {
+public class TrelloObjectFactoryImplTest {
 	
 	TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
 	
@@ -27,6 +28,19 @@ public class TrelloObjectFactoryTest {
 		
 		json.close();
 	}
+
+    @Test
+    public void shouldReturnEmptyList() throws Exception {
+        // GIVEN
+        InputStream json = null;
+
+        // WHEN
+        List<Board> boards = trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, json);
+
+        // THEN
+        assertEquals("Should return empty list", 0, boards.size());
+    }
+
 
 	@Test
 	public void shouldCreateBoard() throws Exception {

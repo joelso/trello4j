@@ -20,8 +20,6 @@ import com.google.gson.reflect.TypeToken;
 
 public class TrelloImpl implements Trello {
 	
-	// TODO: Return empty list instead of null for empty collection reponses
-	
 	private static final String GZIP_ENCODING = "gzip";
 	private static final String PATH_PARAM_ARG_PREFIX = "\\{";
 	private static final String PATH_PARAM_ARG_SUFFIX = "\\}";

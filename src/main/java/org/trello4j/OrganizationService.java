@@ -10,15 +10,15 @@ import java.util.List;
  * Implemented methods:
  * <ul>
  * 	<li>GET /1/organizations/[org_id or name]</li>
- * 	<li>GET /1/organizations/[org_id or name]/boards</li> 
+ * 	<li>GET /1/organizations/[org_id or name]/boards</li>
+ * 	<li>GET /1/organizations/[org_id or name]/actions</li>
  * </ul>
  * 
  * 
  * To be implemented:
  * <ul>
  * 	<li>GET /1/organizations/[org_id or name]/[field]</li> 
- * 	<li>GET /1/organizations/[org_id or name]/actions</li>
- * 	<li>GET /1/organizations/[org_id or name]/boards/[filter]</li> 
+ * 	<li>GET /1/organizations/[org_id or name]/boards/[filter]</li>
  * 	<li>GET /1/organizations/[org_id or name]/members</li> 
  * 	<li>GET /1/organizations/[org_id or name]/members/[filter]</li> 
  * 	<li>PUT /1/organizations/[org_id or name]</li> 
@@ -35,12 +35,12 @@ import java.util.List;
 public interface OrganizationService {
 
 	/**
-	 * Get organization of given ID.
+	 * Get organization of given ID or name.
 	 * 
-	 * @param organizationName
+	 * @param organizationNameOrId
 	 * @return
 	 */
-	Organization getOrganization(String organizationName);
+	Organization getOrganization(String organizationNameOrId);
 
 	/**
 	 * Get list of boards that belong to organization.
@@ -51,6 +51,7 @@ public interface OrganizationService {
 	List<Board> getBoardsByOrganization(String organizationNameOrId);
 
     /**
+     * Get list of actions related to given organization.
      *
      * @param organizationNameOrId
      * @return

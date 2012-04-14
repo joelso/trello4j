@@ -12,7 +12,11 @@ public class TrelloURL {
 
 	public static final String ORGANIZATION_BOARDS_URL = "https://api.trello.com/1/organizations/{0}/boards";
 
+	public static final String ORGANIZATION_ACTIONS_URL = "https://api.trello.com/1/organizations/{0}/actions";
+
 	public static final String MEMBER_URL = "https://api.trello.com/1/members/{0}";
+
+	public static final String MEMBER_BOARDS_URL = "https://api.trello.com/1/members/{0}/boards";
 
 	public static final String CARD_URL = "https://api.trello.com/1/cards/{0}";
 
@@ -20,7 +24,4 @@ public class TrelloURL {
 
 	public static final String NOTIFICATION_URL = "https://api.trello.com/1/notifications/{0}";
 
-    public static final String MEMBER_BOARDS_URL = "https://api.trello.com/1/members/{0}/boards";
-
-    public static final String ORGANIZATION_ACTIONS_URL = "https://api.trello.com/1/organizations/{0}/actions";
 }
