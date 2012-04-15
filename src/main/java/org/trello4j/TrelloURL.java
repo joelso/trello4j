@@ -25,8 +25,8 @@ public class TrelloURL {
     private final String[] pathParams;
     private final String url;
     private final String apiKey;
-    private String token;
-    private String[] filters;
+    private String token = null;
+    private String[] filters = null;
 
     public static TrelloURL create(String apiKey, String url, String... pathParams) {
         return new TrelloURL(apiKey, url, pathParams);
@@ -44,7 +44,7 @@ public class TrelloURL {
     }
 
     public TrelloURL filter(String... filters) {
-        this.filters = filters;
+        this.filters = isArrayEmpty(filters) ? null : filters;
         return this;
     }
 
@@ -88,6 +88,10 @@ public class TrelloURL {
         }
         //boardUrl += authQueryString;
         return compiledUrl;
+    }
+
+    private static boolean isArrayEmpty(String[] arr) {
+        return arr == null || arr.length == 0;
     }
 
 }
