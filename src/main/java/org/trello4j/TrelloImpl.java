@@ -50,6 +50,7 @@ public class TrelloImpl implements Trello {
 
         final String url = TrelloURL
                 .create(apiKey, TrelloURL.BOARD_URL, boardId)
+                .token(token)
                 .build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>(){}, doApiGet(url));
@@ -61,6 +62,7 @@ public class TrelloImpl implements Trello {
 
         final String url = TrelloURL
                 .create(apiKey, TrelloURL.BOARD_ACTIONS_URL, boardId)
+                .token(token)
                 .build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>(){}, doApiGet(url));
@@ -72,6 +74,7 @@ public class TrelloImpl implements Trello {
 
         final String url = TrelloURL
                 .create(apiKey, TrelloURL.ACTION_URL, actionId)
+                .token(token)
                 .build();
 
 		return trelloObjFactory.createObject(new TypeToken<Action>(){}, doApiGet(url));
@@ -81,6 +84,7 @@ public class TrelloImpl implements Trello {
 	public Organization getOrganization(String organizationName) {
 		final String url = TrelloURL
                 .create(apiKey, TrelloURL.ORGANIZATION_URL, organizationName)
+                .token(token)
                 .build();
 		return trelloObjFactory.createObject(new TypeToken<Organization>(){}, doApiGet(url));
 	}
@@ -89,6 +93,7 @@ public class TrelloImpl implements Trello {
 	public Member getMember(String usernameOrId) {
 		final String url = TrelloURL
                 .create(apiKey, TrelloURL.MEMBER_URL, usernameOrId)
+                .token(token)
                 .build();
 		return trelloObjFactory.createObject(new TypeToken<Member>(){}, doApiGet(url));
 	}
@@ -97,6 +102,7 @@ public class TrelloImpl implements Trello {
     public List<Board> getBoardsByMember(String usernameOrId) {
         final String url = TrelloURL
                 .create(apiKey, TrelloURL.MEMBER_BOARDS_URL, usernameOrId)
+                .token(token)
                 .build();
         return trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, doApiGet(url));
     }
@@ -105,6 +111,7 @@ public class TrelloImpl implements Trello {
 	public List<Board> getBoardsByOrganization(String organizationName) {
 		final String url = TrelloURL
                 .create(apiKey, TrelloURL.ORGANIZATION_BOARDS_URL, organizationName)
+                .token(token)
                 .build();
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, doApiGet(url));
 	}
@@ -113,6 +120,7 @@ public class TrelloImpl implements Trello {
     public List<Action> getActionsByOrganization(String organizationNameOrId) {
         final String url = TrelloURL
                 .create(apiKey, TrelloURL.ORGANIZATION_ACTIONS_URL, organizationNameOrId)
+                .token(token)
                 .build();
         return trelloObjFactory.createObject(new TypeToken<List<Action>>(){}, doApiGet(url));    
     }
@@ -123,6 +131,7 @@ public class TrelloImpl implements Trello {
 
         final String url = TrelloURL
                 .create(apiKey, TrelloURL.CARD_URL, cardId)
+                .token(token)
                 .build();
 
 		return trelloObjFactory.createObject(new TypeToken<Card>(){}, doApiGet(url));
@@ -134,6 +143,7 @@ public class TrelloImpl implements Trello {
 
         final String url = TrelloURL
                 .create(apiKey, TrelloURL.LIST_URL, listId)
+                .token(token)
                 .build();
 
 		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>(){}, doApiGet(url));
@@ -145,6 +155,7 @@ public class TrelloImpl implements Trello {
 
         final String url = TrelloURL
                 .create(apiKey, TrelloURL.NOTIFICATION_URL, notificationId)
+                .token(token)
                 .build();
 
 		return trelloObjFactory.createObject(new TypeToken<Notification>(){}, doApiGet(url));
