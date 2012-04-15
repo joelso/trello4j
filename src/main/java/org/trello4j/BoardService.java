@@ -57,8 +57,10 @@ public interface BoardService {
 	 * Get list of actions that belongs to given board.
 	 * 
 	 * @param boardId
+     * @param filter
 	 * @return list of actions
 	 */
-	List<Action> getActionsByBoard(String boardId);
+	List<Action> getActionsByBoard(String boardId, String... filter);
+
 
 }

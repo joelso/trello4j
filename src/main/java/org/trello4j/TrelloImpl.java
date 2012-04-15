@@ -57,12 +57,13 @@ public class TrelloImpl implements Trello {
 	}
 	
 	@Override
-	public List<Action> getActionsByBoard(final String boardId) {
+	public List<Action> getActionsByBoard(final String boardId, final String... filter) {
 		validateObjectId(boardId);
 
         final String url = TrelloURL
                 .create(apiKey, TrelloURL.BOARD_ACTIONS_URL, boardId)
                 .token(token)
+                .filter(filter)
                 .build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>(){}, doApiGet(url));
