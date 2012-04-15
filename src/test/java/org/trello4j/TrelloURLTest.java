@@ -1,0 +1,27 @@
+package org.trello4j;
+
+import org.junit.Test;
+import org.trello4j.model.Action;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: joel
+ * Date: 2012-04-15
+ * Time: 11:00 AM
+ */
+public class TrelloURLTest {
+
+    @Test
+    public void shouldBuildURLWithFilter() throws Exception {
+        String url = TrelloURL.create("API_KEY", TrelloURL.ACTION_URL, "ID")
+                .token("TOKEN")
+                .filter(Action.TYPE.ADD_ATTACHMENT, Action.TYPE.ADD_CHECKLIST)
+                .build();
+
+        String expectedUrl = "https://api.trello.com/1/actions/ID?key=API_KEY&token=TOKEN&filter=" + Action.TYPE.ADD_ATTACHMENT + "," + Action.TYPE.ADD_CHECKLIST;
+
+        assertEquals(expectedUrl, url);
+    }
+}

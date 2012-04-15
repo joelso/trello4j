@@ -21,13 +21,11 @@ import com.google.gson.reflect.TypeToken;
 public class TrelloImpl implements Trello {
 	
 	private static final String GZIP_ENCODING = "gzip";
-	private static final String PATH_PARAM_ARG_PREFIX = "\\{";
-	private static final String PATH_PARAM_ARG_SUFFIX = "\\}";
-	
+
 	private String apiKey = null;
 	private String token = null;
 	
-	private String authQueryString = null;
+	//private String authQueryString = null;
 	
 	private TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
 	
@@ -43,78 +41,112 @@ public class TrelloImpl implements Trello {
 			throw new TrelloException("API key must be set, get one here: https://trello.com/1/appKey/generate");
 		} 
 		
-		this.authQueryString = createAuthQueryString();
+		//this.authQueryString = createAuthQueryString();
 	}
 
 	@Override
 	public Board getBoard(final String boardId) {
 		validateObjectId(boardId);
-		final String url = buildUrl(TrelloURL.BOARD_URL, boardId);
+
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.BOARD_URL, boardId)
+                .build();
+
 		return trelloObjFactory.createObject(new TypeToken<Board>(){}, doApiGet(url));
 	}
 	
 	@Override
 	public List<Action> getActionsByBoard(final String boardId) {
 		validateObjectId(boardId);
-		final String url = buildUrl(TrelloURL.BOARD_ACTIONS_URL, boardId);
+
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.BOARD_ACTIONS_URL, boardId)
+                .build();
+
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>(){}, doApiGet(url));
 	}
 	
 	@Override
 	public Action getAction(final String actionId) {
 		validateObjectId(actionId);
-		final String url = buildUrl(TrelloURL.ACTION_URL, actionId);
+
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.ACTION_URL, actionId)
+                .build();
+
 		return trelloObjFactory.createObject(new TypeToken<Action>(){}, doApiGet(url));
 	}
 
 	@Override
 	public Organization getOrganization(String organizationName) {
-		final String url = buildUrl(TrelloURL.ORGANIZATION_URL, organizationName);
+		final String url = TrelloURL
+                .create(apiKey, TrelloURL.ORGANIZATION_URL, organizationName)
+                .build();
 		return trelloObjFactory.createObject(new TypeToken<Organization>(){}, doApiGet(url));
 	}
 	
 	@Override
 	public Member getMember(String usernameOrId) {
-		final String url = buildUrl(TrelloURL.MEMBER_URL, usernameOrId);
+		final String url = TrelloURL
+                .create(apiKey, TrelloURL.MEMBER_URL, usernameOrId)
+                .build();
 		return trelloObjFactory.createObject(new TypeToken<Member>(){}, doApiGet(url));
 	}
 
     @Override
     public List<Board> getBoardsByMember(String usernameOrId) {
-        final String url = buildUrl(TrelloURL.MEMBER_BOARDS_URL, usernameOrId);
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.MEMBER_BOARDS_URL, usernameOrId)
+                .build();
         return trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, doApiGet(url));
     }
 
     @Override
 	public List<Board> getBoardsByOrganization(String organizationName) {
-		final String url = buildUrl(TrelloURL.ORGANIZATION_BOARDS_URL, organizationName);
+		final String url = TrelloURL
+                .create(apiKey, TrelloURL.ORGANIZATION_BOARDS_URL, organizationName)
+                .build();
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>(){}, doApiGet(url));
 	}
 
     @Override
     public List<Action> getActionsByOrganization(String organizationNameOrId) {
-        final String url = buildUrl(TrelloURL.ORGANIZATION_ACTIONS_URL, organizationNameOrId);
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.ORGANIZATION_ACTIONS_URL, organizationNameOrId)
+                .build();
         return trelloObjFactory.createObject(new TypeToken<List<Action>>(){}, doApiGet(url));    
     }
 
     @Override
 	public Card getCard(final String cardId) {
 		validateObjectId(cardId);
-		final String url = buildUrl(TrelloURL.CARD_URL, cardId);
+
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.CARD_URL, cardId)
+                .build();
+
 		return trelloObjFactory.createObject(new TypeToken<Card>(){}, doApiGet(url));
 	}
 	
 	@Override
 	public org.trello4j.model.List getList(final String listId) {
 		validateObjectId(listId);
-		final String url = buildUrl(TrelloURL.LIST_URL, listId);
+
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.LIST_URL, listId)
+                .build();
+
 		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>(){}, doApiGet(url));
 	}
 	
 	@Override
 	public Notification getNotification(String notificationId) {
 		validateObjectId(notificationId);
-		final String url = buildUrl(TrelloURL.NOTIFICATION_URL, notificationId);
+
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.NOTIFICATION_URL, notificationId)
+                .build();
+
 		return trelloObjFactory.createObject(new TypeToken<Notification>(){}, doApiGet(url));
 	}
 	
@@ -134,7 +166,13 @@ public class TrelloImpl implements Trello {
 			throw new TrelloException(e.getMessage());
 		}
 	}
-	
+
+    private void validateObjectId(String id) {
+        if(!TrelloUtil.isObjectIdValid(id)) {
+            throw new TrelloException("Invalid object id: " + id);
+        }
+    }
+
 	private InputStream getWrappedInputStream(InputStream is, boolean gzip) throws IOException {
 		/*
 		 * TODO: What about this? 
@@ -153,29 +191,6 @@ public class TrelloImpl implements Trello {
 		} else {
 			return new BufferedInputStream(is);
 		}
-	}
-
-	private String createAuthQueryString() {
-		StringBuilder sb = new StringBuilder("?key=").append(apiKey);
-		
-		if(this.token != null) {
-			sb.append("&token=").append(this.token);
-		}
-		return sb.toString();
-	}
-	
-	private void validateObjectId(String id) {
-		if(!TrelloUtil.isObjectIdValid(id)) {
-			throw new TrelloException("Invalid object id: " + id);
-		}
-	}
-	
-	private String buildUrl(String boardUrl, String... pathParams) {
-		for (int i = 0; i < pathParams.length; i++) {
-			boardUrl = boardUrl.replaceAll(PATH_PARAM_ARG_PREFIX + i + PATH_PARAM_ARG_SUFFIX, pathParams[i]);
-		}
-		boardUrl += authQueryString;
-		return boardUrl;
 	}
 
 }
