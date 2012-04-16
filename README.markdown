@@ -21,7 +21,7 @@ Now you got two options:
     Trello trello = new TrelloImpl("myApiKey", "myToken");  
 	
 	// example: get organization by its name
-    List<Organization> = trello.getOrganization("fogcreek");
+    Organization org = trello.getOrganization("fogcreek");
 
 
 ## Roadmap
