@@ -11,7 +11,7 @@ package org.trello4j.model;
  * 	"pos":9408.2119140625
  * }
  * </code>
- * 
+ *
  * @author joel
  *
  */
