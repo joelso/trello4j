@@ -9,13 +9,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Test;
-import org.trello4j.model.Action;
-import org.trello4j.model.Board;
+import org.trello4j.model.*;
 import org.trello4j.model.Board.PERMISSION_TYPE;
-import org.trello4j.model.Card;
-import org.trello4j.model.Member;
-import org.trello4j.model.Notification;
-import org.trello4j.model.Organization;
 
 public class TrelloImplIntegrationTest {
 
@@ -126,7 +121,7 @@ public class TrelloImplIntegrationTest {
 		assertNotNull("Avatar hash not set", member.getAvatarHash());
 		assertEquals("Incorrect full name", "Joel Söderström", 	member.getFullName());
 		assertNotNull("ID not set", member.getId());
-		assertEquals("Invalid count of boards", 0, member.getIdBoards().size());
+		assertTrue("Invalid count of boards", member.getIdBoards().size() > 0);
 		assertTrue("Invalid count of organizations", member.getIdOrganizations().size() > 0);
 		assertEquals("Incorrect initials", "JS", member.getInitials());
 		assertNotNull("Status not set", member.getStatus());
@@ -242,6 +237,20 @@ public class TrelloImplIntegrationTest {
         assertNotNull("Oops, action list is null", actions);
         assertTrue("Organization should have at least one action", actions.size() > 0);
     }
+
+    @Test
+    public void shouldReturnChecklist() {
+        // GIVEN
+        String checklistId = "4f92b89ea73738db6cdd4ed7";
+
+        // WHEN
+        Checklist checklist = new TrelloImpl(API_KEY, API_TOKEN).getChecklist(checklistId);
+
+        // THEN
+        assertNotNull("Oops, checklist list is null", checklist);
+        assertEquals("Checklist id should match", checklistId, checklist.getId());
+    }
+
 
 	private boolean hasBoardWithId(List<Board> boards, String id) {
 		boolean res = false;

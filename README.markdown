@@ -34,7 +34,7 @@ Now you got two options:
   <tr><th>Method</th><th>Version</th></tr>
   
 <tr><th colspan="2">Actions</th></tr>
-<tr><td>GET /1/actions/[action_id]</td><td>1.0 - IMPLEMENTED</td>                      </tr>
+<tr><td>GET /1/actions/[action_id]</td><td>1.0 - IMPLEMENTED</td>        </tr>
 <tr><td>GET /1/actions/[action_id]/[field]</td><td>1.1</td>              </tr>  
 <tr><td>GET /1/actions/[action_id]/board</td><td>1.1</td>                </tr>  
 <tr><td>GET /1/actions/[action_id]/board/[field]</td><td>1.1</td>        </tr>  
@@ -107,7 +107,7 @@ Now you got two options:
 <tr><td>DELETE /1/cards/[card_id]/membersVoted/[idMember]  </td><td>2.0</td></tr>
 
 <tr><th colspan="2">Checklists</th></tr>
-<tr><td>GET /1/checklists/[checklist_id]                                      </td><td>1.1</td></tr>
+<tr><td>GET /1/checklists/[checklist_id]                                      </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/checklists/[checklist_id]/[field]                              </td><td>1.1</td></tr>
 <tr><td>GET /1/checklists/[checklist_id]/board                                </td><td>1.1</td></tr>
 <tr><td>GET /1/checklists/[checklist_id]/board/[field]                        </td><td>1.1</td></tr>

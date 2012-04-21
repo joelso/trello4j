@@ -1,0 +1,25 @@
+{
+    "id":"4f92b89ea73738db6cdd4ed7",
+    "name":"Checklist",
+    "idBoard":"4f92b80ba73738db6cdd4309",
+    "checkItems":[
+        {
+            "id":"4f92b97cf9e2e2ae362df9ab",
+            "name":"First checkitem",
+            "type":"check",
+            "pos":8588
+        },
+        {
+            "id":"4f92b99b5c92e5cd28006ee8",
+            "name":"GET /1/boards/[board_id]/actions?filter",
+            "type":"check",
+            "pos":12882
+        },
+        {
+            "id":"4f92bc0977e94bde6c98b8e0",
+            "name":"test",
+            "type":"check",
+            "pos":102113
+        }
+    ]
+}

@@ -9,12 +9,7 @@ import java.util.zip.GZIPInputStream;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.trello4j.model.Action;
-import org.trello4j.model.Board;
-import org.trello4j.model.Card;
-import org.trello4j.model.Member;
-import org.trello4j.model.Notification;
-import org.trello4j.model.Organization;
+import org.trello4j.model.*;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -161,6 +156,18 @@ public class TrelloImpl implements Trello {
 
 		return trelloObjFactory.createObject(new TypeToken<Notification>(){}, doApiGet(url));
 	}
+
+    @Override
+    public Checklist getChecklist(String checklistId) {
+        validateObjectId(checklistId);
+
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.CHECKLIST_URL, checklistId)
+                .token(token)
+                .build();
+
+        return trelloObjFactory.createObject(new TypeToken<Checklist>(){}, doApiGet(url));
+    }
 	
 	private InputStream doApiGet(String url) {
 		try {
