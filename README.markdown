@@ -1,5 +1,5 @@
 ## Introduction
-**trello4j** is a java wrapper around [Trello API](https://trello.com/docs/api/index.html).
+**trello4j** is a java wrapper around [Trello API](https://trello.com/docs/api/index.html). Please report any issues and/or participate in the development [here](https://trello.com/board/trello4j/4f92b80ba73738db6cdd4309).
 
 You need to get a API key and optionally generate a token [here](https://trello.com/1/appKey/generate) to be able to use Trello's API.
 
