@@ -16,6 +16,7 @@ public class TrelloURL {
 	public static final String LIST_URL                 = "https://api.trello.com/1/lists/{0}";
 	public static final String NOTIFICATION_URL         = "https://api.trello.com/1/notifications/{0}";
     public static final String CHECKLIST_URL            = "https://api.trello.com/1/checklists/{0}";
+    public static final String TYPE_URL                 = "https://api.trello.com/1/types/{0}";
 
     private static final String PATH_PARAM_ARG_PREFIX = "\\{";
     private static final String PATH_PARAM_ARG_SUFFIX = "\\}";

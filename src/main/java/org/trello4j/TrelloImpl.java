@@ -168,6 +168,16 @@ public class TrelloImpl implements Trello {
 
         return trelloObjFactory.createObject(new TypeToken<Checklist>(){}, doApiGet(url));
     }
+
+    @Override
+    public Type getType(String idOrName) {
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.TYPE_URL, idOrName)
+                .token(token)
+                .build();
+
+        return trelloObjFactory.createObject(new TypeToken<Type>(){}, doApiGet(url));
+    }
 	
 	private InputStream doApiGet(String url) {
 		try {

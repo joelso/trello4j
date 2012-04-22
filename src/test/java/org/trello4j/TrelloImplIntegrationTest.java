@@ -251,6 +251,33 @@ public class TrelloImplIntegrationTest {
         assertEquals("Checklist id should match", checklistId, checklist.getId());
     }
 
+    @Test
+    public void shouldReturnTypeById() {
+        // GIVEN
+        String typeId = "4eb3f3f1e679eb839b4c594b";
+
+        // WHEN
+        Type type = new TrelloImpl(API_KEY, null).getType(typeId);
+
+        // THEN
+        assertNotNull("Oops, type is null", type);
+        assertEquals("Incorrect id", typeId, type.getId());
+        assertEquals("Incorrect trello type", TrelloType.ORGANIZATION, type.getType());
+    }
+
+    @Test
+    public void shouldReturnTypeByName() {
+        // GIVEN
+        String typeName = "fogcreek";
+
+        // WHEN
+        Type type = new TrelloImpl(API_KEY, null).getType(typeName);
+
+        // THEN
+        assertNotNull("Oops, type is null", type);
+        assertEquals("Incorrect trello type", TrelloType.ORGANIZATION, type.getType());
+    }
+
 
 	private boolean hasBoardWithId(List<Board> boards, String id) {
 		boolean res = false;
