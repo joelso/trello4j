@@ -9,7 +9,7 @@ public class TrelloUtil {
 	 * @param s
 	 * @return
 	 */
-    public static boolean isObjectIdValid( String s ){
+    public static boolean isObjectIdValid(String s) {
         if ( s == null )
             return false;
 

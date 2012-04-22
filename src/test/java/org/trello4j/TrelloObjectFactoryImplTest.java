@@ -11,6 +11,8 @@ import org.trello4j.model.Board;
 
 import com.google.gson.reflect.TypeToken;
 import org.trello4j.model.Checklist;
+import org.trello4j.model.TrelloType;
+import org.trello4j.model.Type;
 
 public class TrelloObjectFactoryImplTest {
 	
@@ -77,9 +79,21 @@ public class TrelloObjectFactoryImplTest {
         assertEquals(8588, firstCheckItem.getPos(), 0);
 
         json.close();
-
     }
 
+    @Test
+    public void shouldCreateType() throws Exception {
+        // GIVEN
+        InputStream json = getTestDataFromFile("type.json");
+
+        // WHEN
+        Type type = trelloObjFactory.createObject(new TypeToken<Type>(){}, json);
+
+        // THEN
+        assertEquals(TrelloType.ORGANIZATION, type.getType());
+
+        json.close();
+    }
 
 
 	

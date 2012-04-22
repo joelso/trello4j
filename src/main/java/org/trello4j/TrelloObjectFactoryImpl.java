@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.trello4j.gson.PermissionTypeDeserializer;
+import org.trello4j.gson.TrelloTypeDeserializer;
 import org.trello4j.model.Board.PERMISSION_TYPE;
 
 import com.google.gson.Gson;
@@ -18,13 +19,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import org.trello4j.model.TrelloType;
 
 public class TrelloObjectFactoryImpl {
 	
 	private static final Charset UTF_8_CHAR_SET = Charset.forName("UTF-8");
-	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"; 
+	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 	private final JsonParser parser = new JsonParser();
+    private Gson gson = null;
+
 
     @SuppressWarnings("unchecked")
 	public <T> T createObject(TypeToken<T> typeToken, InputStream jsonContent) {
@@ -55,14 +59,19 @@ public class TrelloObjectFactoryImpl {
 	
 	@SuppressWarnings("unchecked")
 	private <T> T unmarshallToObj(TypeToken<T> typeToken, JsonElement response) {
-		Gson gson = new GsonBuilder()
-			.setDateFormat(DATE_FORMAT)
-			.registerTypeAdapter(PERMISSION_TYPE.class, new PermissionTypeDeserializer())
-			.create();
-
-		return (T) gson.fromJson(response, typeToken.getType());
+		return (T) getGson().fromJson(response, typeToken.getType());
 	}
-	
+
+    private Gson getGson() {
+        if(gson == null) {
+            gson = new GsonBuilder()
+                 .setDateFormat(DATE_FORMAT)
+                 .registerTypeAdapter(PERMISSION_TYPE.class, new PermissionTypeDeserializer())
+                 .registerTypeAdapter(TrelloType.class, new TrelloTypeDeserializer())
+                 .create();
+        }
+        return gson;
+    }
 
 	private void closeStream(InputStream is) {
 		try {
