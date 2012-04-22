@@ -196,7 +196,7 @@ Now you got two options:
 <tr><td>GET /1/tokens/[token]/member/[field]                                  </td><td>1.1</td></tr>
 
 <tr><th colspan="2">Types</th></tr>
-<tr><td>GET /1/types/[id]                                                     </td><td>1.1</td></tr>
+<tr><td>GET /1/types/[id]                                                     </td><td>1.0 - IMPLEMENTED</td></tr>
 
 </table>                                                                     
 
