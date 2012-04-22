@@ -8,7 +8,8 @@
 	<packaging>jar</packaging>
 
 	<name>trello4j</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/joelso/trello4j</url>
+    <description>Java wrapper around Trello API</description>
 
 	<licenses>
 		<license>
