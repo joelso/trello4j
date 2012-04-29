@@ -7,7 +7,6 @@ import org.trello4j.model.Organization;
 
 import java.util.List;
 
-
 /**
  * Implemented methods:
  * <ul>
@@ -29,44 +28,49 @@ import java.util.List;
  * <li>PUT /1/organizations/[org_id or name]/name</li>
  * <li>PUT /1/organizations/[org_id or name]/website</li>
  * <li>POST /1/organizations DELETE /1/organizations/[org_id or name]</li>
- * </ul>.
- *
+ * </ul>
+ * .
+ * 
  * @author joel
  */
 public interface OrganizationService {
 
 	/**
 	 * Get organization of given ID or name.
-	 *
-	 * @param organizationNameOrId the organization name or id
+	 * 
+	 * @param organizationNameOrId
+	 *            the organization name or id
 	 * @return the organization
 	 */
-	Organization getOrganization(String organizationNameOrId);
+	Organization getOrganization(String organizationNameOrId, String... filter);
 
 	/**
 	 * Get list of boards that belong to organization.
-	 *
-	 * @param organizationNameOrId the organization name or id
+	 * 
+	 * @param organizationNameOrId
+	 *            the organization name or id
 	 * @return list of boards
 	 */
-	List<Board> getBoardsByOrganization(String organizationNameOrId);
+	List<Board> getBoardsByOrganization(String organizationNameOrId,
+			String... filter);
 
-    /**
-     * Get list of actions related to given organization.
-     *
-     * @param organizationNameOrId the organization name or id
-     * @return the actions by organization
-     */
-    List<Action> getActionsByOrganization(String organizationNameOrId);
-    
-    
-    /**
-     * Gets the members by organization.
-     *
-     * @param organizationNameOrId the organization name or id
-     * @return the members by organization
-     */
-    List<Member> getMembersByOrganization(String organizationNameOrId);
-    
+	/**
+	 * Get list of actions related to given organization.
+	 * 
+	 * @param organizationNameOrId
+	 *            the organization name or id
+	 * @return the actions by organization
+	 */
+	List<Action> getActionsByOrganization(String organizationNameOrId);
+
+	/**
+	 * Gets the members by organization.
+	 * 
+	 * @param organizationNameOrId
+	 *            the organization name or id
+	 * @return the members by organization
+	 */
+	List<Member> getMembersByOrganization(String organizationNameOrId,
+			String... filter);
 
 }

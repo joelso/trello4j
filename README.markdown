@@ -37,37 +37,37 @@ Now you got two options:
   
 <tr><th colspan="2">Actions</th></tr>
 <tr><td>GET /1/actions/[action_id]</td><td>1.0 - IMPLEMENTED</td>        </tr>
-<tr><td>GET /1/actions/[action_id]/[field]</td><td>1.1</td>              </tr>  
+<tr><td>GET /1/actions/[action_id]/[field]</td><td>1.1 - IMPLEMENTED</td>              </tr>  
 <tr><td>GET /1/actions/[action_id]/board</td><td>1.1 - IMPLEMENTED</td>                </tr>  
-<tr><td>GET /1/actions/[action_id]/board/[field]</td><td>1.1</td>        </tr>  
+<tr><td>GET /1/actions/[action_id]/board/[field]</td><td>1.1 - IMPLEMENTED</td>        </tr>  
 <tr><td>GET /1/actions/[action_id]/card</td><td>1.1 - IMPLEMENTED</td>                 </tr>  
-<tr><td>GET /1/actions/[action_id]/card/[field]</td><td>1.1</td>         </tr>  
+<tr><td>GET /1/actions/[action_id]/card/[field]</td><td>1.1 - IMPLEMENTED</td>         </tr>  
 <tr><td>GET /1/actions/[action_id]/list</td><td>1.1 - IMPLEMENTED</td>                 </tr>  
-<tr><td>GET /1/actions/[action_id]/list/[field]</td><td>1.1</td>         </tr>  
+<tr><td>GET /1/actions/[action_id]/list/[field]</td><td>1.1 - IMPLEMENTED</td>         </tr>  
 <tr><td>GET /1/actions/[action_id]/member</td><td>1.1 - IMPLEMENTED</td>               </tr>  
-<tr><td>GET /1/actions/[action_id]/member/[field]</td><td>1.1</td>       </tr>  
+<tr><td>GET /1/actions/[action_id]/member/[field]</td><td>1.1 - IMPLEMENTED</td>       </tr>  
 <tr><td>GET /1/actions/[action_id]/memberCreator</td><td>1.1 - IMPLEMENTED</td>        </tr>  
-<tr><td>GET /1/actions/[action_id]/memberCreator/[field]</td><td>1.1</td></tr>  
+<tr><td>GET /1/actions/[action_id]/memberCreator/[field]</td><td>1.1 - IMPLEMENTED</td></tr>  
 <tr><td>GET /1/actions/[action_id]/organization</td><td>1.1 - IMPLEMENTED</td>         </tr>  
-<tr><td>GET /1/actions/[action_id]/organization/[field]</td><td>1.1</td> </tr>  
+<tr><td>GET /1/actions/[action_id]/organization/[field]</td><td>1.1 - IMPLEMENTED</td> </tr>  
 
 <tr><th colspan="2">Boards</th></tr>
 <tr><td>GET /1/boards/[board_id]                       </td><td>1.0 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/boards/[board_id]/[field]               </td><td>1.1</td></tr>
+<tr><td>GET /1/boards/[board_id]/[field]               </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/actions               </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/cards                 </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/boards/[board_id]/cards/[filter]        </td><td>1.1</td></tr>
-<tr><td>GET /1/boards/[board_id]/cards/[idCard]        </td><td>1.1</td></tr>
+<tr><td>GET /1/boards/[board_id]/cards/[filter]        </td><td>1.1- IMPLEMENTED</td></tr>
+<tr><td>GET /1/boards/[board_id]/cards/[idCard]        </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/checklists            </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/lists                 </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/boards/[board_id]/lists/[filter]        </td><td>1.1</td></tr>
+<tr><td>GET /1/boards/[board_id]/lists/[filter]        </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/members               </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/boards/[board_id]/members/[filter]      </td><td>1.1</td></tr>
+<tr><td>GET /1/boards/[board_id]/members/[filter]      </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/membersInvited        </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/boards/[board_id]/membersInvited/[field]</td><td>1.1</td></tr>
+<tr><td>GET /1/boards/[board_id]/membersInvited/[field]</td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/myPrefs               </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/organization          </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/boards/[board_id]/organization/[field]  </td><td>1.1</td></tr>
+<tr><td>GET /1/boards/[board_id]/organization/[field]  </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>PUT /1/boards/[board_id]                       </td><td>2.0</td></tr>
 <tr><td>PUT /1/boards/[board_id]/closed                </td><td>2.0</td></tr>
 <tr><td>PUT /1/boards/[board_id]/desc                  </td><td>2.0</td></tr>
@@ -79,15 +79,15 @@ Now you got two options:
 
 <tr><th colspan="2">Cards</th></tr>
 <tr><td>GET /1/cards/[card_id]                             </td><td>1.0 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/cards/[card_id]/[field]                     </td><td>1.1</td></tr>
+<tr><td>GET /1/cards/[card_id]/[field]                     </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/cards/[card_id]/actions                     </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/cards/[card_id]/attachments                 </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/cards/[card_id]/board                       </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/cards/[card_id]/board/[field]               </td><td>1.1</td></tr>
+<tr><td>GET /1/cards/[card_id]/board/[field]               </td><td>1.1- IMPLEMENTEDv</td></tr>
 <tr><td>GET /1/cards/[card_id]/checkItemStates             </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/cards/[card_id]/checklists                  </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/cards/[card_id]/list                        </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/cards/[card_id]/list/[field]                </td><td>1.1</td></tr>
+<tr><td>GET /1/cards/[card_id]/list/[field]                </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/cards/[card_id]/members                     </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>PUT /1/cards/[card_id]                             </td><td>2.0</td></tr>
 <tr><td>PUT /1/cards/[card_id]/closed                      </td><td>2.0</td></tr>
@@ -110,11 +110,11 @@ Now you got two options:
 
 <tr><th colspan="2">Checklists</th></tr>
 <tr><td>GET /1/checklists/[checklist_id]                                      </td><td>1.0 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/checklists/[checklist_id]/[field]                              </td><td>1.1</td></tr>
+<tr><td>GET /1/checklists/[checklist_id]/[field]                              </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/checklists/[checklist_id]/board                                </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/checklists/[checklist_id]/board/[field]                        </td><td>1.1</td></tr>
+<tr><td>GET /1/checklists/[checklist_id]/board/[field]                        </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/checklists/[checklist_id]/cards                                </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/checklists/[checklist_id]/cards/[filter]                       </td><td>1.1</td></tr>
+<tr><td>GET /1/checklists/[checklist_id]/cards/[filter]                       </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/checklists/[checklist_id]/checkItems                           </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>PUT /1/checklists/[checklist_id]                                      </td><td>2.0</td></tr>
 <tr><td>PUT /1/checklists/[checklist_id]/name                                 </td><td>2.0</td></tr>
@@ -124,12 +124,12 @@ Now you got two options:
 
 <tr><th colspan="2">Lists</th></tr>
 <tr><td>GET /1/lists/[list_id]                                                </td><td>1.0 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/lists/[list_id]/[field]                                        </td><td>1.1</td></tr>
+<tr><td>GET /1/lists/[list_id]/[field]                                        </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/lists/[list_id]/actions                                        </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/lists/[list_id]/board                                          </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/lists/[list_id]/board/[field]                                  </td><td>1.1</td></tr>
+<tr><td>GET /1/lists/[list_id]/board/[field]                                  </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/lists/[list_id]/cards                                          </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/lists/[list_id]/cards/[filter]                                 </td><td>1.1</td></tr>
+<tr><td>GET /1/lists/[list_id]/cards/[filter]                                 </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>PUT /1/lists/[list_id]                                                </td><td>2.0</td></tr>
 <tr><td>PUT /1/lists/[list_id]/closed                                         </td><td>2.0</td></tr>
 <tr><td>PUT /1/lists/[list_id]/name                                           </td><td>2.0</td></tr>
@@ -138,20 +138,20 @@ Now you got two options:
 
 <tr><th colspan="2">Members</th></tr>
 <tr><td>GET /1/members/[member_id or username]                                </td><td>1.0 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/members/[member_id or username]/[field]                        </td><td>1.1</td></tr>
+<tr><td>GET /1/members/[member_id or username]/[field]                        </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/actions                        </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/boards                         </td><td>1.0 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/members/[member_id or username]/boards/[filter]                </td><td>1.1</td></tr>
+<tr><td>GET /1/members/[member_id or username]/boards/[filter]                </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/boardsInvited                  </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/members/[member_id or username]/boardsInvited/[field]          </td><td>1.1</td></tr>
+<tr><td>GET /1/members/[member_id or username]/boardsInvited/[field]          </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/cards                          </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/members/[member_id or username]/cards/[filter]                 </td><td>1.1</td></tr>
+<tr><td>GET /1/members/[member_id or username]/cards/[filter]                 </td><td>1.1- IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/notifications                  </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/members/[member_id or username]/notifications/[filter]         </td><td>1.1</td></tr>
+<tr><td>GET /1/members/[member_id or username]/notifications/[filter]         </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/organizations                  </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/members/[member_id or username]/organizations/[filter]         </td><td>1.1</td></tr>
+<tr><td>GET /1/members/[member_id or username]/organizations/[filter]         </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/members/[member_id or username]/organizationsInvited           </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/members/[member_id or username]/organizationsInvited/[field]   </td><td>1.1</td></tr>
+<tr><td>GET /1/members/[member_id or username]/organizationsInvited/[field]   </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>PUT /1/members/[member_id or username]                                </td><td>2.0</td></tr>
 <tr><td>PUT /1/members/[member_id or username]/bio                            </td><td>2.0</td></tr>
 <tr><td>PUT /1/members/[member_id or username]/fullName                       </td><td>2.0</td></tr>
@@ -159,28 +159,28 @@ Now you got two options:
 
 <tr><th colspan="2">Notifications</th></tr>
 <tr><td>GET /1/notifications/[notification_id]                                </td><td>1.0 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/notifications/[notification_id]/[field]                        </td><td>1.1</td></tr>
+<tr><td>GET /1/notifications/[notification_id]/[field]                        </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/notifications/[notification_id]/board                          </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/notifications/[notification_id]/board/[field]                  </td><td>1.1</td></tr>
+<tr><td>GET /1/notifications/[notification_id]/board/[field]                  </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/notifications/[notification_id]/card                           </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/notifications/[notification_id]/card/[field]                   </td><td>1.1</td></tr>
+<tr><td>GET /1/notifications/[notification_id]/card/[field]                   </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/notifications/[notification_id]/list                           </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/notifications/[notification_id]/list/[field]                   </td><td>1.1</td></tr>
+<tr><td>GET /1/notifications/[notification_id]/list/[field]                   </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/notifications/[notification_id]/member                         </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/notifications/[notification_id]/member/[field]                 </td><td>1.1</td></tr>
+<tr><td>GET /1/notifications/[notification_id]/member/[field]                 </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/notifications/[notification_id]/memberCreator                  </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/notifications/[notification_id]/memberCreator/[field]          </td><td>1.1</td></tr>
+<tr><td>GET /1/notifications/[notification_id]/memberCreator/[field]          </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/notifications/[notification_id]/organization                   </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/notifications/[notification_id]/organization/[field]           </td><td>1.1</td></tr>
+<tr><td>GET /1/notifications/[notification_id]/organization/[field]           </td><td>1.1 - IMPLEMENTED</td></tr>
 
 <tr><th colspan="2">Organizations</th></tr>
 <tr><td>GET /1/organizations/[org_id or name]                                 </td><td>1.0 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/organizations/[org_id or name]/[field]                         </td><td>1.1</td></tr>
+<tr><td>GET /1/organizations/[org_id or name]/[field]                         </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/actions                         </td><td>1.0 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/boards                          </td><td>1.0 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/organizations/[org_id or name]/boards/[filter]                 </td><td>1.1</td></tr>
+<tr><td>GET /1/organizations/[org_id or name]/boards/[filter]                 </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>GET /1/organizations/[org_id or name]/members                         </td><td>1.1 - IMPLEMENTED</td></tr>
-<tr><td>GET /1/organizations/[org_id or name]/members/[filter]                </td><td>1.1</td></tr>
+<tr><td>GET /1/organizations/[org_id or name]/members/[filter]                </td><td>1.1 - IMPLEMENTED</td></tr>
 <tr><td>PUT /1/organizations/[org_id or name]                                 </td><td>2.0</td></tr>
 <tr><td>PUT /1/organizations/[org_id or name]/desc                            </td><td>2.0</td></tr>
 <tr><td>PUT /1/organizations/[org_id or name]/displayName                     </td><td>2.0</td></tr>

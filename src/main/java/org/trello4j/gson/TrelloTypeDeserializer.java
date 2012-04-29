@@ -9,18 +9,20 @@ import org.trello4j.model.TrelloType;
 
 import java.lang.reflect.Type;
 
-
 /**
  * Translate type string to TrelloType enum.
- *
+ * 
  * @author joel
- *
+ * 
  */
-public class TrelloTypeDeserializer implements
-		JsonDeserializer<TrelloType> {
+public class TrelloTypeDeserializer implements JsonDeserializer<TrelloType> {
 
-	/* (non-Javadoc)
-	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement,
+	 * java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
 	 */
 	public TrelloType deserialize(JsonElement json, Type typeOfT,
 			JsonDeserializationContext context) throws JsonParseException {

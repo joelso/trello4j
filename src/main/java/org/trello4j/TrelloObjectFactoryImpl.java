@@ -21,58 +21,61 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import org.trello4j.model.TrelloType;
 
-
 /**
  * The Class TrelloObjectFactoryImpl.
  */
 public class TrelloObjectFactoryImpl {
-	
+
 	/** The Constant UTF_8_CHAR_SET. */
 	private static final Charset UTF_8_CHAR_SET = Charset.forName("UTF-8");
-	
+
 	/** The Constant DATE_FORMAT. */
 	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 	/** The parser. */
 	private final JsonParser parser = new JsonParser();
-    
-    /** The gson. */
-    private Gson gson = null;
 
+	/** The gson. */
+	private Gson gson = null;
 
-    /**
-     * Creates the object.
-     *
-     * @param <T> the generic type
-     * @param typeToken the type token
-     * @param jsonContent the json content
-     * @return the t
-     */
-    @SuppressWarnings("unchecked")
+	/**
+	 * Creates the object.
+	 * 
+	 * @param <T>
+	 *            the generic type
+	 * @param typeToken
+	 *            the type token
+	 * @param jsonContent
+	 *            the json content
+	 * @return the t
+	 */
+	@SuppressWarnings("unchecked")
 	public <T> T createObject(TypeToken<T> typeToken, InputStream jsonContent) {
-        if(jsonContent == null) {
-            return isList(typeToken) ? (T) Collections.emptyList() : null;
-        }
+		if (jsonContent == null) {
+			return isList(typeToken) ? (T) Collections.emptyList() : null;
+		}
 		return unmarshallToObj(typeToken, unmarshallToJson(jsonContent));
 	}
-	
+
 	/**
 	 * Unmarshall to json.
-	 *
-	 * @param jsonContent the json content
+	 * 
+	 * @param jsonContent
+	 *            the json content
 	 * @return the json element
 	 */
 	private JsonElement unmarshallToJson(InputStream jsonContent) {
 		try {
-			JsonElement element = parser.parse(new InputStreamReader(jsonContent, UTF_8_CHAR_SET));
+			JsonElement element = parser.parse(new InputStreamReader(
+					jsonContent,
+					UTF_8_CHAR_SET));
 			if (element.isJsonObject()) {
 				return element.getAsJsonObject();
-			} 
-			else if(element.isJsonArray()) {
+			} else if (element.isJsonArray()) {
 				return element.getAsJsonArray();
-			}
-			else {
-				throw new IllegalStateException("Unknown content found in response." + element);
+			} else {
+				throw new IllegalStateException(
+						"Unknown content found in response." + element);
 			}
 		} catch (Exception e) {
 			throw new TrelloException(e.getMessage());
@@ -80,13 +83,16 @@ public class TrelloObjectFactoryImpl {
 			closeStream(jsonContent);
 		}
 	}
-	
+
 	/**
 	 * Unmarshall to obj.
-	 *
-	 * @param <T> the generic type
-	 * @param typeToken the type token
-	 * @param response the response
+	 * 
+	 * @param <T>
+	 *            the generic type
+	 * @param typeToken
+	 *            the type token
+	 * @param response
+	 *            the response
 	 * @return the t
 	 */
 	@SuppressWarnings("unchecked")
@@ -94,26 +100,31 @@ public class TrelloObjectFactoryImpl {
 		return (T) getGson().fromJson(response, typeToken.getType());
 	}
 
-    /**
-     * Gets the gson.
-     *
-     * @return the gson
-     */
-    private Gson getGson() {
-        if(gson == null) {
-            gson = new GsonBuilder()
-                 .setDateFormat(DATE_FORMAT)
-                 .registerTypeAdapter(PERMISSION_TYPE.class, new PermissionTypeDeserializer())
-                 .registerTypeAdapter(TrelloType.class, new TrelloTypeDeserializer())
-                 .create();
-        }
-        return gson;
-    }
+	/**
+	 * Gets the gson.
+	 * 
+	 * @return the gson
+	 */
+	private Gson getGson() {
+		if (gson == null) {
+			gson = new GsonBuilder()
+					.setDateFormat(DATE_FORMAT)
+					.registerTypeAdapter(
+							PERMISSION_TYPE.class,
+							new PermissionTypeDeserializer())
+					.registerTypeAdapter(
+							TrelloType.class,
+							new TrelloTypeDeserializer())
+					.create();
+		}
+		return gson;
+	}
 
 	/**
 	 * Close stream.
-	 *
-	 * @param is the is
+	 * 
+	 * @param is
+	 *            the is
 	 */
 	private void closeStream(InputStream is) {
 		try {
@@ -125,14 +136,15 @@ public class TrelloObjectFactoryImpl {
 		}
 	}
 
-    /**
-     * Checks if is list.
-     *
-     * @param typeToken the type token
-     * @return true, if is list
-     */
-    private boolean isList(TypeToken typeToken) {
-        return List.class.isAssignableFrom(typeToken.getRawType());
-    }
-	
+	/**
+	 * Checks if is list.
+	 * 
+	 * @param typeToken
+	 *            the type token
+	 * @return true, if is list
+	 */
+	private boolean isList(TypeToken typeToken) {
+		return List.class.isAssignableFrom(typeToken.getRawType());
+	}
+
 }

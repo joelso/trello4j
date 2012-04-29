@@ -2,8 +2,6 @@ package org.trello4j.model;
 
 import java.util.Date;
 
-
-
 /**
  * The Class Token.
  */
@@ -28,19 +26,19 @@ public class Token extends TrelloObject {
 	 */
 
 	String idMember;
-	
+
 	/** The date created. */
 	Date dateCreated;
-	
+
 	/** The date expires. */
 	Date dateExpires;
-	
+
 	/** The permissions. */
 	java.util.List<Permission> permissions;
 
 	/**
 	 * Gets the id member.
-	 *
+	 * 
 	 * @return the id member
 	 */
 	public String getIdMember() {
@@ -49,8 +47,9 @@ public class Token extends TrelloObject {
 
 	/**
 	 * Sets the id member.
-	 *
-	 * @param idMember the new id member
+	 * 
+	 * @param idMember
+	 *            the new id member
 	 */
 	public void setIdMember(String idMember) {
 		this.idMember = idMember;
@@ -58,7 +57,7 @@ public class Token extends TrelloObject {
 
 	/**
 	 * Gets the date created.
-	 *
+	 * 
 	 * @return the date created
 	 */
 	public Date getDateCreated() {
@@ -67,8 +66,9 @@ public class Token extends TrelloObject {
 
 	/**
 	 * Sets the date created.
-	 *
-	 * @param dateCreated the new date created
+	 * 
+	 * @param dateCreated
+	 *            the new date created
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
@@ -76,7 +76,7 @@ public class Token extends TrelloObject {
 
 	/**
 	 * Gets the date expires.
-	 *
+	 * 
 	 * @return the date expires
 	 */
 	public Date getDateExpires() {
@@ -85,8 +85,9 @@ public class Token extends TrelloObject {
 
 	/**
 	 * Sets the date expires.
-	 *
-	 * @param dateExpires the new date expires
+	 * 
+	 * @param dateExpires
+	 *            the new date expires
 	 */
 	public void setDateExpires(Date dateExpires) {
 		this.dateExpires = dateExpires;
@@ -99,7 +100,7 @@ public class Token extends TrelloObject {
 
 		/**
 		 * Gets the id model.
-		 *
+		 * 
 		 * @return the id model
 		 */
 		public String getIdModel() {
@@ -108,8 +109,9 @@ public class Token extends TrelloObject {
 
 		/**
 		 * Sets the id model.
-		 *
-		 * @param idModel the new id model
+		 * 
+		 * @param idModel
+		 *            the new id model
 		 */
 		public void setIdModel(String idModel) {
 			this.idModel = idModel;
@@ -117,7 +119,7 @@ public class Token extends TrelloObject {
 
 		/**
 		 * Gets the model type.
-		 *
+		 * 
 		 * @return the model type
 		 */
 		public String getModelType() {
@@ -126,8 +128,9 @@ public class Token extends TrelloObject {
 
 		/**
 		 * Sets the model type.
-		 *
-		 * @param modelType the new model type
+		 * 
+		 * @param modelType
+		 *            the new model type
 		 */
 		public void setModelType(String modelType) {
 			this.modelType = modelType;
@@ -135,7 +138,7 @@ public class Token extends TrelloObject {
 
 		/**
 		 * Checks if is read.
-		 *
+		 * 
 		 * @return true, if is read
 		 */
 		public boolean isRead() {
@@ -144,8 +147,9 @@ public class Token extends TrelloObject {
 
 		/**
 		 * Sets the read.
-		 *
-		 * @param read the new read
+		 * 
+		 * @param read
+		 *            the new read
 		 */
 		public void setRead(boolean read) {
 			this.read = read;
@@ -153,7 +157,7 @@ public class Token extends TrelloObject {
 
 		/**
 		 * Checks if is write.
-		 *
+		 * 
 		 * @return true, if is write
 		 */
 		public boolean isWrite() {
@@ -162,8 +166,9 @@ public class Token extends TrelloObject {
 
 		/**
 		 * Sets the write.
-		 *
-		 * @param write the new write
+		 * 
+		 * @param write
+		 *            the new write
 		 */
 		public void setWrite(boolean write) {
 			this.write = write;
@@ -171,13 +176,13 @@ public class Token extends TrelloObject {
 
 		/** The id model. */
 		String idModel;
-		
+
 		/** The model type. */
 		String modelType;
-		
+
 		/** The read. */
 		boolean read;
-		
+
 		/** The write. */
 		boolean write;
 	}
