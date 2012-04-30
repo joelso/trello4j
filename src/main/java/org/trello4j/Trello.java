@@ -3,6 +3,10 @@ package org.trello4j;
 
 import org.trello4j.model.Type;
 
+
+/**
+ * The Interface Trello.
+ */
 public interface Trello extends
 		OrganizationService, 
 		NotificationService, 
@@ -11,8 +15,15 @@ public interface Trello extends
 		ActionService,
 		ListService,
 		MemberService,
-        ChecklistService {
+        ChecklistService,
+        TokenService{
 
+    /**
+     * Gets the type.
+     *
+     * @param idOrName the id or name
+     * @return the type
+     */
     Type getType(String idOrName);
 
 }

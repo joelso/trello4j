@@ -14,10 +14,20 @@ import org.trello4j.model.Checklist;
 import org.trello4j.model.TrelloType;
 import org.trello4j.model.Type;
 
+
+/**
+ * The Class TrelloObjectFactoryImplTest.
+ */
 public class TrelloObjectFactoryImplTest {
 	
+	/** The trello obj factory. */
 	TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
 	
+	/**
+	 * Should create board list.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void shouldCreateBoardList() throws Exception {
 		// GIVEN
@@ -32,6 +42,11 @@ public class TrelloObjectFactoryImplTest {
 		json.close();
 	}
 
+    /**
+     * Should return empty list.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void shouldReturnEmptyList() throws Exception {
         // GIVEN
@@ -45,6 +60,11 @@ public class TrelloObjectFactoryImplTest {
     }
 
 
+	/**
+	 * Should create board.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void shouldCreateBoard() throws Exception {
 		// GIVEN
@@ -59,6 +79,11 @@ public class TrelloObjectFactoryImplTest {
 		json.close();
 	}
 
+    /**
+     * Should create checklist.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void shouldCreateChecklist() throws Exception {
         // GIVEN
@@ -81,6 +106,11 @@ public class TrelloObjectFactoryImplTest {
         json.close();
     }
 
+    /**
+     * Should create type.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void shouldCreateType() throws Exception {
         // GIVEN
@@ -97,6 +127,12 @@ public class TrelloObjectFactoryImplTest {
 
 
 	
+	/**
+	 * Gets the test data from file.
+	 *
+	 * @param file the file
+	 * @return the test data from file
+	 */
 	private InputStream getTestDataFromFile(String file) {
 		return this.getClass().getClassLoader().getResourceAsStream(file);
 	}

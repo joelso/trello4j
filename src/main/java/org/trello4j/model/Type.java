@@ -1,5 +1,6 @@
 package org.trello4j.model;
 
+
 /**
  * Trello type. Represent response of a GET /1/types/[id] request.
  * This is simply a way of getting the type of given id or name.
@@ -18,12 +19,23 @@ package org.trello4j.model;
  */
 public class Type extends TrelloObject {
 
+	/** The type. */
 	private TrelloType type;
 
+    /**
+     * Gets the type.
+     *
+     * @return the type
+     */
     public TrelloType getType() {
         return type;
     }
 
+    /**
+     * Sets the type.
+     *
+     * @param type the new type
+     */
     public void setType(TrelloType type) {
         this.type = type;
     }

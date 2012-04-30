@@ -21,15 +21,33 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import org.trello4j.model.TrelloType;
 
+
+/**
+ * The Class TrelloObjectFactoryImpl.
+ */
 public class TrelloObjectFactoryImpl {
 	
+	/** The Constant UTF_8_CHAR_SET. */
 	private static final Charset UTF_8_CHAR_SET = Charset.forName("UTF-8");
+	
+	/** The Constant DATE_FORMAT. */
 	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
+	/** The parser. */
 	private final JsonParser parser = new JsonParser();
+    
+    /** The gson. */
     private Gson gson = null;
 
 
+    /**
+     * Creates the object.
+     *
+     * @param <T> the generic type
+     * @param typeToken the type token
+     * @param jsonContent the json content
+     * @return the t
+     */
     @SuppressWarnings("unchecked")
 	public <T> T createObject(TypeToken<T> typeToken, InputStream jsonContent) {
         if(jsonContent == null) {
@@ -38,6 +56,12 @@ public class TrelloObjectFactoryImpl {
 		return unmarshallToObj(typeToken, unmarshallToJson(jsonContent));
 	}
 	
+	/**
+	 * Unmarshall to json.
+	 *
+	 * @param jsonContent the json content
+	 * @return the json element
+	 */
 	private JsonElement unmarshallToJson(InputStream jsonContent) {
 		try {
 			JsonElement element = parser.parse(new InputStreamReader(jsonContent, UTF_8_CHAR_SET));
@@ -57,11 +81,24 @@ public class TrelloObjectFactoryImpl {
 		}
 	}
 	
+	/**
+	 * Unmarshall to obj.
+	 *
+	 * @param <T> the generic type
+	 * @param typeToken the type token
+	 * @param response the response
+	 * @return the t
+	 */
 	@SuppressWarnings("unchecked")
 	private <T> T unmarshallToObj(TypeToken<T> typeToken, JsonElement response) {
 		return (T) getGson().fromJson(response, typeToken.getType());
 	}
 
+    /**
+     * Gets the gson.
+     *
+     * @return the gson
+     */
     private Gson getGson() {
         if(gson == null) {
             gson = new GsonBuilder()
@@ -73,6 +110,11 @@ public class TrelloObjectFactoryImpl {
         return gson;
     }
 
+	/**
+	 * Close stream.
+	 *
+	 * @param is the is
+	 */
 	private void closeStream(InputStream is) {
 		try {
 			if (is != null) {
@@ -83,6 +125,12 @@ public class TrelloObjectFactoryImpl {
 		}
 	}
 
+    /**
+     * Checks if is list.
+     *
+     * @param typeToken the type token
+     * @return true, if is list
+     */
     private boolean isList(TypeToken typeToken) {
         return List.class.isAssignableFrom(typeToken.getRawType());
     }

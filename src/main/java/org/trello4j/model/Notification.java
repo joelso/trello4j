@@ -1,6 +1,7 @@
 package org.trello4j.model;
 
 
+
 /**
  * <code>
  * {
@@ -34,12 +35,23 @@ package org.trello4j.model;
  */
 public class Notification extends Action {
 	
+	/** The unread. */
 	private boolean unread;
 	
+	/**
+	 * Checks if is unread.
+	 *
+	 * @return true, if is unread
+	 */
 	public boolean isUnread() {
 		return unread;
 	}
 	
+	/**
+	 * Sets the unread.
+	 *
+	 * @param unread the new unread
+	 */
 	public void setUnread(boolean unread) {
 		this.unread = unread;
 	}

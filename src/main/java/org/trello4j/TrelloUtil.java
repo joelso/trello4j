@@ -1,13 +1,17 @@
 package org.trello4j;
 
+
+/**
+ * The Class TrelloUtil.
+ */
 public class TrelloUtil {
 	
 	/**
 	 * "Stolen" from:
 	 * https://github.com/mongodb/mongo-java-driver
-	 * 
-	 * @param s
-	 * @return
+	 *
+	 * @param s the s
+	 * @return true, if is object id valid
 	 */
     public static boolean isObjectIdValid(String s) {
         if ( s == null )

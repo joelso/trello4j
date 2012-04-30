@@ -9,6 +9,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
+
 /**
  * We need extra handling of permission types "public, organization, members"
  * since "public" is a reserved word in java. 
@@ -19,6 +20,9 @@ import com.google.gson.JsonParseException;
 public class PermissionTypeDeserializer implements
 		JsonDeserializer<PERMISSION_TYPE> {
 
+	/* (non-Javadoc)
+	 * @see com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement, java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 */
 	public PERMISSION_TYPE deserialize(JsonElement json, Type typeOfT,
 			JsonDeserializationContext context) throws JsonParseException {
 		
