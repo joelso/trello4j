@@ -1,13 +1,13 @@
 package org.trello4j.gson;
 
+import java.lang.reflect.Type;
+
+import org.trello4j.model.TrelloType;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import org.trello4j.model.Board.PERMISSION_TYPE;
-import org.trello4j.model.TrelloType;
-
-import java.lang.reflect.Type;
 
 /**
  * Translate type string to TrelloType enum.

@@ -1,6 +1,5 @@
 package org.trello4j;
 
-import java.util.Arrays;
 
 /**
  * The Class TrelloURL.

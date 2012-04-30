@@ -1,9 +1,9 @@
 package org.trello4j;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.trello4j.model.Action;
-
-import static org.junit.Assert.assertEquals;
 
 
 /**

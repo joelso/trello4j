@@ -1,6 +1,6 @@
 package org.trello4j.model;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

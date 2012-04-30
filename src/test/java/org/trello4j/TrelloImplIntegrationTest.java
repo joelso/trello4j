@@ -9,8 +9,16 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Test;
-import org.trello4j.model.*;
+import org.trello4j.model.Action;
+import org.trello4j.model.Board;
 import org.trello4j.model.Board.PERMISSION_TYPE;
+import org.trello4j.model.Card;
+import org.trello4j.model.Checklist;
+import org.trello4j.model.Member;
+import org.trello4j.model.Notification;
+import org.trello4j.model.Organization;
+import org.trello4j.model.TrelloType;
+import org.trello4j.model.Type;
 
 
 /**

@@ -1,18 +1,17 @@
 package org.trello4j;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Test;
 import org.trello4j.model.Board;
-
-import com.google.gson.reflect.TypeToken;
 import org.trello4j.model.Checklist;
 import org.trello4j.model.TrelloType;
 import org.trello4j.model.Type;
+
+import com.google.gson.reflect.TypeToken;
 
 
 /**

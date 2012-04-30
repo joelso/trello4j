@@ -1,8 +1,8 @@
 package org.trello4j.model;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
+
+import org.junit.Test;
 
 
 /**

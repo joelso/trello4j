@@ -9,10 +9,18 @@ import java.util.zip.GZIPInputStream;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.trello4j.model.*;
+import org.trello4j.model.Action;
+import org.trello4j.model.Board;
 import org.trello4j.model.Board.Prefs;
+import org.trello4j.model.Card;
 import org.trello4j.model.Card.Attachment;
+import org.trello4j.model.Checklist;
 import org.trello4j.model.Checklist.CheckItem;
+import org.trello4j.model.Member;
+import org.trello4j.model.Notification;
+import org.trello4j.model.Organization;
+import org.trello4j.model.Token;
+import org.trello4j.model.Type;
 
 import com.google.gson.reflect.TypeToken;
 

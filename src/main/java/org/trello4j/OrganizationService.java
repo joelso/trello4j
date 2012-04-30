@@ -1,11 +1,11 @@
 package org.trello4j;
 
+import java.util.List;
+
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Member;
 import org.trello4j.model.Organization;
-
-import java.util.List;
 
 /**
  * Implemented methods:

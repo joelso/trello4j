@@ -2,7 +2,6 @@ package org.trello4j;
 
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
-import org.trello4j.model.Board.Prefs;
 import org.trello4j.model.Card;
 import org.trello4j.model.List;
 import org.trello4j.model.Member;
