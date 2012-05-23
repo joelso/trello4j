@@ -67,8 +67,6 @@ public class TrelloImpl implements Trello {
 			throw new TrelloException(
 					"API key must be set, get one here: https://trello.com/1/appKey/generate");
 		}
-
-		// this.authQueryString = createAuthQueryString();
 	}
 
 	/*
