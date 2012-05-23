@@ -38,8 +38,6 @@ public class TrelloImpl implements Trello {
 	/** The token. */
 	private String token = null;
 
-	// private String authQueryString = null;
-
 	/** The trello obj factory. */
 	private TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
 
