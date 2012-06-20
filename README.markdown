@@ -194,7 +194,9 @@ Now you got two options:
 
 </table>                                                                     
 
+## Contributors
 
+[skydjol](https://github.com/skydjol)
 
 
 	
