@@ -13,7 +13,7 @@ import org.trello4j.model.Member;
 /**
  * The Interface CardService.
  * 
- * @author joel
+ * @author 
  */
 public interface CardService {
 
