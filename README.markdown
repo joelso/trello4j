@@ -26,12 +26,6 @@ Now you got two options:
     Organization org = trello.getOrganization("fogcreek");
 
 
-## Roadmap
-
-* 1.0 - *core* read-only API methods
-* 1.1 - fully support read-only methods (i.e. all GET methods)
-* 2.0 - support create, update and delete
-
 <table>
   <tr><th>Method</th><th>Version</th></tr>
   
