@@ -1,11 +1,11 @@
 package org.trello4j.model;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A Trello checklist.
- *
+ * 
  * <code>
  *  {
  *    "id":"4f92b89ea73738db6cdd4ed7",
@@ -27,66 +27,145 @@ import java.util.List;
  *    ]
  *  }
  * </code>
- *
+ * 
  */
 public class Checklist extends TrelloObject {
 
-    private String name;
-    private String idBoard;
-    private java.util.List<CheckItem> checkItems = new ArrayList<CheckItem>();
+	/** The name. */
+	private String name;
 
-    public String getName() {
-        return name;
-    }
+	/** The id board. */
+	private String idBoard;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	/** The check items. */
+	private java.util.List<CheckItem> checkItems = new ArrayList<CheckItem>();
 
-    public String getIdBoard() {
-        return idBoard;
-    }
+	/**
+	 * Gets the name.
+	 * 
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
 
-    public void setIdBoard(String idBoard) {
-        this.idBoard = idBoard;
-    }
+	/**
+	 * Sets the name.
+	 * 
+	 * @param name
+	 *            the new name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<CheckItem> getCheckItems() {
-        return checkItems;
-    }
+	/**
+	 * Gets the id board.
+	 * 
+	 * @return the id board
+	 */
+	public String getIdBoard() {
+		return idBoard;
+	}
 
-    public void setCheckItems(List<CheckItem> checkItems) {
-        this.checkItems = checkItems;
-    }
+	/**
+	 * Sets the id board.
+	 * 
+	 * @param idBoard
+	 *            the new id board
+	 */
+	public void setIdBoard(String idBoard) {
+		this.idBoard = idBoard;
+	}
 
-    public class CheckItem extends TrelloObject {
+	/**
+	 * Gets the check items.
+	 * 
+	 * @return the check items
+	 */
+	public List<CheckItem> getCheckItems() {
+		return checkItems;
+	}
 
-        private String name;
-        private String type;
-        private double pos;
+	/**
+	 * Sets the check items.
+	 * 
+	 * @param checkItems
+	 *            the new check items
+	 */
+	public void setCheckItems(List<CheckItem> checkItems) {
+		this.checkItems = checkItems;
+	}
 
-        public String getName() {
-            return name;
-        }
+	/**
+	 * The Class CheckItem.
+	 */
+	public class CheckItem extends TrelloObject {
 
-        public void setName(String name) {
-            this.name = name;
-        }
+		/** The name. */
+		private String name;
 
-        public String getType() {
-            return type;
-        }
+		/** The type. */
+		private String type;
 
-        public void setType(String type) {
-            this.type = type;
-        }
+		/** The pos. */
+		private double pos;
 
-        public double getPos() {
-            return pos;
-        }
+		/**
+		 * Gets the name.
+		 * 
+		 * @return the name
+		 */
+		public String getName() {
+			return name;
+		}
 
-        public void setPos(double pos) {
-            this.pos = pos;
-        }
-    }
+		/**
+		 * Sets the name.
+		 * 
+		 * @param name
+		 *            the new name
+		 */
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		/**
+		 * Gets the type.
+		 * 
+		 * @return the type
+		 */
+		public String getType() {
+			return type;
+		}
+
+		/**
+		 * Sets the type.
+		 * 
+		 * @param type
+		 *            the new type
+		 */
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		/**
+		 * Gets the pos.
+		 * 
+		 * @return the pos
+		 */
+		public double getPos() {
+			return pos;
+		}
+
+		/**
+		 * Sets the pos.
+		 * 
+		 * @param pos
+		 *            the new pos
+		 */
+		public void setPos(double pos) {
+			this.pos = pos;
+		}
+	}
 }

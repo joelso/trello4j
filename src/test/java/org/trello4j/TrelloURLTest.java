@@ -1,9 +1,10 @@
 package org.trello4j;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.trello4j.model.Action;
 
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +14,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class TrelloURLTest {
 
+    /**
+     * Should build url with filter.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void shouldBuildURLWithFilter() throws Exception {
         String url = TrelloURL.create("API_KEY", TrelloURL.ACTION_URL, "ID")

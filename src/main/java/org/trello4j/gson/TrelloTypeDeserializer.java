@@ -1,23 +1,29 @@
 package org.trello4j.gson;
 
+import java.lang.reflect.Type;
+
+import org.trello4j.model.TrelloType;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import org.trello4j.model.Board.PERMISSION_TYPE;
-import org.trello4j.model.TrelloType;
-
-import java.lang.reflect.Type;
 
 /**
  * Translate type string to TrelloType enum.
- *
+ * 
  * @author joel
- *
+ * 
  */
-public class TrelloTypeDeserializer implements
-		JsonDeserializer<TrelloType> {
+public class TrelloTypeDeserializer implements JsonDeserializer<TrelloType> {
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement,
+	 * java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
+	 */
 	public TrelloType deserialize(JsonElement json, Type typeOfT,
 			JsonDeserializationContext context) throws JsonParseException {
 		final String jsonStr = json.getAsString();
