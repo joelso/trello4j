@@ -388,10 +388,10 @@ public class TrelloImpl implements Trello {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.trello4j.CardService#getAttachementsByCard(java.lang.String)
+	 * @see org.trello4j.CardService#getAttachmentsByCard(java.lang.String)
 	 */
 	@Override
-	public List<Attachment> getAttachementsByCard(final String cardId) {
+	public List<Attachment> getAttachmentsByCard(final String cardId) {
 		validateObjectId(cardId);
 
 		final String url = TrelloURL

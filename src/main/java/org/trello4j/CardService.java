@@ -36,15 +36,15 @@ public interface CardService {
 	List<Action> getActionsByCard(String cardId);
 
 	/**
-	 * Gets the attachements by card.
+	 * Gets the attachments by card.
 	 * 
 	 * @param cardId
 	 *            the card id
 	 * @return the attachements by card
 	 */
-	List<Attachment> getAttachementsByCard(String cardId);
+	List<Attachment> getAttachmentsByCard(String cardId);
 
-	/**
+	/**                                           +å
 	 * Gets the board by card.
 	 * 
 	 * @param cardId

@@ -228,10 +228,10 @@ public class TrelloImplIntegrationTest {
 		// THEN
 		assertNotNull("Oops, card is null", card);
 		assertEquals("Card id should be equal", cardId, card.getId());
-		
-		if(!card.getAttachments().isEmpty()) {
-			assertNotNull("Attachment should be set", card.getAttachments().get(0).get_id());
-		}
+
+		// if(!card.getAttachments().isEmpty()) {
+		// 	assertNotNull("Attachment should be set", card.getAttachments().get(0).get_id());
+		// }
 	}
 
 	/**
