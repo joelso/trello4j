@@ -61,7 +61,7 @@ public class TrelloURL {
 	public static final String ACTION_MEMBERCREATOR_URL = "https://api.trello.com/1/actions/{0}/memberCreator";
 
 	/** The Constant ACTION_ORGANIZATION_URL. */
-	public static final String ACTION_ORGANIZATION_URL = "https://api.trello.com/1/actions/{0}/organisation";
+	public static final String ACTION_ORGANIZATION_URL = "https://api.trello.com/1/actions/{0}/organization";
 
 	/** The Constant BOARD_CARDS_URL. */
 	public static final String BOARD_CARDS_URL = "https://api.trello.com/1/boards/{0}/cards";
