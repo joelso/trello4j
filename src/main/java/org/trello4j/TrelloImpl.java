@@ -4,7 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -498,9 +501,26 @@ public class TrelloImpl implements Trello {
 		}, doApiGet(url));
 	}
 
+	@Override
+	public Card addNewCard(String idList, String name,
+						   Map<String, String> keyValueMap) {
+		validateObjectId(idList);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CARD_POST_URL)
+				.token(token)
+				.build();
+		if (keyValueMap == null) keyValueMap = new HashMap<String, String>();
+		if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
+		keyValueMap.put("name", name);
+
+		return trelloObjFactory.createObject(new TypeToken<Card>() {
+		}, doApiPost(url, keyValueMap));
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.trello4j.ListService#getList(java.lang.String)
 	 */
 	@Override
@@ -1154,8 +1174,8 @@ public class TrelloImpl implements Trello {
 	 *            the url
 	 * @return the input stream
 	 */
-	private InputStream doApiPost(String url) {
-		return doRequest(url, "POST");
+	private InputStream doApiPost(String url, Map<String, String> keyValueMap) {
+		return doPostRequest(url, keyValueMap);
 	}
 
 	/**
@@ -1178,6 +1198,44 @@ public class TrelloImpl implements Trello {
 			conn.connect();
 
 			// Return null if we get an error response
+			if (conn.getResponseCode() > 399) {
+				return null;
+			} else {
+				return getWrappedInputStream(
+						conn.getInputStream(),
+						GZIP_ENCODING.equalsIgnoreCase(conn
+								.getContentEncoding()));
+			}
+		} catch (IOException e) {
+			throw new TrelloException(e.getMessage());
+		}
+	}
+
+	/**
+	 * Execute a POST request with URL-encoded key-value parameter pairs.
+	 * @param url Trello API URL.
+	 * @param keyValueMap Key-value map.
+	 * @return the response input stream.
+	 */
+	private InputStream doPostRequest(String url,
+									  Map<String, String> keyValueMap) {
+		try {
+			HttpsURLConnection conn = (HttpsURLConnection) new URL(url)
+					.openConnection();
+			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+
+			StringBuilder stringBuilder = new StringBuilder();
+			for (String key : keyValueMap.keySet()) {
+				String encodedValue = URLEncoder
+						.encode(keyValueMap.get(key), "UTF-8");
+				stringBuilder
+						.append(stringBuilder.length() > 0 ? "&" : "")
+						.append(key).append("=").append(encodedValue);
+			}
+			conn.getOutputStream()
+					.write(stringBuilder.toString().getBytes());
 			if (conn.getResponseCode() > 399) {
 				return null;
 			} else {
