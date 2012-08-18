@@ -318,6 +318,7 @@ public class TrelloURL {
 	 * @return the string
 	 */
 	private String createUrlWithPathParams() {
+		if (pathParams == null || pathParams.length == 0) return url;
 		String compiledUrl = null;
 		for (int i = 0; i < pathParams.length; i++) {
 			compiledUrl = url.replaceAll(PATH_PARAM_ARG_PREFIX + i
