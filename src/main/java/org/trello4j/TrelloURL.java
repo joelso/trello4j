@@ -108,6 +108,9 @@ public class TrelloURL {
 	/** The Constant CARD_MEMBERS_URL. */
 	public static final String CARD_MEMBERS_URL = "https://api.trello.com/1/cards/{0}/members";
 
+	/** The Constant CARD_POST_URL. */
+	public static final String CARD_POST_URL = "https://api.trello.com/1/cards";
+
 	/** The Constant LIST_ACTIONS_URL. */
 	public static final String LIST_ACTIONS_URL = "https://api.trello.com/1/lists/{0}/action";
 
