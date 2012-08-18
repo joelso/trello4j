@@ -513,6 +513,7 @@ public class TrelloImpl implements Trello {
 		if (keyValueMap == null) keyValueMap = new HashMap<String, String>();
 		if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
 		keyValueMap.put("name", name);
+		keyValueMap.put("idList", idList);
 
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
 		}, doApiPost(url, keyValueMap));
