@@ -30,4 +30,16 @@ public class TrelloURLTest {
 
         assertEquals(expectedUrl, url);
     }
+
+	@Test
+	public void shouldNotReturnNullBaseURL() {
+		String url = TrelloURL
+				.create("API_KEY", TrelloURL.CARD_POST_URL)
+				.token("TOKEN")
+				.build();
+
+		String expectedUrl = "https://api.trello.com/1/cards?key=API_KEY&token=TOKEN";
+
+		assertEquals(expectedUrl, url);
+	}
 }
