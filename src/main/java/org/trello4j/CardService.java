@@ -1,6 +1,7 @@
 package org.trello4j;
 
 import java.util.List;
+import java.util.Map;
 
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
@@ -89,4 +90,13 @@ public interface CardService {
 	 */
 	List<Member> getMembersByCard(String cardId);
 
+	/**
+	 * Add a new {@link Card} with the optional keyValue pairs.
+	 * @param idList Id of the {@link org.trello4j.model.List}
+	 *               the card should be added to.
+	 * @param name Name of the new card.
+	 * @param keyValeMap Map of the optional key-value-pairs.
+	 */
+	Card addNewCard(String idList, String name,
+					Map<String, String> keyValeMap);
 }

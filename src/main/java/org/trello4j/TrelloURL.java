@@ -108,6 +108,9 @@ public class TrelloURL {
 	/** The Constant CARD_MEMBERS_URL. */
 	public static final String CARD_MEMBERS_URL = "https://api.trello.com/1/cards/{0}/members";
 
+	/** The Constant CARD_POST_URL. */
+	public static final String CARD_POST_URL = "https://api.trello.com/1/cards";
+
 	/** The Constant LIST_ACTIONS_URL. */
 	public static final String LIST_ACTIONS_URL = "https://api.trello.com/1/lists/{0}/action";
 
@@ -315,6 +318,7 @@ public class TrelloURL {
 	 * @return the string
 	 */
 	private String createUrlWithPathParams() {
+		if (pathParams == null || pathParams.length == 0) return url;
 		String compiledUrl = null;
 		for (int i = 0; i < pathParams.length; i++) {
 			compiledUrl = url.replaceAll(PATH_PARAM_ARG_PREFIX + i
