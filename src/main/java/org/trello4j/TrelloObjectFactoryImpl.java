@@ -1,5 +1,15 @@
 package org.trello4j;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import org.trello4j.gson.PermissionTypeDeserializer;
+import org.trello4j.gson.TrelloTypeDeserializer;
+import org.trello4j.model.Board.PERMISSION_TYPE;
+import org.trello4j.model.TrelloType;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -7,32 +17,16 @@ import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
 
-import org.trello4j.gson.PermissionTypeDeserializer;
-import org.trello4j.gson.TrelloTypeDeserializer;
-import org.trello4j.model.Board.PERMISSION_TYPE;
-import org.trello4j.model.TrelloType;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-
 /**
  * The Class TrelloObjectFactoryImpl.
  */
 public class TrelloObjectFactoryImpl {
 
-	/** The Constant UTF_8_CHAR_SET. */
 	private static final Charset UTF_8_CHAR_SET = Charset.forName("UTF-8");
-
-	/** The Constant DATE_FORMAT. */
 	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
-	/** The parser. */
 	private final JsonParser parser = new JsonParser();
 
-	/** The gson. */
 	private Gson gson = null;
 
 	/**

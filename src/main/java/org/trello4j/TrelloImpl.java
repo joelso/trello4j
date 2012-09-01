@@ -1149,7 +1149,7 @@ public class TrelloImpl implements Trello {
 	 * @return the input stream
 	 */
 	private InputStream doApiGet(String url) {
-		return doRequest(url, "GET");
+		return doRequest(url, METHOD_GET);
 	}
 
 	/**
@@ -1160,7 +1160,7 @@ public class TrelloImpl implements Trello {
 	 * @return the input stream
 	 */
 	private InputStream doApiPut(String url) {
-		return doRequest(url, "PUT");
+		return doRequest(url, METHOD_PUT);
 	}
 
 	/**
@@ -1182,7 +1182,7 @@ public class TrelloImpl implements Trello {
 	 * @return the input stream
 	 */
 	private InputStream doDelete(String url) {
-		return doRequest(url, "DELETE");
+		return doRequest(url, METHOD_DELETE);
 	}
 
 	public InputStream doRequest(String url, String requestMethod) {
