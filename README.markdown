@@ -7,7 +7,7 @@ Please report any issues and/or participate in the development [here](https://tr
 
 ## Getting started
 
-### User trello4j from unofficial maven repo
+### Get trello4j from unofficial maven repo
 
     <repository>
 	    <id>joelso-mvn-repo</id>
