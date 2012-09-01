@@ -18,24 +18,12 @@ package org.trello4j.model;
  */
 public class Type extends TrelloObject {
 
-	/** The type. */
 	private TrelloType type;
 
-	/**
-	 * Gets the type.
-	 * 
-	 * @return the type
-	 */
 	public TrelloType getType() {
 		return type;
 	}
 
-	/**
-	 * Sets the type.
-	 * 
-	 * @param type
-	 *            the new type
-	 */
 	public void setType(TrelloType type) {
 		this.type = type;
 	}
