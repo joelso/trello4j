@@ -1,8 +1,8 @@
 package org.trello4j.model;
 
-import static junit.framework.Assert.assertEquals;
-
 import org.junit.Test;
+
+import static junit.framework.Assert.assertEquals;
 
 
 /**
@@ -13,22 +13,12 @@ import org.junit.Test;
  */
 public class TrelloTypeTest {
 
-    /**
-     * Test from string_should create organization.
-     *
-     * @throws Exception the exception
-     */
     @Test
     public void testFromString_shouldCreateOrganization() throws Exception {
         final String type = "organization";
         assertEquals(TrelloType.ORGANIZATION, TrelloType.fromString(type));
     }
 
-    /**
-     * Test from string_should create unknown.
-     *
-     * @throws Exception the exception
-     */
     @Test
     public void testFromString_shouldCreateUnknown() throws Exception {
         final String type = "foobar";

@@ -22,41 +22,21 @@ import java.util.zip.GZIPInputStream;
  */
 public class TrelloImpl implements Trello {
 
-    private static final String METHOD_DELETE = "DELETE";
-    private static final String METHOD_GET = "GET";
-    private static final String METHOD_POST = "POST";
-    private static final String METHOD_PUT = "PUT";
+    private static final String METHOD_DELETE   = "DELETE";
+    private static final String METHOD_GET      = "GET";
+    private static final String METHOD_POST     = "POST";
+    private static final String METHOD_PUT      = "PUT";
+	private static final String GZIP_ENCODING   = "gzip";
 
-	/** The Constant GZIP_ENCODING. */
-	private static final String GZIP_ENCODING = "gzip";
-
-	/** The api key. */
 	private String apiKey = null;
-
-	/** The token. */
 	private String token = null;
-
-	/** The trello obj factory. */
 	private TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
 
-	/**
-	 * Instantiates a new trello impl.
-	 * 
-	 * @param apiKey
-	 *            the api key
-	 */
+
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
 	}
 
-	/**
-	 * Instantiates a new trello impl.
-	 * 
-	 * @param apiKey
-	 *            the api key
-	 * @param token
-	 *            the token
-	 */
 	public TrelloImpl(String apiKey, String token) {
 		this.apiKey = apiKey;
 		this.token = token;
@@ -82,7 +62,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -103,7 +83,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -121,7 +101,7 @@ public class TrelloImpl implements Trello {
 				.filter(filter)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -138,7 +118,7 @@ public class TrelloImpl implements Trello {
 				.token(token)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<List<Checklist>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -159,7 +139,7 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(
 				new TypeToken<List<org.trello4j.model.List>>() {
 				},
-				doApiGet(url));
+				doGet(url));
 	}
 
 	/*
@@ -178,7 +158,7 @@ public class TrelloImpl implements Trello {
 				.filter(filter)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -197,7 +177,7 @@ public class TrelloImpl implements Trello {
 				.filter(filter)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -214,7 +194,7 @@ public class TrelloImpl implements Trello {
 				.token(token)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<Prefs>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -233,7 +213,7 @@ public class TrelloImpl implements Trello {
 				.filter(filter)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<Organization>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -252,7 +232,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Action>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -269,7 +249,7 @@ public class TrelloImpl implements Trello {
 				.filter(filter)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<Organization>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -285,7 +265,7 @@ public class TrelloImpl implements Trello {
 				.filter(filter)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -302,7 +282,7 @@ public class TrelloImpl implements Trello {
 				.filter(filter)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -324,7 +304,7 @@ public class TrelloImpl implements Trello {
 				.filter(filter)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -344,7 +324,7 @@ public class TrelloImpl implements Trello {
 				.token(token)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -362,7 +342,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -380,7 +360,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -398,7 +378,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Attachment>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -417,7 +397,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -435,7 +415,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<CheckItem>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -453,7 +433,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Checklist>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -475,7 +455,7 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(
 				new TypeToken<org.trello4j.model.List>() {
 				},
-				doApiGet(url));
+				doGet(url));
 	}
 
 	/*
@@ -493,12 +473,11 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	@Override
-	public Card createCard(String idList, String name,
-                           Map<String, String> keyValueMap) {
+	public Card createCard(String idList, String name, Map<String, String> keyValueMap) {
 		validateObjectId(idList);
 
 		final String url = TrelloURL
@@ -506,12 +485,12 @@ public class TrelloImpl implements Trello {
 				.token(token)
 				.build();
 		if (keyValueMap == null) keyValueMap = new HashMap<String, String>();
-		if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
+		//if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
 		keyValueMap.put("name", name);
 		keyValueMap.put("idList", idList);
 
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
-		}, doApiPost(url, keyValueMap));
+		}, doPost(url, keyValueMap));
 	}
 
 	/*
@@ -531,7 +510,7 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(
 				new TypeToken<org.trello4j.model.List>() {
 				},
-				doApiGet(url));
+				doGet(url));
 	}
 
 	/*
@@ -551,7 +530,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Notification>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -570,7 +549,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Checklist>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -586,7 +565,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Type>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -605,7 +584,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -624,7 +603,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -643,7 +622,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -665,7 +644,7 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(
 				new TypeToken<org.trello4j.model.List>() {
 				},
-				doApiGet(url));
+				doGet(url));
 	}
 
 	/*
@@ -686,7 +665,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -706,7 +685,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Organization>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -730,7 +709,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -754,7 +733,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -778,7 +757,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -801,7 +780,7 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(
 				new TypeToken<org.trello4j.model.List>() {
 				},
-				doApiGet(url));
+				doGet(url));
 	}
 
 	/*
@@ -826,7 +805,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -851,7 +830,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -876,7 +855,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -894,7 +873,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -913,7 +892,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -932,7 +911,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -949,7 +928,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -968,7 +947,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -993,7 +972,7 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(
 				new TypeToken<List<Notification>>() {
 				},
-				doApiGet(url));
+				doGet(url));
 	}
 
 	/*
@@ -1015,7 +994,7 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(
 				new TypeToken<List<Organization>>() {
 				},
-				doApiGet(url));
+				doGet(url));
 	}
 
 	/*
@@ -1041,7 +1020,7 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(
 				new TypeToken<List<Organization>>() {
 				},
-				doApiGet(url));
+				doGet(url));
 	}
 
 	/*
@@ -1061,7 +1040,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -1080,7 +1059,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<CheckItem>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -1100,7 +1079,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -1119,7 +1098,7 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Token>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
 	/*
@@ -1138,100 +1117,55 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doApiGet(url));
+		}, doGet(url));
 	}
 
-	/**
-	 * Do api get.
-	 * 
-	 * @param url
-	 *            the url
-	 * @return the input stream
-	 */
-	private InputStream doApiGet(String url) {
+	private InputStream doGet(String url) {
 		return doRequest(url, METHOD_GET);
 	}
 
-	/**
-	 * Do api Put.
-	 * 
-	 * @param url
-	 *            the url
-	 * @return the input stream
-	 */
-	private InputStream doApiPut(String url) {
+	private InputStream doPut(String url) {
 		return doRequest(url, METHOD_PUT);
 	}
 
-	/**
-	 * Do api Post.
-	 * 
-	 * @param url
-	 *            the url
-	 * @return the input stream
-	 */
-	private InputStream doApiPost(String url, Map<String, String> keyValueMap) {
-		return doPostRequest(url, keyValueMap);
+	private InputStream doPost(String url, Map<String, String> map) {
+		return doRequest(url, METHOD_POST, map);
 	}
 
-	/**
-	 * Do api Post.
-	 * 
-	 * @param url
-	 *            the url
-	 * @return the input stream
-	 */
 	private InputStream doDelete(String url) {
 		return doRequest(url, METHOD_DELETE);
 	}
 
-	public InputStream doRequest(String url, String requestMethod) {
-		try {
-			HttpsURLConnection conn = (HttpsURLConnection) new URL(url)
-					.openConnection();
-			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
-			conn.setRequestMethod(requestMethod);
-			conn.connect();
-
-			// Return null if we get an error response
-			if (conn.getResponseCode() > 399) {
-				return null;
-			} else {
-				return getWrappedInputStream(
-						conn.getInputStream(),
-						GZIP_ENCODING.equalsIgnoreCase(conn
-								.getContentEncoding()));
-			}
-		} catch (IOException e) {
-			throw new TrelloException(e.getMessage());
-		}
+	private InputStream doRequest(String url, String requestMethod) {
+        return doRequest(url, requestMethod, null);
 	}
 
 	/**
 	 * Execute a POST request with URL-encoded key-value parameter pairs.
 	 * @param url Trello API URL.
-	 * @param keyValueMap Key-value map.
+	 * @param map Key-value map.
 	 * @return the response input stream.
 	 */
-	private InputStream doPostRequest(String url,
-									  Map<String, String> keyValueMap) {
+	private InputStream doRequest(String url, String requestMethod, Map<String, String> map) {
 		try {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(url)
 					.openConnection();
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
-			conn.setRequestMethod(METHOD_POST);
-			conn.setDoOutput(true);
+            conn.setDoOutput(requestMethod.equals(METHOD_POST) || requestMethod.equals(METHOD_PUT));
+            conn.setRequestMethod(requestMethod);
 
-			StringBuilder stringBuilder = new StringBuilder();
-			for (String key : keyValueMap.keySet()) {
-				String encodedValue = URLEncoder
-						.encode(keyValueMap.get(key), "UTF-8");
-				stringBuilder
-						.append(stringBuilder.length() > 0 ? "&" : "")
-						.append(key).append("=").append(encodedValue);
-			}
-			conn.getOutputStream()
-					.write(stringBuilder.toString().getBytes());
+            if(map != null && !map.isEmpty()) {
+                StringBuilder sb = new StringBuilder();
+                for (String key : map.keySet()) {
+                    sb.append(sb.length() > 0 ? "&" : "")
+                        .append(key)
+                        .append("=")
+                        .append( URLEncoder.encode(map.get(key), "UTF-8") );
+                }
+                conn.getOutputStream().write(sb.toString().getBytes());
+                conn.getOutputStream().close();
+            }
+
 			if (conn.getResponseCode() > 399) {
 				return null;
 			} else {
@@ -1245,29 +1179,12 @@ public class TrelloImpl implements Trello {
 		}
 	}
 
-	/**
-	 * Validate object id.
-	 * 
-	 * @param id
-	 *            the id
-	 */
 	private void validateObjectId(String id) {
 		if (!TrelloUtil.isObjectIdValid(id)) {
 			throw new TrelloException("Invalid object id: " + id);
 		}
 	}
 
-	/**
-	 * Gets the wrapped input stream.
-	 * 
-	 * @param is
-	 *            the is
-	 * @param gzip
-	 *            the gzip
-	 * @return the wrapped input stream
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
 	private InputStream getWrappedInputStream(InputStream is, boolean gzip)
 			throws IOException {
 		/*

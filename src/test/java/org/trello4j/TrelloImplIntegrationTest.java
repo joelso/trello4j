@@ -1,24 +1,12 @@
 package org.trello4j;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.trello4j.model.*;
+import org.trello4j.model.Board.PERMISSION_TYPE;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.trello4j.model.Action;
-import org.trello4j.model.Board;
-import org.trello4j.model.Board.PERMISSION_TYPE;
-import org.trello4j.model.Card;
-import org.trello4j.model.Checklist;
-import org.trello4j.model.Member;
-import org.trello4j.model.Notification;
-import org.trello4j.model.Organization;
-import org.trello4j.model.TrelloType;
-import org.trello4j.model.Type;
+import static org.junit.Assert.*;
 
 
 /**
@@ -26,23 +14,14 @@ import org.trello4j.model.Type;
  */
 public class TrelloImplIntegrationTest {
 
-	/** The Constant API_KEY. */
 	private static final String API_KEY = "23ec668887f03d4c71c7f74fb0ae30a4";
-	
-	/** The Constant API_TOKEN. */
 	private static final String API_TOKEN = "ede7758ace3911eb83585b15d9cbb14a02542e4556d14e7314d0e24228c578ae";
 
-	/**
-	 * Missing api key_should throw exception.
-	 */
 	@Test(expected = TrelloException.class)
 	public void missingApiKey_shouldThrowException() {
 		new TrelloImpl(null);
 	}
 
-	/**
-	 * Test invalid object id.
-	 */
 	@Test(expected=TrelloException.class)
 	public void testInvalidObjectId() {
 		// GIVEN		
@@ -55,10 +34,6 @@ public class TrelloImplIntegrationTest {
 		assertNull("Oops, board is null", board);
 	}
 
-	// TODO
-	/**
-	 * Test404_should return null.
-	 */
 	@Test
 	public void test404_shouldReturnNull() {
 		// GIVEN		
@@ -71,9 +46,6 @@ public class TrelloImplIntegrationTest {
 		assertNull("Oops, board is null", board);
 	}
 
-	/**
-	 * Should return public board.
-	 */
 	@Test
 	public void shouldReturnPublicBoard() {
 		// GIVEN
@@ -94,9 +66,6 @@ public class TrelloImplIntegrationTest {
 		assertEquals(PERMISSION_TYPE.PUBLIC, board.getPrefs().getVoting());
 	}
 
-	/**
-	 * Should return action.
-	 */
 	@Test
 	public void shouldReturnAction() {
 		// GIVEN
@@ -125,9 +94,6 @@ public class TrelloImplIntegrationTest {
 
 	}
 
-	/**
-	 * Should return organization.
-	 */
 	@Test
 	public void shouldReturnOrganization() {
 		// GIVEN
@@ -141,9 +107,6 @@ public class TrelloImplIntegrationTest {
 		assertEquals("Incorrect organization name", organizationName, org.getName());
 	}
 
-	/**
-	 * Should return member by username.
-	 */
 	@Test
 	public void shouldReturnMemberByUsername() {
 		// GIVEN
@@ -165,9 +128,6 @@ public class TrelloImplIntegrationTest {
 		assertEquals("Incorrect username", username, member.getUsername());
 	}
 
-	/**
-	 * Should return member by id.
-	 */
 	@Test
 	public void shouldReturnMemberById() {
 		// GIVEN
@@ -181,9 +141,6 @@ public class TrelloImplIntegrationTest {
 		assertEquals("Incorrect username", "joelsoderstrom", member.getUsername());
 	}
 
-	/**
-	 * Should return boards by organization.
-	 */
 	@Test
 	public void shouldReturnBoardsByOrganization() {
 		// GIVEN
@@ -198,9 +155,6 @@ public class TrelloImplIntegrationTest {
 		assertTrue("Organization FogCreek should have Trello Development board", hasBoardWithId(boards, trelloDevBoardId));
 	}
 
-	/**
-	 * Should return actions by board.
-	 */
 	@Test
 	public void shouldReturnActionsByBoard() {
 		// GIVEN
@@ -214,9 +168,6 @@ public class TrelloImplIntegrationTest {
 		assertEquals("Board id and action.data.board.id should be equal", trelloDevBoardId, actions.get(0).getData().getBoard().getId());
 	}
 
-	/**
-	 * Should return card.
-	 */
 	@Test
 	public void shouldReturnCard() {
 		// GIVEN
@@ -234,9 +185,6 @@ public class TrelloImplIntegrationTest {
 		// }
 	}
 
-	/**
-	 * Should return list.
-	 */
 	@Test
 	public void shouldReturnList() {
 		// GIVEN
@@ -250,9 +198,6 @@ public class TrelloImplIntegrationTest {
 		assertEquals("Card id should be equal", listId, list.getId());
 	}
 
-	/**
-	 * Should return notification.
-	 */
 	@Test
 	public void shouldReturnNotification() {
 		// GIVEN
@@ -266,9 +211,6 @@ public class TrelloImplIntegrationTest {
 		assertEquals("Notification id should be equal", notificationId, notification.getId());
 	}
 
-    /**
-     * Should return boards by member.
-     */
     @Test
     public void shouldReturnBoardsByMember() {
         // GIVEN
@@ -282,9 +224,6 @@ public class TrelloImplIntegrationTest {
         assertTrue("Member should have at least one board", boards.size() > 0);
     }
 
-    /**
-     * Should return actions by organization.
-     */
     @Test
     public void shouldReturnActionsByOrganization() {
         // GIVEN
@@ -298,9 +237,6 @@ public class TrelloImplIntegrationTest {
         assertTrue("Organization should have at least one action", actions.size() > 0);
     }
 
-    /**
-     * Should return checklist.
-     */
     @Test
     public void shouldReturnChecklist() {
         // GIVEN
@@ -314,9 +250,6 @@ public class TrelloImplIntegrationTest {
         assertEquals("Checklist id should match", checklistId, checklist.getId());
     }
 
-    /**
-     * Should return type by id.
-     */
     @Test
     public void shouldReturnTypeById() {
         // GIVEN
@@ -331,9 +264,6 @@ public class TrelloImplIntegrationTest {
         assertEquals("Incorrect trello type", TrelloType.ORGANIZATION, type.getType());
     }
 
-    /**
-     * Should return type by name.
-     */
     @Test
     public void shouldReturnTypeByName() {
         // GIVEN
