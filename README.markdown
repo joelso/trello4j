@@ -6,7 +6,25 @@ You need to get a API key and optionally generate a token [here](https://trello.
 Please report any issues and/or participate in the development [here](https://trello.com/board/trello4j/4f92b80ba73738db6cdd4309) :)
 
 ## Getting started
-Get source and build it:
+
+### User trello4j from unofficial maven repo
+
+    <repository>
+	    <id>joelso-mvn-repo</id>
+	    <name>joelso github mvn repo</name>
+	    <url>https://raw.github.com/joelso/joelso-mvn-repo/master/snapshots/</url>
+	</repository>
+	
+	...
+	
+	<dependency>
+	    <groupId>org.trello4j</groupId>
+		<artifactId>trello4j</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</dependency>
+	
+
+### Get source and build it
 
     git clone git@github.com:joelso/trello4j.git
 	cd trello4j
@@ -89,7 +107,7 @@ Now you got two options:
 <tr><td>PUT /1/cards/[card_id]/due                         </td><td>TODO</td></tr>
 <tr><td>PUT /1/cards/[card_id]/idList                      </td><td>TODO</td></tr>
 <tr><td>PUT /1/cards/[card_id]/name                        </td><td>TODO</td></tr>
-<tr><td>POST /1/cards                                      </td><td>TODO</td></tr>
+<tr><td>POST /1/cards                                      </td><td>IMPLEMENTED</td></tr>
 <tr><td>POST /1/cards/[card_id]/actions/comments           </td><td>TODO</td></tr>
 <tr><td>POST /1/cards/[card_id]/attachments                </td><td>TODO</td></tr>
 <tr><td>POST /1/cards/[card_id]/checklists                 </td><td>TODO</td></tr>
