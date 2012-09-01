@@ -8,8 +8,7 @@ public class TrelloUtil {
 	/**
 	 * "Stolen" from: https://github.com/mongodb/mongo-java-driver
 	 * 
-	 * @param s
-	 *            the s
+	 * @param id String to validate
 	 * @return true, if is object id valid
 	 */
 	public static boolean isObjectIdValid(String s) {

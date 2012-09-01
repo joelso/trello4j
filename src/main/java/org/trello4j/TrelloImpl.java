@@ -1160,7 +1160,7 @@ public class TrelloImpl implements Trello {
                     sb.append(sb.length() > 0 ? "&" : "")
                         .append(key)
                         .append("=")
-                        .append( URLEncoder.encode(map.get(key), "UTF-8") );
+                        .append(URLEncoder.encode(map.get(key), "UTF-8"));
                 }
                 conn.getOutputStream().write(sb.toString().getBytes());
                 conn.getOutputStream().close();
@@ -1170,9 +1170,8 @@ public class TrelloImpl implements Trello {
 				return null;
 			} else {
 				return getWrappedInputStream(
-						conn.getInputStream(),
-						GZIP_ENCODING.equalsIgnoreCase(conn
-								.getContentEncoding()));
+                    conn.getInputStream(), GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding())
+                );
 			}
 		} catch (IOException e) {
 			throw new TrelloException(e.getMessage());
