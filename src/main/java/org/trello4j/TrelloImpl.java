@@ -1,5 +1,12 @@
 package org.trello4j;
 
+import com.google.gson.reflect.TypeToken;
+import org.trello4j.model.*;
+import org.trello4j.model.Board.Prefs;
+import org.trello4j.model.Card.Attachment;
+import org.trello4j.model.Checklist.CheckItem;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,27 +17,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-import javax.net.ssl.HttpsURLConnection;
-
-import org.trello4j.model.Action;
-import org.trello4j.model.Board;
-import org.trello4j.model.Board.Prefs;
-import org.trello4j.model.Card;
-import org.trello4j.model.Card.Attachment;
-import org.trello4j.model.Checklist;
-import org.trello4j.model.Checklist.CheckItem;
-import org.trello4j.model.Member;
-import org.trello4j.model.Notification;
-import org.trello4j.model.Organization;
-import org.trello4j.model.Token;
-import org.trello4j.model.Type;
-
-import com.google.gson.reflect.TypeToken;
-
 /**
  * The Class TrelloImpl.
  */
 public class TrelloImpl implements Trello {
+
+    private static final String METHOD_DELETE = "DELETE";
+    private static final String METHOD_GET = "GET";
+    private static final String METHOD_POST = "POST";
+    private static final String METHOD_PUT = "PUT";
 
 	/** The Constant GZIP_ENCODING. */
 	private static final String GZIP_ENCODING = "gzip";
@@ -343,9 +338,9 @@ public class TrelloImpl implements Trello {
 	public List<Action> getActionsByOrganization(String organizationNameOrId) {
 		final String url = TrelloURL
 				.create(
-						apiKey,
-						TrelloURL.ORGANIZATION_ACTIONS_URL,
-						organizationNameOrId)
+                        apiKey,
+                        TrelloURL.ORGANIZATION_ACTIONS_URL,
+                        organizationNameOrId)
 				.token(token)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
@@ -502,8 +497,8 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
-	public Card addNewCard(String idList, String name,
-						   Map<String, String> keyValueMap) {
+	public Card createCard(String idList, String name,
+                           Map<String, String> keyValueMap) {
 		validateObjectId(idList);
 
 		final String url = TrelloURL
@@ -1224,7 +1219,7 @@ public class TrelloImpl implements Trello {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(url)
 					.openConnection();
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
-			conn.setRequestMethod("POST");
+			conn.setRequestMethod(METHOD_POST);
 			conn.setDoOutput(true);
 
 			StringBuilder stringBuilder = new StringBuilder();

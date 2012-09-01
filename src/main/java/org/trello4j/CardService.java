@@ -97,6 +97,6 @@ public interface CardService {
 	 * @param name Name of the new card.
 	 * @param keyValeMap Map of the optional key-value-pairs.
 	 */
-	Card addNewCard(String idList, String name,
-					Map<String, String> keyValeMap);
+	Card createCard(String idList, String name,
+                    Map<String, String> keyValeMap);
 }

@@ -39,7 +39,7 @@ public class CardServiceTest {
 		keyValueMap.put("desc", description);
 
 		Trello trello = new TrelloImpl(developerKey, token);
-		Card card = trello.addNewCard(listId, name, keyValueMap);
+		Card card = trello.createCard(listId, name, keyValueMap);
 
 		assertNotNull(card);
 
