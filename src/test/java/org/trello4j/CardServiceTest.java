@@ -1,6 +1,7 @@
 package org.trello4j;
 
 import org.junit.Test;
+import org.trello4j.model.Action;
 import org.trello4j.model.Card;
 
 import java.util.HashMap;
@@ -38,5 +39,21 @@ public class CardServiceTest {
 		assertNotNull(card);
 		assertThat(card.getName(), equalTo(name));
 		assertThat(card.getDesc(), equalTo(description));
+	}
+
+	@Test
+	public void testCommentOnCard() {
+		// GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+		String commentText = "Comment text from JUnit test.";
+
+		// WHEN
+		Action action = new TrelloImpl(API_KEY, API_TOKEN).commentOnCard(idCard, commentText);
+
+		//THEN
+		assertNotNull(action);
+		assertThat(action.getType(), equalTo(Action.TYPE.COMMENT_CARD));
+		assertThat(action.getData().getText(), equalTo(commentText));
+		assertThat(action.getData().getCard().getId(), equalTo(idCard));
 	}
 }
