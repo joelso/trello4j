@@ -108,7 +108,7 @@ Now you got two options:
 <tr><td>PUT /1/cards/[card_id]/idList                      </td><td>TODO</td></tr>
 <tr><td>PUT /1/cards/[card_id]/name                        </td><td>TODO</td></tr>
 <tr><td>POST /1/cards                                      </td><td>IMPLEMENTED</td></tr>
-<tr><td>POST /1/cards/[card_id]/actions/comments           </td><td>TODO</td></tr>
+<tr><td>POST /1/cards/[card_id]/actions/comments           </td><td>IMPLEMENTED</td></tr>
 <tr><td>POST /1/cards/[card_id]/attachments                </td><td>TODO</td></tr>
 <tr><td>POST /1/cards/[card_id]/checklists                 </td><td>TODO</td></tr>
 <tr><td>POST /1/cards/[card_id]/labels                     </td><td>TODO</td></tr>
