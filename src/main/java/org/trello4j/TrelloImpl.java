@@ -351,12 +351,13 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.CardService#getActionsByCard(java.lang.String)
 	 */
 	@Override
-	public List<Action> getActionsByCard(final String cardId) {
+	public List<Action> getActionsByCard(final String cardId, final String... filters) {
 		validateObjectId(cardId);
 
 		final String url = TrelloURL
 				.create(apiKey, TrelloURL.CARD_ACTION_URL, cardId)
 				.token(token)
+                .filter(filters)
 				.build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {

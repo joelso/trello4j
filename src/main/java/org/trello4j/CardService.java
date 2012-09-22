@@ -20,7 +20,7 @@ public interface CardService {
 
 	Card getCard(String cardId);
 
-	List<Action> getActionsByCard(String cardId);
+	List<Action> getActionsByCard(String cardId, String... filter);
 
 	List<Attachment> getAttachmentsByCard(String cardId);
 
