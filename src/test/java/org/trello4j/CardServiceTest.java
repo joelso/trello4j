@@ -4,12 +4,17 @@ import org.junit.Test;
 import org.trello4j.model.Action;
 import org.trello4j.model.Card;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * @author Johan Mynhardt
@@ -29,7 +34,7 @@ public class CardServiceTest {
 		String name = "Trello4J CardService: Add Card using POST";
 		String description = "Something awesome happened :)";
 
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
         map.put("desc", description);
 
         // WHEN
@@ -55,5 +60,37 @@ public class CardServiceTest {
 		assertThat(action.getType(), equalTo(Action.TYPE.COMMENT_CARD));
 		assertThat(action.getData().getText(), equalTo(commentText));
 		assertThat(action.getData().getCard().getId(), equalTo(idCard));
+	}
+
+	@Test
+	public void testAttachFileToCard() throws IOException {
+		// GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+		String fileContents = "foo bar text in file\n";
+		File file = File.createTempFile("trello_attach_test",".junit");
+		if (!file.exists()) {
+			try {
+				FileWriter fileWriter = new FileWriter(file);
+				fileWriter.write(fileContents);
+				fileWriter.flush();
+				fileWriter.close();
+			} catch (IOException e) {
+				fail(e.toString());
+			}
+		}
+
+		long size = file.length();
+		String fileName = file.getName();
+
+		// WHEN
+		List<Card.Attachment> attachments = new TrelloImpl(API_KEY, API_TOKEN).attachToCard(idCard, file);
+		file.deleteOnExit();
+
+		//THEN
+		assertNotNull(attachments);
+		Card.Attachment attachment = attachments.get(attachments.size()-1);
+
+		assertThat(attachment.getName(), equalTo(fileName));
+		assertThat(attachment.getBytes(), equalTo(""+size));
 	}
 }
