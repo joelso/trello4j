@@ -1,5 +1,6 @@
 package org.trello4j;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,9 @@ public interface CardService {
 	 * @param name Name of the new card.
 	 * @param keyValeMap Map of the optional key-value-pairs.
 	 */
-	Card createCard(String idList, String name, Map<String, String> keyValeMap);
+	Card createCard(String idList, String name, Map<String, Object> keyValeMap);
 
 	Action commentOnCard(String idCard, String text);
+
+	List<Attachment> attachToCard(String idCard, File file);
 }
