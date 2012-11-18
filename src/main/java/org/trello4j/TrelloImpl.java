@@ -8,6 +8,9 @@ import org.trello4j.model.Checklist.CheckItem;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -15,7 +18,10 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.zip.GZIPInputStream;
+
+import static java.lang.String.format;
 
 /**
  * The Class TrelloImpl.
@@ -477,14 +483,14 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
-	public Card createCard(String idList, String name, Map<String, String> keyValueMap) {
+	public Card createCard(String idList, String name, Map<String, Object> keyValueMap) {
 		validateObjectId(idList);
 
 		final String url = TrelloURL
 				.create(apiKey, TrelloURL.CARD_POST_URL)
 				.token(token)
 				.build();
-		if (keyValueMap == null) keyValueMap = new HashMap<String, String>();
+		if (keyValueMap == null) keyValueMap = new HashMap<String, Object>();
 		//if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
 		keyValueMap.put("name", name);
 		keyValueMap.put("idList", idList);
@@ -501,17 +507,28 @@ public class TrelloImpl implements Trello {
 				.create(apiKey, TrelloURL.CARD_POST_COMMENTS, idCard)
 				.token(token)
 				.build();
-		Map<String, String> keyValuMap = new HashMap<String, String>();
+		Map<String, Object> keyValuMap = new HashMap<String, Object>();
 		keyValuMap.put("text", text);
 		return trelloObjFactory.createObject(new TypeToken<Action>() {
 		}, doPost(url, keyValuMap));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.trello4j.ListService#getList(java.lang.String)
-	 */
+	@Override
+	public List<Attachment> attachToCard(String idCard, File file) {
+		validateObjectId(idCard);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CARD_POST_ATTACHMENTS, idCard)
+				.token(token)
+				.build();
+
+		Map<String, Object> keyValueMap = new HashMap<String, Object>();
+		keyValueMap.put("file", file);
+
+		return trelloObjFactory.createObject(new TypeToken<List<Attachment>>() {
+		}, doPost(url, keyValueMap));
+	}
+
 	@Override
 	public org.trello4j.model.List getList(final String listId) {
 		validateObjectId(listId);
@@ -1142,7 +1159,7 @@ public class TrelloImpl implements Trello {
 		return doRequest(url, METHOD_PUT);
 	}
 
-	private InputStream doPost(String url, Map<String, String> map) {
+	private InputStream doPost(String url, Map<String, Object> map) {
 		return doRequest(url, METHOD_POST, map);
 	}
 
@@ -1156,29 +1173,77 @@ public class TrelloImpl implements Trello {
 
 	/**
 	 * Execute a POST request with URL-encoded key-value parameter pairs.
+	 * For a POST having an attachment, multipart/form-data will be used.
+	 *
 	 * @param url Trello API URL.
 	 * @param map Key-value map.
 	 * @return the response input stream.
 	 */
-	private InputStream doRequest(String url, String requestMethod, Map<String, String> map) {
+	private InputStream doRequest(String url, String requestMethod, Map<String, Object> map) {
 		try {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(url)
 					.openConnection();
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
-            conn.setDoOutput(requestMethod.equals(METHOD_POST) || requestMethod.equals(METHOD_PUT));
-            conn.setRequestMethod(requestMethod);
+			conn.setDoOutput(requestMethod.equals(METHOD_POST) || requestMethod.equals(METHOD_PUT));
+			conn.setRequestMethod(requestMethod);
 
-            if(map != null && !map.isEmpty()) {
-                StringBuilder sb = new StringBuilder();
-                for (String key : map.keySet()) {
-                    sb.append(sb.length() > 0 ? "&" : "")
-                        .append(key)
-                        .append("=")
-                        .append(URLEncoder.encode(map.get(key), "UTF-8"));
-                }
-                conn.getOutputStream().write(sb.toString().getBytes());
-                conn.getOutputStream().close();
-            }
+			if (map != null && !map.isEmpty()) {
+				boolean bAllStringValues = true;
+				for (Object value : map.values()) {
+					if (!(value instanceof String)) bAllStringValues = false;
+				}
+
+				if (bAllStringValues) {
+					StringBuilder sb = new StringBuilder();
+					for (String key : map.keySet()) {
+						sb.append(sb.length() > 0 ? "&" : "")
+								.append(key)
+								.append("=")
+								.append(URLEncoder.encode((String) map.get(key), "UTF-8"));
+					}
+					conn.getOutputStream().write(sb.toString().getBytes());
+					conn.getOutputStream().close();
+				} else {
+					// write multipart.
+					final String boundary = UUID.randomUUID().toString();
+					conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+
+					final DataOutputStream dataOutputStream = new DataOutputStream(conn.getOutputStream());
+
+					String[] keys = map.keySet().toArray(new String[map.keySet().size()]);
+					for (int i = 0; i < keys.length; i++) {
+						String key = keys[i];
+						if (map.get(key) instanceof File) {
+							dataOutputStream.writeBytes(format("--%s\r\n", boundary));
+							dataOutputStream.writeBytes(format("content-type: %s\r\n", "application/octet-stream"));
+							dataOutputStream.writeBytes(format("Content-Disposition: form-data; name=\"%s\";filename=\"%s\"\r\n", key, ((File) map.get(key)).getName()));
+							dataOutputStream.writeBytes("\r\n");
+
+							FileInputStream fileInputStream = new FileInputStream((File) map.get(key));
+							int bytesAvailable = fileInputStream.available();
+							int maxBufferSize = 16384;
+							int bufferSize = Math.min(maxBufferSize, bytesAvailable);
+
+							byte[] buffer = new byte[bufferSize];
+
+							int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+							while (bytesRead > 0) {
+								dataOutputStream.write(buffer, 0, bufferSize);
+								bytesAvailable = fileInputStream.available();
+								bufferSize = Math.min(bytesAvailable, maxBufferSize);
+								bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+							}
+
+							dataOutputStream.writeBytes("\r\n");
+						} else {
+							dataOutputStream.writeBytes(format("Content-Disposition: form-data; name=\"%s\"\r\n\r\n", key));
+							dataOutputStream.writeBytes(format("%s\r\n\r\n", map.get(key)));
+						}
+						dataOutputStream.writeBytes(format("--%s%s\r\n", boundary, i == keys.length - 1 ? "--" : ""));
+					}
+				}
+			}
 
 			if (conn.getResponseCode() > 399) {
 				return null;
