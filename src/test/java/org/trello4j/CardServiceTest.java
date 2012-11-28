@@ -7,10 +7,13 @@ import org.trello4j.model.Card;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -83,7 +86,7 @@ public class CardServiceTest {
 		String fileName = file.getName();
 
 		// WHEN
-		List<Card.Attachment> attachments = new TrelloImpl(API_KEY, API_TOKEN).attachToCard(idCard, file);
+		List<Card.Attachment> attachments = new TrelloImpl(API_KEY, API_TOKEN).attachToCard(idCard, file, null, null, null);
 		file.deleteOnExit();
 
 		//THEN
@@ -92,5 +95,23 @@ public class CardServiceTest {
 
 		assertThat(attachment.getName(), equalTo(fileName));
 		assertThat(attachment.getBytes(), equalTo(""+size));
+	}
+
+	@Test
+	public void testAttachFileFromUrl() throws IOException {
+		//GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+		URL url = new URL("https://trello.com/images/reco/Taco_idle.png");
+
+		//WHEN
+		List<Card.Attachment> attachments = new TrelloImpl(API_KEY, API_TOKEN).attachToCard(idCard, null, url, "Taco", null);
+
+		//THEN
+		assertNotNull(attachments);
+		Card.Attachment attachment = attachments.get(attachments.size()-1);
+		assertNotNull(attachment);
+		assertThat(attachment.getName(), equalTo("Taco"));
+		assertTrue(attachment.getUrl().startsWith("http"));
+		assertTrue(attachment.getUrl().endsWith("Taco_idle.png"));
 	}
 }

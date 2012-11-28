@@ -1,6 +1,7 @@
 package org.trello4j;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -46,5 +47,5 @@ public interface CardService {
 
 	Action commentOnCard(String idCard, String text);
 
-	List<Attachment> attachToCard(String idCard, File file);
+	List<Attachment> attachToCard(String idCard, File file, URL url, String name, String mimeType);
 }
