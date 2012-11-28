@@ -514,7 +514,7 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
-	public List<Attachment> attachToCard(String idCard, File file) {
+	public List<Attachment> attachToCard(String idCard, File file, URL attachmentUrl, String name, String mimeType) {
 		validateObjectId(idCard);
 
 		final String url = TrelloURL
@@ -523,7 +523,10 @@ public class TrelloImpl implements Trello {
 				.build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
-		keyValueMap.put("file", file);
+		if (file != null) keyValueMap.put("file", file);
+		if (attachmentUrl != null) keyValueMap.put("url", attachmentUrl.toString());
+		if (name != null) keyValueMap.put("name", name);
+		if (mimeType != null) keyValueMap.put("mimeType", mimeType);
 
 		return trelloObjFactory.createObject(new TypeToken<List<Attachment>>() {
 		}, doPost(url, keyValueMap));
