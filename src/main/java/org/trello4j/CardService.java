@@ -48,4 +48,15 @@ public interface CardService {
 	Action commentOnCard(String idCard, String text);
 
 	List<Attachment> attachToCard(String idCard, File file, URL url, String name, String mimeType);
+
+	/**
+	 * Required permissions: write
+	 *
+	 * @param idCard The id of the card to add the checklist to.
+	 * @param idChecklist The id of the checklist to add to the card, or null to create a new one.
+	 * @param checklistName Name of the checklist.
+	 * @param idChecklistSource The id of the source checklist to copy into a new checklist.
+	 * @return The created {@link Checklist}.
+	 */
+	Checklist addChecklist(String idCard, String idChecklist, String checklistName, String idChecklistSource, String... filter);
 }

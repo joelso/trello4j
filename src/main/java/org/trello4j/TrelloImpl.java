@@ -533,6 +533,29 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
+	public Checklist addChecklist(String idCard, String idChecklist, String checklistName, String idChecklistSource,
+								  String... filter) {
+		validateObjectId(idCard);
+		if (idChecklist != null) {
+			validateObjectId(idChecklist);
+		}
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CORD_POST_CHECKLISTS, idCard)
+				.token(token)
+				.filter(filter)
+				.build();
+
+		Map<String, Object> keyValueMap = new HashMap<String, Object>();
+		keyValueMap.put("name", checklistName == null ? "Checklist" : checklistName);
+		if (idChecklist != null) keyValueMap.put("value", idChecklist);
+		if (idChecklistSource != null) keyValueMap.put("idChecklistSource",idChecklistSource);
+
+		return trelloObjFactory.createObject(new TypeToken<Checklist>(){
+		}, doPost(url, keyValueMap));
+	}
+
+	@Override
 	public org.trello4j.model.List getList(final String listId) {
 		validateObjectId(listId);
 
