@@ -541,7 +541,7 @@ public class TrelloImpl implements Trello {
 		}
 
 		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CORD_POST_CHECKLISTS, idCard)
+				.create(apiKey, TrelloURL.CARD_POST_CHECKLISTS, idCard)
 				.token(token)
 				.filter(filter)
 				.build();
