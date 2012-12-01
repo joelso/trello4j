@@ -1,9 +1,5 @@
 package org.trello4j;
 
-import org.junit.Test;
-import org.trello4j.model.Action;
-import org.trello4j.model.Card;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,7 +7,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
+
+import org.junit.Test;
+import org.trello4j.model.Action;
+import org.trello4j.model.Card;
+import org.trello4j.model.Checklist;
 
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -113,5 +113,33 @@ public class CardServiceTest {
 		assertThat(attachment.getName(), equalTo("Taco"));
 		assertTrue(attachment.getUrl().startsWith("http"));
 		assertTrue(attachment.getUrl().endsWith("Taco_idle.png"));
+	}
+
+	@Test
+	public void testAddChecklistToCard() throws IOException {
+		//GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+
+		//WHEN
+		Checklist checklist = new TrelloImpl(API_KEY, API_TOKEN).addChecklist(idCard, null, null, null);
+
+		//THEN
+		assertNotNull(checklist);
+
+		assertThat(checklist.getName(), equalTo("Checklist"));
+		assertThat(checklist.getCheckItems().size(), equalTo(0));
+	}
+
+	@Test
+	public void testAddLabelToCard() throws IOException {
+		//GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+
+		//WHEN
+		List<Card.Label> labels = new TrelloImpl(API_KEY, API_TOKEN).addLabel(idCard, "blue");
+
+		//THEN
+		assertNotNull(labels);
+		assertThat(labels.get(labels.size()-1).getColor(), equalTo("blue"));
 	}
 }
