@@ -59,4 +59,22 @@ public interface CardService {
 	 * @return The created {@link Checklist}.
 	 */
 	Checklist addChecklist(String idCard, String idChecklist, String checklistName, String idChecklistSource, String... filter);
+
+	/**
+	 * Required permissions: write
+	 * Arguments:
+	 * <ul>
+	 *     <li>value (required)</li>
+	 *     <ul>
+	 *      Valid Values: One of:
+	 * 	    <li>green</li>
+	 * 	    <li>yellow</li>
+	 * 	    <li>orange</li>
+	 * 	    <li>red</li>
+	 * 	    <li>purple</li>
+	 * 	    <li>blue</li>
+	 *     </ul>
+	 * </ul>
+	 */
+	List<Card.Label> addLabel(String idCard, String label, String... filter);
 }
