@@ -3,16 +3,21 @@ package org.trello4j;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import org.junit.Test;
 import org.trello4j.model.Action;
 import org.trello4j.model.Card;
 import org.trello4j.model.Checklist;
+import org.trello4j.model.Member;
 
+import static java.lang.String.format;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertNotNull;
@@ -132,6 +137,8 @@ public class CardServiceTest {
 
 	@Test
 	public void testAddLabelToCard() throws IOException {
+		//TODO: prepare for test by removing all labels when the delete method becomes available.
+
 		//GIVEN
 		String idCard = "50429779e215b4e45d7aef24";
 
@@ -141,5 +148,52 @@ public class CardServiceTest {
 		//THEN
 		assertNotNull(labels);
 		assertThat(labels.get(labels.size()-1).getColor(), equalTo("blue"));
+	}
+
+	@Test
+	public void testAddMemberToCard() throws IOException {
+		//GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+
+		Trello trello = new TrelloImpl(API_KEY, API_TOKEN);
+		Member boardUser = trello.getMember("joelsoderstrom");
+
+		//PREPARE CARD
+		List<Member> cardMembers = trello.getMembersByCard(idCard);
+		if (!cardMembers.isEmpty()) {
+			for (Member member : cardMembers){
+				deleteMembersFromCard(idCard, member.getId(), API_KEY, API_TOKEN);
+			}
+		}
+
+		//WHEN
+		List<Member> membersAfterAdd = trello.addMember(idCard, boardUser.getId());
+
+		//THEN
+		assertNotNull(membersAfterAdd);
+		assertThat(membersAfterAdd.size(), equalTo(1));
+		Member resultMember = membersAfterAdd.get(0);
+		assertThat(resultMember.getId(), equalTo(boardUser.getId()));
+	}
+
+	private void deleteMembersFromCard(String cardId, String memberId, String key, String token) {
+		Object[] params = new Object[]{
+				cardId, memberId, key, token
+		};
+		try {
+			HttpsURLConnection urlConnection = (HttpsURLConnection) new URL(
+					format("https://api.trello.com/1/cards/%s/members/%s?key=%s&token=%s", params)
+			).openConnection();
+
+			urlConnection.setRequestMethod("DELETE");
+
+			System.out.println(format("Removing member %s from card %s: HTTP Response: %s/%s",
+					memberId, cardId, urlConnection.getResponseMessage(), urlConnection.getResponseCode()));
+			urlConnection.disconnect();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
