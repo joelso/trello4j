@@ -572,6 +572,23 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
+	public List<Member> addMember(String idCard, String memberId, String... filter) {
+		validateObjectId(idCard);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CARD_POST_ADD_MEMBER, idCard)
+				.token(token)
+				.filter(filter)
+				.build();
+
+		Map<String, Object> keyValueMap = new HashMap<String, Object>();
+		keyValueMap.put("value", memberId);
+
+		return trelloObjFactory.createObject(new TypeToken<List<Member>>(){
+		}, doPost(url, keyValueMap));
+	}
+
+	@Override
 	public org.trello4j.model.List getList(final String listId) {
 		validateObjectId(listId);
 
