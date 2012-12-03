@@ -79,4 +79,8 @@ public interface CardService {
 	List<Card.Label> addLabel(String idCard, String label, String... filter);
 
 	List<Member> addMember(String idCard, String memberId, String... filter);
+
+	boolean voteOnCard(String idCard, String memberId, String... filter);
+
+	List<Member> getMemberVotesOnCard(String idCard, String... filter);
 }
