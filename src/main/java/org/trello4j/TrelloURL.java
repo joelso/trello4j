@@ -46,6 +46,7 @@ public class TrelloURL {
 	public static final String CARD_POST_CHECKLISTS = "https://api.trello.com/1/cards/{0}/checklists";
 	public static final String CARD_POST_LABELS = "https://api.trello.com/1/cards/{0}/labels";
 	public static final String CARD_POST_ADD_MEMBER = "https://api.trello.com/1/cards/{0}/members";
+	public static final String CARD_POST_VOTE_MEMBER = "https://api.trello.com/1/cards/{0}/membersVoted";
 	public static final String LIST_ACTIONS_URL = "https://api.trello.com/1/lists/{0}/action";
 	public static final String LIST_BOARD_URL = "https://api.trello.com/1/lists/{0}/board";
 	public static final String LIST_CARDS_URL = "https://api.trello.com/1/lists/{0}/cards";
