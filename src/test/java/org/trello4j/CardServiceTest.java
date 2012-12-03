@@ -99,7 +99,7 @@ public class CardServiceTest {
 		Card.Attachment attachment = attachments.get(attachments.size()-1);
 
 		assertThat(attachment.getName(), equalTo(fileName));
-		assertThat(attachment.getBytes(), equalTo(""+size));
+		assertThat(attachment.getBytes(), equalTo("" + size));
 	}
 
 	@Test
@@ -147,7 +147,7 @@ public class CardServiceTest {
 
 		//THEN
 		assertNotNull(labels);
-		assertThat(labels.get(labels.size()-1).getColor(), equalTo("blue"));
+		assertThat(labels.get(labels.size() - 1).getColor(), equalTo("blue"));
 	}
 
 	@Test
@@ -176,6 +176,29 @@ public class CardServiceTest {
 		assertThat(resultMember.getId(), equalTo(boardUser.getId()));
 	}
 
+	@Test
+	public void addMemberVote() throws IOException {
+		Trello trello = new TrelloImpl(API_KEY, API_TOKEN);
+
+		//GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+		Member boardUser = trello.getMember("joelsoderstrom");
+		assertNotNull(boardUser);
+
+		//CLEANUP
+		List<Member> votedMembers = trello.getMemberVotesOnCard(idCard);
+		if (votedMembers != null && !votedMembers.isEmpty()) {
+			for (Member member : votedMembers) {
+				removeVoteFromCard(idCard, member.getId(), API_KEY, API_TOKEN);
+			}
+		}
+		//WHEN
+		boolean voted = new TrelloImpl(API_KEY, API_TOKEN).voteOnCard(idCard, boardUser.getId());
+
+		//THEN
+		assertTrue(voted);
+	}
+
 	private void deleteMembersFromCard(String cardId, String memberId, String key, String token) {
 		Object[] params = new Object[]{
 				cardId, memberId, key, token
@@ -192,6 +215,24 @@ public class CardServiceTest {
 			urlConnection.disconnect();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void removeVoteFromCard(String cardId, String memberId, String key, String token) {
+		Object[] params = new Object[] {
+				cardId, memberId, key, token
+		};
+		try {
+			HttpsURLConnection urlConnection = (HttpsURLConnection) new URL(
+					format("https://api.trello.com/1/cards/%s/membersVoted/%s?key=%s&token=%s", params)
+			).openConnection();
+
+			urlConnection.setRequestMethod("DELETE");
+
+			System.out.println(format("Removing vote %s from card %s: HTTP Response: %s/%s",
+					memberId, cardId, urlConnection.getRequestMethod(), urlConnection.getResponseCode()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

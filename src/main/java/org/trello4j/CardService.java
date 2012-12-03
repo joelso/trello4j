@@ -81,4 +81,6 @@ public interface CardService {
 	List<Member> addMember(String idCard, String memberId, String... filter);
 
 	boolean voteOnCard(String idCard, String memberId, String... filter);
+
+	List<Member> getMemberVotesOnCard(String idCard, String... filter);
 }
