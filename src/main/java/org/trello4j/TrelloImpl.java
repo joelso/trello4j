@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -586,6 +587,22 @@ public class TrelloImpl implements Trello {
 
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>(){
 		}, doPost(url, keyValueMap));
+	}
+
+	@Override
+	public boolean voteOnCard(String idCard, String memberId, String... filter) {
+		validateObjectId(idCard);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CARD_POST_VOTE_MEMBER, idCard)
+				.token(token)
+				.filter(filter)
+				.build();
+
+		Map<String, Object> keyValueMap = new HashMap<String, Object>();
+		keyValueMap.put("value", memberId);
+
+		return  doPost(url, keyValueMap) != null;
 	}
 
 	@Override
