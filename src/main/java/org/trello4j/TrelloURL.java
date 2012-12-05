@@ -1,6 +1,8 @@
 package org.trello4j;
 
 
+import java.text.MessageFormat;
+
 /**
  * The Class TrelloURL.
  */
@@ -48,6 +50,7 @@ public class TrelloURL {
 	public static final String CARD_POST_LABELS = "https://api.trello.com/1/cards/{0}/labels";
 	public static final String CARD_POST_ADD_MEMBER = "https://api.trello.com/1/cards/{0}/members";
 	public static final String CARD_POST_VOTE_MEMBER = "https://api.trello.com/1/cards/{0}/membersVoted";
+	public static final String CARD_DELETE_VOTE_MEMBER = "https://api.trello.com/1/cards/{0}/membersVoted/{1}";
 	public static final String LIST_ACTIONS_URL = "https://api.trello.com/1/lists/{0}/action";
 	public static final String LIST_BOARD_URL = "https://api.trello.com/1/lists/{0}/board";
 	public static final String LIST_CARDS_URL = "https://api.trello.com/1/lists/{0}/cards";
@@ -144,13 +147,8 @@ public class TrelloURL {
 
 	private String createUrlWithPathParams() {
 		if (pathParams == null || pathParams.length == 0) return url;
-		String compiledUrl = null;
-		for (int i = 0; i < pathParams.length; i++) {
-			compiledUrl = url.replaceAll(PATH_PARAM_ARG_PREFIX + i
-					+ PATH_PARAM_ARG_SUFFIX, pathParams[i]);
-		}
+		return MessageFormat.format(url, pathParams);
 		// boardUrl += authQueryString;
-		return compiledUrl;
 	}
 
 	private static boolean isArrayEmpty(String[] arr) {
