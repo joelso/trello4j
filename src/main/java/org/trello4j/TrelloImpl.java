@@ -601,7 +601,14 @@ public class TrelloImpl implements Trello {
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		keyValueMap.put("value", memberId);
 
-		return  doPost(url, keyValueMap) != null;
+		Response response = doPostWithResponse(url, keyValueMap);
+
+		if (response.getCode() < 400) {
+			return true;
+		} else {
+			System.err.println(format("Could not vote on card: %s", response.getResponseBody()));
+			return false;
+		}
 	}
 
 	@Override
@@ -1270,6 +1277,10 @@ public class TrelloImpl implements Trello {
 
 	private InputStream doPost(String url, Map<String, Object> map) {
 		return doRequest(url, METHOD_POST, map).getInputStream();
+	}
+
+	private Response doPostWithResponse(String url, Map<String, Object> map) {
+		return doRequest(url, METHOD_POST, map);
 	}
 
 	private Response doDelete(String url) {
