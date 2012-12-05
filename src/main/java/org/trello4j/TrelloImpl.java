@@ -619,6 +619,26 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
+	public boolean deleteVoteFromCard(String idCard, String memberId, String... filter) {
+		validateObjectId(idCard);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CARD_DELETE_VOTE_MEMBER, idCard, memberId)
+				.token(token)
+				.filter(filter)
+				.build();
+
+		Response response =  doDelete(url);
+
+		if (response.getCode() < 400) {
+			return true;
+		} else {
+			System.err.println(format("Could not remove vote from card: %s",response.getResponseBody()));
+			return false;
+		}
+	}
+
+	@Override
 	public org.trello4j.model.List getList(final String listId) {
 		validateObjectId(listId);
 
@@ -1249,15 +1269,15 @@ public class TrelloImpl implements Trello {
 	}
 
 	private InputStream doPost(String url, Map<String, Object> map) {
-		return doRequest(url, METHOD_POST, map);
+		return doRequest(url, METHOD_POST, map).getInputStream();
 	}
 
-	private InputStream doDelete(String url) {
-		return doRequest(url, METHOD_DELETE);
+	private Response doDelete(String url) {
+		return doRequest(url, METHOD_DELETE, null);
 	}
 
 	private InputStream doRequest(String url, String requestMethod) {
-        return doRequest(url, requestMethod, null);
+        return doRequest(url, requestMethod, null).getInputStream();
 	}
 
 	/**
@@ -1268,7 +1288,7 @@ public class TrelloImpl implements Trello {
 	 * @param map Key-value map.
 	 * @return the response input stream.
 	 */
-	private InputStream doRequest(String url, String requestMethod, Map<String, Object> map) {
+	private Response doRequest(String url, String requestMethod, Map<String, Object> map) {
 		try {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(url)
 					.openConnection();
@@ -1335,11 +1355,16 @@ public class TrelloImpl implements Trello {
 			}
 
 			if (conn.getResponseCode() > 399) {
-				return null;
+				return new Response(conn.getErrorStream(), conn.getResponseMessage(), conn.getResponseCode());
 			} else {
-				return getWrappedInputStream(
-                    conn.getInputStream(), GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding())
-                );
+				return new Response(
+						getWrappedInputStream(
+								conn.getInputStream(),
+								GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding())
+						),
+						conn.getResponseMessage(),
+						conn.getResponseCode()
+				);
 			}
 		} catch (IOException e) {
 			throw new TrelloException(e.getMessage());
