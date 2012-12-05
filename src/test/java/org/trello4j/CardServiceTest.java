@@ -156,7 +156,7 @@ public class CardServiceTest {
 		String idCard = "50429779e215b4e45d7aef24";
 
 		Trello trello = new TrelloImpl(API_KEY, API_TOKEN);
-		Member boardUser = trello.getMember("joelsoderstrom");
+		Member boardUser = trello.getMember("userj");
 
 		//PREPARE CARD
 		List<Member> cardMembers = trello.getMembersByCard(idCard);
@@ -182,14 +182,14 @@ public class CardServiceTest {
 
 		//GIVEN
 		String idCard = "50429779e215b4e45d7aef24";
-		Member boardUser = trello.getMember("joelsoderstrom");
+		Member boardUser = trello.getMember("userj");
 		assertNotNull(boardUser);
 
 		//CLEANUP
 		List<Member> votedMembers = trello.getMemberVotesOnCard(idCard);
 		if (votedMembers != null && !votedMembers.isEmpty()) {
 			for (Member member : votedMembers) {
-				removeVoteFromCard(idCard, member.getId(), API_KEY, API_TOKEN);
+				trello.deleteVoteFromCard(idCard, member.getId());
 			}
 		}
 		//WHEN
@@ -197,6 +197,25 @@ public class CardServiceTest {
 
 		//THEN
 		assertTrue(voted);
+	}
+
+	@Test
+	public void testDeleteMemberVoteFromCard() throws IOException {
+		Trello trello = new TrelloImpl(API_KEY, API_TOKEN);
+
+		//GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+		Member boardUser = trello.getMember("userj");
+		assertNotNull(boardUser);
+
+		boolean addedVote = trello.voteOnCard(idCard, boardUser.getId());
+		assertTrue(addedVote);
+
+		//WHEN
+		boolean removedFromCard = trello.deleteVoteFromCard(idCard, boardUser.getId());
+
+		//THEN
+		assertTrue(removedFromCard);
 	}
 
 	private void deleteMembersFromCard(String cardId, String memberId, String key, String token) {
@@ -215,24 +234,6 @@ public class CardServiceTest {
 			urlConnection.disconnect();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void removeVoteFromCard(String cardId, String memberId, String key, String token) {
-		Object[] params = new Object[] {
-				cardId, memberId, key, token
-		};
-		try {
-			HttpsURLConnection urlConnection = (HttpsURLConnection) new URL(
-					format("https://api.trello.com/1/cards/%s/membersVoted/%s?key=%s&token=%s", params)
-			).openConnection();
-
-			urlConnection.setRequestMethod("DELETE");
-
-			System.out.println(format("Removing vote %s from card %s: HTTP Response: %s/%s",
-					memberId, cardId, urlConnection.getRequestMethod(), urlConnection.getResponseCode()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

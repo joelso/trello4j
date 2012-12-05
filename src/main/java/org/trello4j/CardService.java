@@ -83,4 +83,6 @@ public interface CardService {
 	boolean voteOnCard(String idCard, String memberId, String... filter);
 
 	List<Member> getMemberVotesOnCard(String idCard, String... filter);
+
+	boolean deleteVoteFromCard(String idCard, String memberId, String... filter);
 }
