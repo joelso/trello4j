@@ -116,8 +116,8 @@ Now you got two options:
 <tr><td>POST /1/cards/[card_id]/membersVoted               </td><td>IMPLEMENTED</td></tr>
 <tr><td>DELETE /1/cards/[card_id]                          </td><td>TODO</td></tr>
 <tr><td>DELETE /1/cards/[card_id]/checklists/[idChecklist] </td><td>TODO</td></tr>
-<tr><td>DELETE /1/cards/[card_id]/labels/[color]           </td><td>TODO</td></tr>
-<tr><td>DELETE /1/cards/[card_id]/members/[idMember]       </td><td>TODO</td></tr>
+<tr><td>DELETE /1/cards/[card_id]/labels/[color]           </td><td>IMPLEMENTED</td></tr>
+<tr><td>DELETE /1/cards/[card_id]/members/[idMember]       </td><td>IMPLEMENTED</td></tr>
 <tr><td>DELETE /1/cards/[card_id]/membersVoted/[idMember]  </td><td>IMPLEMENTED</td></tr>
 
 <tr><th colspan="2">Checklists</th></tr>
