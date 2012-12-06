@@ -198,6 +198,29 @@ public class CardServiceTest {
 		//THEN
 		assertTrue(voted);
 	}
+	
+	@Test
+	public void deleteMemberFromCard() throws IOException {
+		Trello trello = new TrelloImpl(API_KEY, API_TOKEN);
+
+		//GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+		Member member = trello.getMember("userj");
+
+		//PREPARATION
+		List<Member> members = trello.getMembersByCard(idCard);
+		boolean needToAddMember = true;
+		for (Member cardMember : members) {
+			if (cardMember.getId().equals(member.getId())) needToAddMember = false;
+		}
+		if (needToAddMember) trello.addMember(idCard, member.getId());
+
+		//WHEN
+		boolean removedMemberFromCard = trello.deleteMemberFromCard(idCard, member.getId());
+
+		//THEN
+		assertTrue(removedMemberFromCard);
+	}
 
 	@Test
 	public void testDeleteMemberVoteFromCard() throws IOException {
