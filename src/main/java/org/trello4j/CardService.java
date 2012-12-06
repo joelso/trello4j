@@ -84,6 +84,8 @@ public interface CardService {
 
 	List<Member> getMemberVotesOnCard(String idCard, String... filter);
 
+	boolean deleteLabelFromCard(String idCard, String color, String... filter);
+
 	boolean deleteMemberFromCard(String idCard, String idMember, String... filter);
 
 	boolean deleteVoteFromCard(String idCard, String memberId, String... filter);
