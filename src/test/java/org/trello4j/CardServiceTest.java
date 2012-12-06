@@ -3,13 +3,10 @@ package org.trello4j;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import org.junit.Test;
 import org.trello4j.model.Action;
@@ -17,7 +14,6 @@ import org.trello4j.model.Card;
 import org.trello4j.model.Checklist;
 import org.trello4j.model.Member;
 
-import static java.lang.String.format;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertNotNull;
@@ -141,9 +137,11 @@ public class CardServiceTest {
 
 		//GIVEN
 		String idCard = "50429779e215b4e45d7aef24";
+		Trello trello = new TrelloImpl(API_KEY, API_TOKEN);
 
 		//WHEN
-		List<Card.Label> labels = new TrelloImpl(API_KEY, API_TOKEN).addLabel(idCard, "blue");
+		trello.deleteLabelFromCard(idCard, "blue");
+		List<Card.Label> labels = trello.addLabel(idCard, "blue");
 
 		//THEN
 		assertNotNull(labels);
@@ -162,7 +160,7 @@ public class CardServiceTest {
 		List<Member> cardMembers = trello.getMembersByCard(idCard);
 		if (!cardMembers.isEmpty()) {
 			for (Member member : cardMembers){
-				deleteMembersFromCard(idCard, member.getId(), API_KEY, API_TOKEN);
+				trello.deleteMemberFromCard(idCard, member.getId());
 			}
 		}
 
@@ -198,6 +196,25 @@ public class CardServiceTest {
 		//THEN
 		assertTrue(voted);
 	}
+
+	@Test
+	public void deleteLabelFromCard() {
+		Trello trello = new TrelloImpl(API_KEY, API_TOKEN);
+
+		//GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+		Member member = trello.getMember("userj");
+
+		//PREPARATION
+		trello.deleteLabelFromCard(idCard, "blue");
+		trello.addLabel(idCard, "blue");
+
+		//WHEN
+		boolean deleted = trello.deleteLabelFromCard(idCard, "blue");
+
+		//THEN
+		assertTrue(deleted);
+	}
 	
 	@Test
 	public void deleteMemberFromCard() throws IOException {
@@ -231,34 +248,22 @@ public class CardServiceTest {
 		Member boardUser = trello.getMember("userj");
 		assertNotNull(boardUser);
 
-		boolean addedVote = trello.voteOnCard(idCard, boardUser.getId());
-		assertTrue(addedVote);
+		List<Member> membersVoted = trello.getMemberVotesOnCard(idCard);
+
+		boolean needToAddVote = true;
+		for (Member member : membersVoted) {
+			if (member.getId().equals(boardUser.getId())) needToAddVote = false;
+		}
+
+		if (needToAddVote) {
+			boolean addedVote = trello.voteOnCard(idCard, boardUser.getId());
+			assertTrue(addedVote);
+		}
 
 		//WHEN
 		boolean removedFromCard = trello.deleteVoteFromCard(idCard, boardUser.getId());
 
 		//THEN
 		assertTrue(removedFromCard);
-	}
-
-	private void deleteMembersFromCard(String cardId, String memberId, String key, String token) {
-		Object[] params = new Object[]{
-				cardId, memberId, key, token
-		};
-		try {
-			HttpsURLConnection urlConnection = (HttpsURLConnection) new URL(
-					format("https://api.trello.com/1/cards/%s/members/%s?key=%s&token=%s", params)
-			).openConnection();
-
-			urlConnection.setRequestMethod("DELETE");
-
-			System.out.println(format("Removing member %s from card %s: HTTP Response: %s/%s",
-					memberId, cardId, urlConnection.getResponseMessage(), urlConnection.getResponseCode()));
-			urlConnection.disconnect();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
