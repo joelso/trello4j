@@ -626,6 +626,24 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
+	public boolean deleteMemberFromCard(String idCard, String idMember, String... filter) {
+		validateObjectId(idCard);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CARD_DELETE_MEMBER, idCard, idMember)
+				.token(token)
+				.filter(filter)
+				.build();
+		Response response = doDelete(url);
+		if (response.getCode() < 400) {
+			return true;
+		} else {
+			System.err.println(format("Could not remove member from card: %s", response.getResponseBody()));
+			return false;
+		}
+	}
+
+	@Override
 	public boolean deleteVoteFromCard(String idCard, String memberId, String... filter) {
 		validateObjectId(idCard);
 
