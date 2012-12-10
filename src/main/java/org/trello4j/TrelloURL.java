@@ -53,6 +53,7 @@ public class TrelloURL {
 	public static final String CARD_DELETE_LABEL = "https://api.trello.com/1/cards/{0}/labels/{1}";
 	public static final String CARD_DELETE_MEMBER = "https://api.trello.com/1/cards/{0}/members/{1}";
 	public static final String CARD_DELETE_VOTE_MEMBER = "https://api.trello.com/1/cards/{0}/membersVoted/{1}";
+	public static final String CARD_DELETE_CHECKLIST = "https://api.trello.com/1/cards/{0}/checklists/{1}";
 	public static final String LIST_ACTIONS_URL = "https://api.trello.com/1/lists/{0}/action";
 	public static final String LIST_BOARD_URL = "https://api.trello.com/1/lists/{0}/board";
 	public static final String LIST_CARDS_URL = "https://api.trello.com/1/lists/{0}/cards";
