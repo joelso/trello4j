@@ -198,6 +198,21 @@ public class CardServiceTest {
 	}
 
 	@Test
+	public void deleteChecklistFromCard() {
+		Trello trello = new TrelloImpl(API_KEY, API_TOKEN);
+
+		//GIVEN
+		String idCard = "50429779e215b4e45d7aef24";
+		Checklist checklist = trello.addChecklist(idCard, null, null, null);
+
+		//WHEN
+		boolean deletedChecklist = trello.deleteChecklistFromCard(idCard, checklist.getId());
+
+		//THEN
+		assertTrue(deletedChecklist);
+	}
+
+	@Test
 	public void deleteLabelFromCard() {
 		Trello trello = new TrelloImpl(API_KEY, API_TOKEN);
 
