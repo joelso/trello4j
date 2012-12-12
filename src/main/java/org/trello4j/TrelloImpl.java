@@ -626,6 +626,44 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
+	public boolean deleteCard(String idCard, String... filter) {
+		validateObjectId(idCard);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CARD_DELETE_CARD, idCard)
+				.token(token)
+				.filter(filter)
+				.build();
+
+		Response response = doDelete(url);
+		if (response.getCode() < 400) {
+			return true;
+		} else {
+			System.err.println(format("Could not delete card %s: %s", idCard, response.getResponseBody()));
+			return false;
+		}
+	}
+
+	@Override
+	public boolean deleteChecklistFromCard(String idCard, String idList, String... filter) {
+		validateObjectId(idCard);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CARD_DELETE_CHECKLIST, idCard, idList)
+				.token(token)
+				.filter(filter)
+				.build();
+
+		Response response = doDelete(url);
+		if (response.getCode() < 400) {
+			return true;
+		} else {
+			System.err.printf(format("Could not remove checklist %s from card: %s", idList, response.getResponseBody()));
+			return false;
+		}
+	}
+
+	@Override
 	public boolean deleteLabelFromCard(String idCard, String color, String... filter) {
 		validateObjectId(idCard);
 
