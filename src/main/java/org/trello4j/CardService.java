@@ -42,12 +42,13 @@ public interface CardService {
 	 *               the card should be added to.
 	 * @param name Name of the new card.
 	 * @param keyValeMap Map of the optional key-value-pairs.
+	 * @param filter
 	 */
-	Card createCard(String idList, String name, Map<String, Object> keyValeMap);
+	Card createCard(String idList, String name, Map<String, Object> keyValeMap, String... filter);
 
-	Action commentOnCard(String idCard, String text);
+	Action commentOnCard(String idCard, String text, String... filter);
 
-	List<Attachment> attachToCard(String idCard, File file, URL url, String name, String mimeType);
+	List<Attachment> attachToCard(String idCard, File file, URL url, String name, String mimeType, String... filter);
 
 	/**
 	 * Required permissions: write

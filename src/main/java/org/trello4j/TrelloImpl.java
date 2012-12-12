@@ -483,12 +483,13 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
-	public Card createCard(String idList, String name, Map<String, Object> keyValueMap) {
+	public Card createCard(String idList, String name, Map<String, Object> keyValueMap, String... filter) {
 		validateObjectId(idList);
 
 		final String url = TrelloURL
 				.create(apiKey, TrelloURL.CARD_POST_URL)
 				.token(token)
+				.filter(filter)
 				.build();
 		if (keyValueMap == null) keyValueMap = new HashMap<String, Object>();
 		//if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
@@ -500,12 +501,13 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
-	public Action commentOnCard(String idCard, String text) {
+	public Action commentOnCard(String idCard, String text, String... filter) {
 		validateObjectId(idCard);
 
 		final String url = TrelloURL
 				.create(apiKey, TrelloURL.CARD_POST_COMMENTS, idCard)
 				.token(token)
+				.filter(filter)
 				.build();
 		Map<String, Object> keyValuMap = new HashMap<String, Object>();
 		keyValuMap.put("text", text);
@@ -514,12 +516,13 @@ public class TrelloImpl implements Trello {
 	}
 
 	@Override
-	public List<Attachment> attachToCard(String idCard, File file, URL attachmentUrl, String name, String mimeType) {
+	public List<Attachment> attachToCard(String idCard, File file, URL attachmentUrl, String name, String mimeType, String... filter) {
 		validateObjectId(idCard);
 
 		final String url = TrelloURL
 				.create(apiKey, TrelloURL.CARD_POST_ATTACHMENTS, idCard)
 				.token(token)
+				.filter(filter)
 				.build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
