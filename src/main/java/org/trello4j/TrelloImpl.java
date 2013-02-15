@@ -1365,7 +1365,8 @@ public class TrelloImpl implements Trello {
 	}
 
 	private InputStream doRequest(String url, String requestMethod) {
-        return doRequest(url, requestMethod, null).getInputStream();
+        final Response response = doRequest(url, requestMethod, null);
+        return response != null ? response.getInputStream() : null;
 	}
 
 	/**
@@ -1442,8 +1443,11 @@ public class TrelloImpl implements Trello {
 				}
 			}
 
-			if (conn.getResponseCode() > 399) {
-				return new Response(conn.getErrorStream(), conn.getResponseMessage(), conn.getResponseCode());
+            final int responseCode = conn.getResponseCode();
+            if (responseCode == 404) {
+                return null;
+            } else if (responseCode > 399) {
+                return new Response(conn.getErrorStream(), conn.getResponseMessage(), responseCode);
 			} else {
 				return new Response(
 						getWrappedInputStream(
@@ -1451,7 +1455,7 @@ public class TrelloImpl implements Trello {
 								GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding())
 						),
 						conn.getResponseMessage(),
-						conn.getResponseCode()
+                        responseCode
 				);
 			}
 		} catch (IOException e) {
