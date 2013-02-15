@@ -198,19 +198,6 @@ public class TrelloImplIntegrationTest {
 		assertEquals("Card id should be equal", listId, list.getId());
 	}
 
-	@Test
-	public void shouldReturnNotification() {
-		// GIVEN
-		String notificationId = "4f82edfd34862b8473d92a8a";
-		
-		// WHEN
-		Notification notification = new TrelloImpl(API_KEY, API_TOKEN).getNotification(notificationId);
-		
-		// THEN
-		assertNotNull("Oops, notification is null", notification);
-		assertEquals("Notification id should be equal", notificationId, notification.getId());
-	}
-
     @Test
     public void shouldReturnBoardsByMember() {
         // GIVEN
