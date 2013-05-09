@@ -20,7 +20,9 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.trello4j.core.ActionOperations;
 import org.trello4j.core.DefaultActionOperations;
+import org.trello4j.core.DefaultListOperations;
 import org.trello4j.core.DefaultOrganizationOperations;
+import org.trello4j.core.ListOperations;
 import org.trello4j.core.OrganizationOperations;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
@@ -54,6 +56,7 @@ public class TrelloImpl implements Trello {
 
 	private final ActionOperations actionOperationsDelegate;
 	private final OrganizationOperations organizationOperationsDelegate;
+	private final ListOperations listOperationsDelegate;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -69,6 +72,7 @@ public class TrelloImpl implements Trello {
 
 		actionOperationsDelegate = new DefaultActionOperations(apiKey, token, trelloObjFactory);
 		organizationOperationsDelegate = new DefaultOrganizationOperations(apiKey, token, trelloObjFactory);
+		listOperationsDelegate = new DefaultListOperations(apiKey, token, trelloObjFactory);
 	}
 
 	/*
@@ -540,12 +544,7 @@ public class TrelloImpl implements Trello {
 
 	@Override
 	public org.trello4j.model.List getList(final String listId) {
-		validateObjectId(listId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_URL, listId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
-		}, doGet(url));
+		return listOperationsDelegate.getList(listId);
 	}
 
 	/*
@@ -690,56 +689,21 @@ public class TrelloImpl implements Trello {
 		}, doGet(url));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ListService#getActionsByList(java.lang.String)
-	 */
 	@Override
 	public List<Action> getActionsByList(String listId) {
-		validateObjectId(listId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_ACTIONS_URL, listId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doGet(url));
+		return listOperationsDelegate.getActionsByList(listId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ListService#getBoardByList(java.lang.String)
-	 */
 	@Override
 	public Board getBoardByList(String listId, final String... filter) {
-		validateObjectId(listId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_BOARD_URL, listId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doGet(url));
+		return listOperationsDelegate.getBoardByList(listId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ListService#getCardsByList(java.lang.String)
-	 */
 	@Override
 	public List<Card> getCardsByList(String listId, final String... filter) {
-		validateObjectId(listId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_CARDS_URL, listId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
-		}, doGet(url));
+		return listOperationsDelegate.getCardsByList(listId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.MemberService#getActionsByMember(java.lang.String)
-	 */
 	@Override
 	public List<Action> getActionsByMember(String usernameOrId) {
 
