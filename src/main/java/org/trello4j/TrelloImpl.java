@@ -23,8 +23,10 @@ import org.trello4j.core.ChecklistOperations;
 import org.trello4j.core.DefaultActionOperations;
 import org.trello4j.core.DefaultChecklistOperations;
 import org.trello4j.core.DefaultListOperations;
+import org.trello4j.core.DefaultMemberOperations;
 import org.trello4j.core.DefaultOrganizationOperations;
 import org.trello4j.core.ListOperations;
+import org.trello4j.core.MemberOperations;
 import org.trello4j.core.OrganizationOperations;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
@@ -60,6 +62,7 @@ public class TrelloImpl implements Trello {
 	private final OrganizationOperations organizationOperationsDelegate;
 	private final ListOperations listOperationsDelegate;
 	private final ChecklistOperations checklistOperations;
+	private final MemberOperations memberOperations;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -77,6 +80,7 @@ public class TrelloImpl implements Trello {
 		organizationOperationsDelegate = new DefaultOrganizationOperations(apiKey, token, trelloObjFactory);
 		listOperationsDelegate = new DefaultListOperations(apiKey, token, trelloObjFactory);
 		checklistOperations = new DefaultChecklistOperations(apiKey, token, trelloObjFactory);
+		memberOperations = new DefaultMemberOperations(apiKey, token, trelloObjFactory);
 	}
 
 	/*
@@ -208,28 +212,14 @@ public class TrelloImpl implements Trello {
 		}, doGet(url));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.MemberService#getMember(java.lang.String)
-	 */
 	@Override
 	public Member getMember(String usernameOrId, final String... filter) {
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_URL, usernameOrId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doGet(url));
+		return memberOperations.getMember(usernameOrId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.MemberService#getBoardsByMember(java.lang.String)
-	 */
 	@Override
 	public List<Board> getBoardsByMember(String usernameOrId, final String... filter) {
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_BOARDS_URL, usernameOrId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<List<Board>>() {
-		}, doGet(url));
+		return memberOperations.getBoardsByMember(usernameOrId, filter);
 	}
 
 	/*
@@ -695,71 +685,27 @@ public class TrelloImpl implements Trello {
 
 	@Override
 	public List<Action> getActionsByMember(String usernameOrId) {
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_ACTIONS_URL, usernameOrId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doGet(url));
+		return memberOperations.getActionsByMember(usernameOrId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.MemberService#getCardsByMember(java.lang.String)
-	 */
 	@Override
 	public List<Card> getCardsByMember(String usernameOrId, final String... filter) {
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_CARDS_URL, usernameOrId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
-		}, doGet(url));
+		return memberOperations.getCardsByMember(usernameOrId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.MemberService#getNotificationsByMember(java.lang.String)
-	 */
 	@Override
 	public List<Notification> getNotificationsByMember(String usernameOrId, final String... filter) {
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_NOTIFIACTIONS_URL, usernameOrId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Notification>>() {
-		}, doGet(url));
+		return memberOperations.getNotificationsByMember(usernameOrId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.MemberService#getOrganizationsByMember(java.lang.String)
-	 */
 	@Override
 	public List<Organization> getOrganizationsByMember(String usernameOrId, final String... filter) {
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_ORGANIZATION_URL, usernameOrId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Organization>>() {
-		}, doGet(url));
+		return memberOperations.getOrganizationsByMember(usernameOrId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.MemberService#getOrganizationsInvitedByMember(java.lang.
-	 * String)
-	 */
 	@Override
 	public List<Organization> getOrganizationsInvitedByMember(String usernameOrId, final String... filter) {
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_ORGANIZATION_INVITED_URL, usernameOrId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Organization>>() {
-		}, doGet(url));
+		return memberOperations.getOrganizationsInvitedByMember(usernameOrId, filter);
 	}
 
 	@Override
