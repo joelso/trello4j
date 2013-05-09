@@ -20,6 +20,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.trello4j.core.ActionOperations;
 import org.trello4j.core.DefaultActionOperations;
+import org.trello4j.core.DefaultOrganizationOperations;
+import org.trello4j.core.OrganizationOperations;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Board.Prefs;
@@ -40,17 +42,18 @@ import com.google.gson.reflect.TypeToken;
  */
 public class TrelloImpl implements Trello {
 
-    private static final String METHOD_DELETE   = "DELETE";
-    private static final String METHOD_GET      = "GET";
-    private static final String METHOD_POST     = "POST";
-    private static final String METHOD_PUT      = "PUT";
-	private static final String GZIP_ENCODING   = "gzip";
+	private static final String METHOD_DELETE = "DELETE";
+	private static final String METHOD_GET = "GET";
+	private static final String METHOD_POST = "POST";
+	private static final String METHOD_PUT = "PUT";
+	private static final String GZIP_ENCODING = "gzip";
 
 	private String apiKey = null;
 	private String token = null;
 	private TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
 
 	private final ActionOperations actionOperationsDelegate;
+	private final OrganizationOperations organizationOperationsDelegate;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -61,11 +64,11 @@ public class TrelloImpl implements Trello {
 		this.token = token;
 
 		if (this.apiKey == null) {
-			throw new TrelloException(
-					"API key must be set, get one here: https://trello.com/1/appKey/generate");
+			throw new TrelloException("API key must be set, get one here: https://trello.com/1/appKey/generate");
 		}
-		
+
 		actionOperationsDelegate = new DefaultActionOperations(apiKey, token, trelloObjFactory);
+		organizationOperationsDelegate = new DefaultOrganizationOperations(apiKey, token, trelloObjFactory);
 	}
 
 	/*
@@ -77,10 +80,7 @@ public class TrelloImpl implements Trello {
 	public Board getBoard(final String boardId) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.BOARD_URL, boardId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_URL, boardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
 		}, doGet(url));
@@ -93,15 +93,10 @@ public class TrelloImpl implements Trello {
 	 * java.lang.String[])
 	 */
 	@Override
-	public List<Action> getActionsByBoard(final String boardId,
-			final String... filter) {
+	public List<Action> getActionsByBoard(final String boardId, final String... filter) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.BOARD_ACTIONS_URL, boardId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_ACTIONS_URL, boardId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
 		}, doGet(url));
@@ -116,11 +111,7 @@ public class TrelloImpl implements Trello {
 	public List<Card> getCardsByBoard(String boardId, final String... filter) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.BOARD_CARDS_URL, boardId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_CARDS_URL, boardId).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
 		}, doGet(url));
 	}
@@ -134,10 +125,7 @@ public class TrelloImpl implements Trello {
 	public List<Checklist> getChecklistByBoard(String boardId) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.BOARD_CHECKLISTS_URL, boardId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_CHECKLISTS_URL, boardId).token(token).build();
 		return trelloObjFactory.createObject(new TypeToken<List<Checklist>>() {
 		}, doGet(url));
 	}
@@ -148,19 +136,12 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.BoardService#getListByBoard(java.lang.String)
 	 */
 	@Override
-	public List<org.trello4j.model.List> getListByBoard(String boardId,
-			final String... filter) {
+	public List<org.trello4j.model.List> getListByBoard(String boardId, final String... filter) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.BOARD_LISTS_URL, boardId)
-				.token(token)
-				.filter(filter)
-				.build();
-		return trelloObjFactory.createObject(
-				new TypeToken<List<org.trello4j.model.List>>() {
-				},
-				doGet(url));
+		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_LISTS_URL, boardId).token(token).filter(filter).build();
+		return trelloObjFactory.createObject(new TypeToken<List<org.trello4j.model.List>>() {
+		}, doGet(url));
 	}
 
 	/*
@@ -169,15 +150,10 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.BoardService#getMembersByBoard(java.lang.String)
 	 */
 	@Override
-	public List<Member> getMembersByBoard(String boardId,
-			final String... filter) {
+	public List<Member> getMembersByBoard(String boardId, final String... filter) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.BOARD_MEMBERS_URL, boardId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_MEMBERS_URL, boardId).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
 		}, doGet(url));
 	}
@@ -188,15 +164,10 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.BoardService#getMembersInvitedByBoard(java.lang.String)
 	 */
 	@Override
-	public List<Member> getMembersInvitedByBoard(String boardId,
-			final String... filter) {
+	public List<Member> getMembersInvitedByBoard(String boardId, final String... filter) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.BOARD_MEMBERS_INVITED_URL, boardId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_MEMBERS_INVITED_URL, boardId).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
 		}, doGet(url));
 	}
@@ -210,10 +181,7 @@ public class TrelloImpl implements Trello {
 	public Prefs getPrefsByBoard(String boardId) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.BOARD_PREFS_URL, boardId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_PREFS_URL, boardId).token(token).build();
 		return trelloObjFactory.createObject(new TypeToken<Prefs>() {
 		}, doGet(url));
 	}
@@ -224,32 +192,10 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.BoardService#getOrganizationByBoard(java.lang.String)
 	 */
 	@Override
-	public Organization getOrganizationByBoard(String boardId,
-			final String... filter) {
+	public Organization getOrganizationByBoard(String boardId, final String... filter) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.BOARD_ORGANIZAION_URL, boardId)
-				.token(token)
-				.filter(filter)
-				.build();
-		return trelloObjFactory.createObject(new TypeToken<Organization>() {
-		}, doGet(url));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.OrganizationService#getOrganization(java.lang.String)
-	 */
-	@Override
-	public Organization getOrganization(String organizationName,
-			final String... filter) {
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.ORGANIZATION_URL, organizationName)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_ORGANIZAION_URL, boardId).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<Organization>() {
 		}, doGet(url));
 	}
@@ -261,11 +207,7 @@ public class TrelloImpl implements Trello {
 	 */
 	@Override
 	public Member getMember(String usernameOrId, final String... filter) {
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.MEMBER_URL, usernameOrId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_URL, usernameOrId).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
 		}, doGet(url));
 	}
@@ -276,56 +218,9 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.MemberService#getBoardsByMember(java.lang.String)
 	 */
 	@Override
-	public List<Board> getBoardsByMember(String usernameOrId,
-			final String... filter) {
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.MEMBER_BOARDS_URL, usernameOrId)
-				.token(token)
-				.filter(filter)
-				.build();
+	public List<Board> getBoardsByMember(String usernameOrId, final String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_BOARDS_URL, usernameOrId).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>() {
-		}, doGet(url));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.OrganizationService#getBoardsByOrganization(java.lang.String
-	 * )
-	 */
-	@Override
-	public List<Board> getBoardsByOrganization(String organizationName,
-			final String... filter) {
-		final String url = TrelloURL
-				.create(
-						apiKey,
-						TrelloURL.ORGANIZATION_BOARDS_URL,
-						organizationName)
-				.token(token)
-				.filter(filter)
-				.build();
-		return trelloObjFactory.createObject(new TypeToken<List<Board>>() {
-		}, doGet(url));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.OrganizationService#getActionsByOrganization(java.lang.String
-	 * )
-	 */
-	@Override
-	public List<Action> getActionsByOrganization(String organizationNameOrId) {
-		final String url = TrelloURL
-				.create(
-                        apiKey,
-                        TrelloURL.ORGANIZATION_ACTIONS_URL,
-                        organizationNameOrId)
-				.token(token)
-				.build();
-		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
 		}, doGet(url));
 	}
 
@@ -338,10 +233,7 @@ public class TrelloImpl implements Trello {
 	public Card getCard(final String cardId) {
 		validateObjectId(cardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_URL, cardId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
 		}, doGet(url));
@@ -356,10 +248,7 @@ public class TrelloImpl implements Trello {
 	public List<Action> getActionsByCard(final String cardId) {
 		validateObjectId(cardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_ACTION_URL, cardId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_ACTION_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
 		}, doGet(url));
@@ -374,10 +263,7 @@ public class TrelloImpl implements Trello {
 	public List<Attachment> getAttachmentsByCard(final String cardId) {
 		validateObjectId(cardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_ATTACHEMENT_URL, cardId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_ATTACHEMENT_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Attachment>>() {
 		}, doGet(url));
@@ -392,11 +278,7 @@ public class TrelloImpl implements Trello {
 	public Board getBoardByCard(final String cardId, final String... filter) {
 		validateObjectId(cardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_BOARD_URL, cardId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_BOARD_URL, cardId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
 		}, doGet(url));
@@ -411,10 +293,7 @@ public class TrelloImpl implements Trello {
 	public List<CheckItem> getCheckItemStatesByCard(final String cardId) {
 		validateObjectId(cardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_CHECK_ITEM_STATES_URL, cardId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_CHECK_ITEM_STATES_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<CheckItem>>() {
 		}, doGet(url));
@@ -429,10 +308,7 @@ public class TrelloImpl implements Trello {
 	public List<Checklist> getChecklistByCard(final String cardId) {
 		validateObjectId(cardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_CHECKLISTS_URL, cardId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_CHECKLISTS_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Checklist>>() {
 		}, doGet(url));
@@ -444,20 +320,13 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.CardService#getListByCard(java.lang.String)
 	 */
 	@Override
-	public org.trello4j.model.List getListByCard(final String cardId,
-			final String... filter) {
+	public org.trello4j.model.List getListByCard(final String cardId, final String... filter) {
 		validateObjectId(cardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_LIST_URL, cardId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_LIST_URL, cardId).token(token).filter(filter).build();
 
-		return trelloObjFactory.createObject(
-				new TypeToken<org.trello4j.model.List>() {
-				},
-				doGet(url));
+		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
+		}, doGet(url));
 	}
 
 	/*
@@ -469,10 +338,7 @@ public class TrelloImpl implements Trello {
 	public List<Member> getMembersByCard(final String cardId) {
 		validateObjectId(cardId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_MEMBERS_URL, cardId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_MEMBERS_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
 		}, doGet(url));
@@ -482,13 +348,10 @@ public class TrelloImpl implements Trello {
 	public Card createCard(String idList, String name, Map<String, Object> keyValueMap, String... filter) {
 		validateObjectId(idList);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_POST_URL)
-				.token(token)
-				.filter(filter)
-				.build();
-		if (keyValueMap == null) keyValueMap = new HashMap<String, Object>();
-		//if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_URL).token(token).filter(filter).build();
+		if (keyValueMap == null)
+			keyValueMap = new HashMap<String, Object>();
+		// if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
 		keyValueMap.put("name", name);
 		keyValueMap.put("idList", idList);
 
@@ -500,11 +363,7 @@ public class TrelloImpl implements Trello {
 	public Action commentOnCard(String idCard, String text, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_POST_COMMENTS, idCard)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_COMMENTS, idCard).token(token).filter(filter).build();
 		Map<String, Object> keyValuMap = new HashMap<String, Object>();
 		keyValuMap.put("text", text);
 		return trelloObjFactory.createObject(new TypeToken<Action>() {
@@ -515,42 +374,39 @@ public class TrelloImpl implements Trello {
 	public List<Attachment> attachToCard(String idCard, File file, URL attachmentUrl, String name, String mimeType, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_POST_ATTACHMENTS, idCard)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_ATTACHMENTS, idCard).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
-		if (file != null) keyValueMap.put("file", file);
-		if (attachmentUrl != null) keyValueMap.put("url", attachmentUrl.toString());
-		if (name != null) keyValueMap.put("name", name);
-		if (mimeType != null) keyValueMap.put("mimeType", mimeType);
+		if (file != null)
+			keyValueMap.put("file", file);
+		if (attachmentUrl != null)
+			keyValueMap.put("url", attachmentUrl.toString());
+		if (name != null)
+			keyValueMap.put("name", name);
+		if (mimeType != null)
+			keyValueMap.put("mimeType", mimeType);
 
 		return trelloObjFactory.createObject(new TypeToken<List<Attachment>>() {
 		}, doPost(url, keyValueMap));
 	}
 
 	@Override
-	public Checklist addChecklist(String idCard, String idChecklist, String checklistName, String idChecklistSource,
-								  String... filter) {
+	public Checklist addChecklist(String idCard, String idChecklist, String checklistName, String idChecklistSource, String... filter) {
 		validateObjectId(idCard);
 		if (idChecklist != null) {
 			validateObjectId(idChecklist);
 		}
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_POST_CHECKLISTS, idCard)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_CHECKLISTS, idCard).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		keyValueMap.put("name", checklistName == null ? "Checklist" : checklistName);
-		if (idChecklist != null) keyValueMap.put("value", idChecklist);
-		if (idChecklistSource != null) keyValueMap.put("idChecklistSource",idChecklistSource);
+		if (idChecklist != null)
+			keyValueMap.put("value", idChecklist);
+		if (idChecklistSource != null)
+			keyValueMap.put("idChecklistSource", idChecklistSource);
 
-		return trelloObjFactory.createObject(new TypeToken<Checklist>(){
+		return trelloObjFactory.createObject(new TypeToken<Checklist>() {
 		}, doPost(url, keyValueMap));
 	}
 
@@ -558,15 +414,11 @@ public class TrelloImpl implements Trello {
 	public List<Card.Label> addLabel(String idCard, String label, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_POST_LABELS, idCard)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_LABELS, idCard).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		keyValueMap.put("value", label);
-		return trelloObjFactory.createObject(new TypeToken<List<Card.Label>>(){
+		return trelloObjFactory.createObject(new TypeToken<List<Card.Label>>() {
 		}, doPost(url, keyValueMap));
 	}
 
@@ -574,16 +426,12 @@ public class TrelloImpl implements Trello {
 	public List<Member> addMember(String idCard, String memberId, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_POST_ADD_MEMBER, idCard)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_ADD_MEMBER, idCard).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		keyValueMap.put("value", memberId);
 
-		return trelloObjFactory.createObject(new TypeToken<List<Member>>(){
+		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
 		}, doPost(url, keyValueMap));
 	}
 
@@ -591,11 +439,7 @@ public class TrelloImpl implements Trello {
 	public boolean voteOnCard(String idCard, String memberId, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_POST_VOTE_MEMBER, idCard)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_VOTE_MEMBER, idCard).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		keyValueMap.put("value", memberId);
@@ -614,11 +458,7 @@ public class TrelloImpl implements Trello {
 	public List<Member> getMemberVotesOnCard(String idCard, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_GET_VOTES, idCard)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_GET_VOTES, idCard).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
 		}, doGet(url));
@@ -628,11 +468,7 @@ public class TrelloImpl implements Trello {
 	public boolean deleteCard(String idCard, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_DELETE_CARD, idCard)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_CARD, idCard).token(token).filter(filter).build();
 
 		Response response = doDelete(url);
 		if (response.getCode() < 400) {
@@ -647,11 +483,7 @@ public class TrelloImpl implements Trello {
 	public boolean deleteChecklistFromCard(String idCard, String idList, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_DELETE_CHECKLIST, idCard, idList)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_CHECKLIST, idCard, idList).token(token).filter(filter).build();
 
 		Response response = doDelete(url);
 		if (response.getCode() < 400) {
@@ -666,11 +498,7 @@ public class TrelloImpl implements Trello {
 	public boolean deleteLabelFromCard(String idCard, String color, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_DELETE_LABEL, idCard, color)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_LABEL, idCard, color).token(token).filter(filter).build();
 		Response response = doDelete(url);
 		if (response.getCode() < 400) {
 			return true;
@@ -684,11 +512,7 @@ public class TrelloImpl implements Trello {
 	public boolean deleteMemberFromCard(String idCard, String idMember, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_DELETE_MEMBER, idCard, idMember)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_MEMBER, idCard, idMember).token(token).filter(filter).build();
 		Response response = doDelete(url);
 		if (response.getCode() < 400) {
 			return true;
@@ -702,18 +526,14 @@ public class TrelloImpl implements Trello {
 	public boolean deleteVoteFromCard(String idCard, String memberId, String... filter) {
 		validateObjectId(idCard);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_DELETE_VOTE_MEMBER, idCard, memberId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_VOTE_MEMBER, idCard, memberId).token(token).filter(filter).build();
 
-		Response response =  doDelete(url);
+		Response response = doDelete(url);
 
 		if (response.getCode() < 400) {
 			return true;
 		} else {
-			System.err.println(format("Could not remove vote from card: %s",response.getResponseBody()));
+			System.err.println(format("Could not remove vote from card: %s", response.getResponseBody()));
 			return false;
 		}
 	}
@@ -722,15 +542,10 @@ public class TrelloImpl implements Trello {
 	public org.trello4j.model.List getList(final String listId) {
 		validateObjectId(listId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.LIST_URL, listId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_URL, listId).token(token).build();
 
-		return trelloObjFactory.createObject(
-				new TypeToken<org.trello4j.model.List>() {
-				},
-				doGet(url));
+		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
+		}, doGet(url));
 	}
 
 	/*
@@ -739,15 +554,10 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.NotificationService#getNotification(java.lang.String)
 	 */
 	@Override
-	public Notification getNotification(String notificationId,
-			final String... filter) {
+	public Notification getNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.NOTIFICATION_URL, notificationId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Notification>() {
 		}, doGet(url));
@@ -762,11 +572,7 @@ public class TrelloImpl implements Trello {
 	public Checklist getChecklist(String checklistId, final String... filter) {
 		validateObjectId(checklistId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CHECKLIST_URL, checklistId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CHECKLIST_URL, checklistId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Checklist>() {
 		}, doGet(url));
@@ -779,40 +585,9 @@ public class TrelloImpl implements Trello {
 	 */
 	@Override
 	public Type getType(String idOrName) {
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.TYPE_URL, idOrName)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.TYPE_URL, idOrName).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Type>() {
-		}, doGet(url));
-	}
-
-
-
-	
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.OrganizationService#getMembersByOrganization(java.lang.String
-	 * )
-	 */
-	@Override
-	public List<Member> getMembersByOrganization(String organizationNameOrId,
-			final String... filter) {
-
-		final String url = TrelloURL
-				.create(
-						apiKey,
-						TrelloURL.ORGANIZATION_MEMBERS_URL,
-						organizationNameOrId)
-				.token(token)
-				.filter(filter)
-				.build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
 		}, doGet(url));
 	}
 
@@ -823,18 +598,10 @@ public class TrelloImpl implements Trello {
 	 * org.trello4j.NotificationService#getBoardByNotification(java.lang.String)
 	 */
 	@Override
-	public Board getBoardByNotification(String notificationId,
-			final String... filter) {
+	public Board getBoardByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL
-				.create(
-						apiKey,
-						TrelloURL.NOTIFICATION_BOARDS_URL,
-						notificationId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_BOARDS_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
 		}, doGet(url));
@@ -847,18 +614,10 @@ public class TrelloImpl implements Trello {
 	 * org.trello4j.NotificationService#getCardByNotification(java.lang.String)
 	 */
 	@Override
-	public Card getCardByNotification(String notificationId,
-			final String... filter) {
+	public Card getCardByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL
-				.create(
-						apiKey,
-						TrelloURL.NOTIFICATION_CARDS_URL,
-						notificationId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_CARDS_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
 		}, doGet(url));
@@ -871,20 +630,13 @@ public class TrelloImpl implements Trello {
 	 * org.trello4j.NotificationService#getListByNotification(java.lang.String)
 	 */
 	@Override
-	public org.trello4j.model.List getListByNotification(String notificationId,
-			final String... filter) {
+	public org.trello4j.model.List getListByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.NOTIFICATION_LIST_URL, notificationId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_LIST_URL, notificationId).token(token).filter(filter).build();
 
-		return trelloObjFactory.createObject(
-				new TypeToken<org.trello4j.model.List>() {
-				},
-				doGet(url));
+		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
+		}, doGet(url));
 	}
 
 	/*
@@ -895,18 +647,10 @@ public class TrelloImpl implements Trello {
 	 * )
 	 */
 	@Override
-	public Member getMemberByNotification(String notificationId,
-			final String... filter) {
+	public Member getMemberByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL
-				.create(
-						apiKey,
-						TrelloURL.NOTIFICATION_MEMBERS_URL,
-						notificationId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_MEMBERS_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
 		}, doGet(url));
@@ -920,18 +664,10 @@ public class TrelloImpl implements Trello {
 	 * lang.String)
 	 */
 	@Override
-	public Member getMemberCreatorByNotification(String notificationId,
-			final String... filter) {
+	public Member getMemberCreatorByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL
-				.create(
-						apiKey,
-						TrelloURL.NOTIFICATION_MEMBER_CREATOR_URL,
-						notificationId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_MEMBER_CREATOR_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
 		}, doGet(url));
@@ -945,18 +681,10 @@ public class TrelloImpl implements Trello {
 	 * (java.lang.String)
 	 */
 	@Override
-	public Member getOrganizationCreatorByNotification(String notificationId,
-			final String... filter) {
+	public Member getOrganizationCreatorByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL
-				.create(
-						apiKey,
-						TrelloURL.NOTIFICATION_ORGANIZATION_URL,
-						notificationId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_ORGANIZATION_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
 		}, doGet(url));
@@ -971,10 +699,7 @@ public class TrelloImpl implements Trello {
 	public List<Action> getActionsByList(String listId) {
 		validateObjectId(listId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.LIST_ACTIONS_URL, listId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_ACTIONS_URL, listId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
 		}, doGet(url));
@@ -989,11 +714,7 @@ public class TrelloImpl implements Trello {
 	public Board getBoardByList(String listId, final String... filter) {
 		validateObjectId(listId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.LIST_BOARD_URL, listId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_BOARD_URL, listId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
 		}, doGet(url));
@@ -1008,11 +729,7 @@ public class TrelloImpl implements Trello {
 	public List<Card> getCardsByList(String listId, final String... filter) {
 		validateObjectId(listId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.LIST_CARDS_URL, listId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_CARDS_URL, listId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
 		}, doGet(url));
@@ -1026,10 +743,7 @@ public class TrelloImpl implements Trello {
 	@Override
 	public List<Action> getActionsByMember(String usernameOrId) {
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.MEMBER_ACTIONS_URL, usernameOrId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_ACTIONS_URL, usernameOrId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
 		}, doGet(url));
@@ -1041,14 +755,9 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.MemberService#getCardsByMember(java.lang.String)
 	 */
 	@Override
-	public List<Card> getCardsByMember(String usernameOrId,
-			final String... filter) {
+	public List<Card> getCardsByMember(String usernameOrId, final String... filter) {
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.MEMBER_CARDS_URL, usernameOrId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_CARDS_URL, usernameOrId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
 		}, doGet(url));
@@ -1061,22 +770,12 @@ public class TrelloImpl implements Trello {
 	 * org.trello4j.MemberService#getNotificationsByMember(java.lang.String)
 	 */
 	@Override
-	public List<Notification> getNotificationsByMember(String usernameOrId,
-			final String... filter) {
+	public List<Notification> getNotificationsByMember(String usernameOrId, final String... filter) {
 
-		final String url = TrelloURL
-				.create(
-						apiKey,
-						TrelloURL.MEMBER_NOTIFIACTIONS_URL,
-						usernameOrId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_NOTIFIACTIONS_URL, usernameOrId).token(token).filter(filter).build();
 
-		return trelloObjFactory.createObject(
-				new TypeToken<List<Notification>>() {
-				},
-				doGet(url));
+		return trelloObjFactory.createObject(new TypeToken<List<Notification>>() {
+		}, doGet(url));
 	}
 
 	/*
@@ -1086,19 +785,12 @@ public class TrelloImpl implements Trello {
 	 * org.trello4j.MemberService#getOrganizationsByMember(java.lang.String)
 	 */
 	@Override
-	public List<Organization> getOrganizationsByMember(String usernameOrId,
-			final String... filter) {
+	public List<Organization> getOrganizationsByMember(String usernameOrId, final String... filter) {
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.MEMBER_ORGANIZATION_URL, usernameOrId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_ORGANIZATION_URL, usernameOrId).token(token).filter(filter).build();
 
-		return trelloObjFactory.createObject(
-				new TypeToken<List<Organization>>() {
-				},
-				doGet(url));
+		return trelloObjFactory.createObject(new TypeToken<List<Organization>>() {
+		}, doGet(url));
 	}
 
 	/*
@@ -1109,22 +801,12 @@ public class TrelloImpl implements Trello {
 	 * String)
 	 */
 	@Override
-	public List<Organization> getOrganizationsInvitedByMember(
-			String usernameOrId, final String... filter) {
+	public List<Organization> getOrganizationsInvitedByMember(String usernameOrId, final String... filter) {
 
-		final String url = TrelloURL
-				.create(
-						apiKey,
-						TrelloURL.MEMBER_ORGANIZATION_INVITED_URL,
-						usernameOrId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_ORGANIZATION_INVITED_URL, usernameOrId).token(token).filter(filter).build();
 
-		return trelloObjFactory.createObject(
-				new TypeToken<List<Organization>>() {
-				},
-				doGet(url));
+		return trelloObjFactory.createObject(new TypeToken<List<Organization>>() {
+		}, doGet(url));
 	}
 
 	/*
@@ -1133,15 +815,10 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.ChecklistService#getBoardByChecklist(java.lang.String)
 	 */
 	@Override
-	public Board
-			getBoardByChecklist(String checklistId, final String... filter) {
+	public Board getBoardByChecklist(String checklistId, final String... filter) {
 		validateObjectId(checklistId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CHECKLIST_BOARD_URL, checklistId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CHECKLIST_BOARD_URL, checklistId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
 		}, doGet(url));
@@ -1157,10 +834,7 @@ public class TrelloImpl implements Trello {
 	public List<CheckItem> getCheckItemsByChecklist(String checklistId) {
 		validateObjectId(checklistId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CHECKLIST_CHECKITEMS_URL, checklistId)
-				.token(token)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CHECKLIST_CHECKITEMS_URL, checklistId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<CheckItem>>() {
 		}, doGet(url));
@@ -1172,15 +846,10 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.ChecklistService#getCardByChecklist(java.lang.String)
 	 */
 	@Override
-	public List<Card> getCardByChecklist(String checklistId,
-			final String... filter) {
+	public List<Card> getCardByChecklist(String checklistId, final String... filter) {
 		validateObjectId(checklistId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CHECKLIST_CARDS_URL, checklistId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CHECKLIST_CARDS_URL, checklistId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
 		}, doGet(url));
@@ -1195,11 +864,7 @@ public class TrelloImpl implements Trello {
 	public Token getToken(String tokenId, final String... filter) {
 		// validateObjectId(tokenId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.TOKENS_URL, tokenId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.TOKENS_URL, tokenId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Token>() {
 		}, doGet(url));
@@ -1214,11 +879,7 @@ public class TrelloImpl implements Trello {
 	public Member getMemberByToken(String tokenId, final String... filter) {
 		// validateObjectId(tokenId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.TOKENS_MEMBER_URL, tokenId)
-				.token(token)
-				.filter(filter)
-				.build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.TOKENS_MEMBER_URL, tokenId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
 		}, doGet(url));
@@ -1245,22 +906,23 @@ public class TrelloImpl implements Trello {
 	}
 
 	private InputStream doRequest(String url, String requestMethod) {
-        final Response response = doRequest(url, requestMethod, null);
-        return response != null ? response.getInputStream() : null;
+		final Response response = doRequest(url, requestMethod, null);
+		return response != null ? response.getInputStream() : null;
 	}
 
 	/**
-	 * Execute a POST request with URL-encoded key-value parameter pairs.
-	 * For a POST having an attachment, multipart/form-data will be used.
-	 *
-	 * @param url Trello API URL.
-	 * @param map Key-value map.
+	 * Execute a POST request with URL-encoded key-value parameter pairs. For a
+	 * POST having an attachment, multipart/form-data will be used.
+	 * 
+	 * @param url
+	 *            Trello API URL.
+	 * @param map
+	 *            Key-value map.
 	 * @return the response input stream.
 	 */
 	private Response doRequest(String url, String requestMethod, Map<String, Object> map) {
 		try {
-			HttpsURLConnection conn = (HttpsURLConnection) new URL(url)
-					.openConnection();
+			HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
 			conn.setDoOutput(requestMethod.equals(METHOD_POST) || requestMethod.equals(METHOD_PUT));
 			conn.setRequestMethod(requestMethod);
@@ -1268,16 +930,14 @@ public class TrelloImpl implements Trello {
 			if (map != null && !map.isEmpty()) {
 				boolean bAllStringValues = true;
 				for (Object value : map.values()) {
-					if (!(value instanceof String)) bAllStringValues = false;
+					if (!(value instanceof String))
+						bAllStringValues = false;
 				}
 
 				if (bAllStringValues) {
 					StringBuilder sb = new StringBuilder();
 					for (String key : map.keySet()) {
-						sb.append(sb.length() > 0 ? "&" : "")
-								.append(key)
-								.append("=")
-								.append(URLEncoder.encode((String) map.get(key), "UTF-8"));
+						sb.append(sb.length() > 0 ? "&" : "").append(key).append("=").append(URLEncoder.encode((String) map.get(key), "UTF-8"));
 					}
 					conn.getOutputStream().write(sb.toString().getBytes());
 					conn.getOutputStream().close();
@@ -1323,20 +983,13 @@ public class TrelloImpl implements Trello {
 				}
 			}
 
-            final int responseCode = conn.getResponseCode();
-            if (responseCode == 404) {
-                return null;
-            } else if (responseCode > 399) {
-                return new Response(conn.getErrorStream(), conn.getResponseMessage(), responseCode);
+			final int responseCode = conn.getResponseCode();
+			if (responseCode == 404) {
+				return null;
+			} else if (responseCode > 399) {
+				return new Response(conn.getErrorStream(), conn.getResponseMessage(), responseCode);
 			} else {
-				return new Response(
-						getWrappedInputStream(
-								conn.getInputStream(),
-								GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding())
-						),
-						conn.getResponseMessage(),
-                        responseCode
-				);
+				return new Response(getWrappedInputStream(conn.getInputStream(), GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding())), conn.getResponseMessage(), responseCode);
 			}
 		} catch (IOException e) {
 			throw new TrelloException(e.getMessage());
@@ -1349,8 +1002,7 @@ public class TrelloImpl implements Trello {
 		}
 	}
 
-	private InputStream getWrappedInputStream(InputStream is, boolean gzip)
-			throws IOException {
+	private InputStream getWrappedInputStream(InputStream is, boolean gzip) throws IOException {
 		/*
 		 * TODO: What about this? ---------------------- "Java clients which use
 		 * java.util.zip.GZIPInputStream() and wrap it with a
@@ -1402,6 +1054,26 @@ public class TrelloImpl implements Trello {
 	@Override
 	public org.trello4j.model.List getListByAction(String actionId, String... filter) {
 		return actionOperationsDelegate.getListByAction(actionId, filter);
+	}
+
+	@Override
+	public Organization getOrganization(String organizationNameOrId, String... filter) {
+		return organizationOperationsDelegate.getOrganization(organizationNameOrId, filter);
+	}
+
+	@Override
+	public List<Board> getBoardsByOrganization(String organizationNameOrId, String... filter) {
+		return organizationOperationsDelegate.getBoardsByOrganization(organizationNameOrId, filter);
+	}
+
+	@Override
+	public List<Action> getActionsByOrganization(String organizationNameOrId) {
+		return organizationOperationsDelegate.getActionsByOrganization(organizationNameOrId);
+	}
+
+	@Override
+	public List<Member> getMembersByOrganization(String organizationNameOrId, String... filter) {
+		return organizationOperationsDelegate.getMembersByOrganization(organizationNameOrId, filter);
 	}
 
 }
