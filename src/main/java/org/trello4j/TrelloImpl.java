@@ -1,12 +1,7 @@
 package org.trello4j;
 
-import com.google.gson.reflect.TypeToken;
-import org.trello4j.model.*;
-import org.trello4j.model.Board.Prefs;
-import org.trello4j.model.Card.Attachment;
-import org.trello4j.model.Checklist.CheckItem;
+import static java.lang.String.format;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -21,7 +16,24 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.zip.GZIPInputStream;
 
-import static java.lang.String.format;
+import javax.net.ssl.HttpsURLConnection;
+
+import org.trello4j.core.ActionOperations;
+import org.trello4j.core.DefaultActionOperations;
+import org.trello4j.model.Action;
+import org.trello4j.model.Board;
+import org.trello4j.model.Board.Prefs;
+import org.trello4j.model.Card;
+import org.trello4j.model.Card.Attachment;
+import org.trello4j.model.Checklist;
+import org.trello4j.model.Checklist.CheckItem;
+import org.trello4j.model.Member;
+import org.trello4j.model.Notification;
+import org.trello4j.model.Organization;
+import org.trello4j.model.Token;
+import org.trello4j.model.Type;
+
+import com.google.gson.reflect.TypeToken;
 
 /**
  * The Class TrelloImpl.
@@ -38,6 +50,7 @@ public class TrelloImpl implements Trello {
 	private String token = null;
 	private TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
 
+	private final ActionOperations actionOperationsDelegate;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -51,6 +64,8 @@ public class TrelloImpl implements Trello {
 			throw new TrelloException(
 					"API key must be set, get one here: https://trello.com/1/appKey/generate");
 		}
+		
+		actionOperationsDelegate = new DefaultActionOperations(apiKey, token, trelloObjFactory);
 	}
 
 	/*
@@ -219,25 +234,6 @@ public class TrelloImpl implements Trello {
 				.filter(filter)
 				.build();
 		return trelloObjFactory.createObject(new TypeToken<Organization>() {
-		}, doGet(url));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ActionService#getAction(java.lang.String)
-	 */
-	@Override
-	public Action getAction(final String actionId, final String... filter) {
-		validateObjectId(actionId);
-
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.ACTION_URL, actionId)
-				.token(token)
-				.filter(filter)
-				.build();
-
-		return trelloObjFactory.createObject(new TypeToken<Action>() {
 		}, doGet(url));
 	}
 
@@ -792,125 +788,9 @@ public class TrelloImpl implements Trello {
 		}, doGet(url));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ActionService#getBoardByAction(java.lang.String)
-	 */
-	@Override
-	public Board getBoardByAction(String actionId, final String... filter) {
-		validateObjectId(actionId);
 
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.ACTION_BOARD_URL, actionId)
-				.token(token)
-				.filter(filter)
-				.build();
 
-		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doGet(url));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ActionService#getCardByAction(java.lang.String)
-	 */
-	@Override
-	public Card getCardByAction(String actionId, final String... filter) {
-		validateObjectId(actionId);
-
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.ACTION_CARD_URL, actionId)
-				.token(token)
-				.filter(filter)
-				.build();
-
-		return trelloObjFactory.createObject(new TypeToken<Card>() {
-		}, doGet(url));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ActionService#getMemberByAction(java.lang.String)
-	 */
-	@Override
-	public Member getMemberByAction(String actionId, final String... filter) {
-		validateObjectId(actionId);
-
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.ACTION_MEMBER_URL, actionId)
-				.token(token)
-				.filter(filter)
-				.build();
-
-		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doGet(url));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ActionService#getListByAction(java.lang.String)
-	 */
-	@Override
-	public org.trello4j.model.List getListByAction(String actionId,
-			final String... filter) {
-		validateObjectId(actionId);
-
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.ACTION_LIST_URL, actionId)
-				.token(token)
-				.filter(filter)
-				.build();
-
-		return trelloObjFactory.createObject(
-				new TypeToken<org.trello4j.model.List>() {
-				},
-				doGet(url));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.ActionService#getMemberCreatorByAction(java.lang.String)
-	 */
-	@Override
-	public Member getMemberCreatorByAction(String actionId,
-			final String... filter) {
-		validateObjectId(actionId);
-
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.ACTION_MEMBERCREATOR_URL, actionId)
-				.token(token)
-				.filter(filter)
-				.build();
-
-		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doGet(url));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ActionService#getOrganizationByAction(java.lang.String)
-	 */
-	@Override
-	public Organization getOrganizationByAction(String actionId,
-			final String... filter) {
-		validateObjectId(actionId);
-
-		final String url = TrelloURL
-				.create(apiKey, TrelloURL.ACTION_ORGANIZATION_URL, actionId)
-				.token(token)
-				.filter(filter)
-				.build();
-
-		return trelloObjFactory.createObject(new TypeToken<Organization>() {
-		}, doGet(url));
-	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -1487,6 +1367,41 @@ public class TrelloImpl implements Trello {
 		} else {
 			return new BufferedInputStream(is);
 		}
+	}
+
+	@Override
+	public Action getAction(String actionId, String... filter) {
+		return actionOperationsDelegate.getAction(actionId, filter);
+	}
+
+	@Override
+	public Board getBoardByAction(String actionId, String... filter) {
+		return actionOperationsDelegate.getBoardByAction(actionId, filter);
+	}
+
+	@Override
+	public Card getCardByAction(String actionId, String... filter) {
+		return actionOperationsDelegate.getCardByAction(actionId, filter);
+	}
+
+	@Override
+	public Member getMemberByAction(String actionId, String... filter) {
+		return actionOperationsDelegate.getMemberByAction(actionId, filter);
+	}
+
+	@Override
+	public Member getMemberCreatorByAction(String actionId, String... filter) {
+		return actionOperationsDelegate.getMemberCreatorByAction(actionId, filter);
+	}
+
+	@Override
+	public Organization getOrganizationByAction(String actionId, String... filter) {
+		return actionOperationsDelegate.getOrganizationByAction(actionId, filter);
+	}
+
+	@Override
+	public org.trello4j.model.List getListByAction(String actionId, String... filter) {
+		return actionOperationsDelegate.getListByAction(actionId, filter);
 	}
 
 }
