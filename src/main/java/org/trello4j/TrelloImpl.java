@@ -19,8 +19,10 @@ import java.util.zip.GZIPInputStream;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.trello4j.core.ActionOperations;
+import org.trello4j.core.BoardOperations;
 import org.trello4j.core.ChecklistOperations;
 import org.trello4j.core.DefaultActionOperations;
+import org.trello4j.core.DefaultBoardOperations;
 import org.trello4j.core.DefaultChecklistOperations;
 import org.trello4j.core.DefaultListOperations;
 import org.trello4j.core.DefaultMemberOperations;
@@ -63,6 +65,7 @@ public class TrelloImpl implements Trello {
 	private final ListOperations listOperationsDelegate;
 	private final ChecklistOperations checklistOperations;
 	private final MemberOperations memberOperations;
+	private final BoardOperations boardOperations;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -81,135 +84,52 @@ public class TrelloImpl implements Trello {
 		listOperationsDelegate = new DefaultListOperations(apiKey, token, trelloObjFactory);
 		checklistOperations = new DefaultChecklistOperations(apiKey, token, trelloObjFactory);
 		memberOperations = new DefaultMemberOperations(apiKey, token, trelloObjFactory);
+		boardOperations = new DefaultBoardOperations(apiKey, token, trelloObjFactory);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.BoardService#getBoard(java.lang.String)
-	 */
 	@Override
 	public Board getBoard(final String boardId) {
-		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_URL, boardId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doGet(url));
+		return boardOperations.getBoard(boardId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.BoardService#getActionsByBoard(java.lang.String,
-	 * java.lang.String[])
-	 */
 	@Override
 	public List<Action> getActionsByBoard(final String boardId, final String... filter) {
-		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_ACTIONS_URL, boardId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doGet(url));
+		return boardOperations.getActionsByBoard(boardId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.BoardService#getCardsByBoard(java.lang.String)
-	 */
 	@Override
 	public List<Card> getCardsByBoard(String boardId, final String... filter) {
-		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_CARDS_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
-		}, doGet(url));
+		return boardOperations.getCardsByBoard(boardId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.BoardService#getChecklistByBoard(java.lang.String)
-	 */
 	@Override
 	public List<Checklist> getChecklistByBoard(String boardId) {
-		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_CHECKLISTS_URL, boardId).token(token).build();
-		return trelloObjFactory.createObject(new TypeToken<List<Checklist>>() {
-		}, doGet(url));
+		return boardOperations.getChecklistByBoard(boardId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.BoardService#getListByBoard(java.lang.String)
-	 */
 	@Override
 	public List<org.trello4j.model.List> getListByBoard(String boardId, final String... filter) {
-		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_LISTS_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<List<org.trello4j.model.List>>() {
-		}, doGet(url));
+		return boardOperations.getListByBoard(boardId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.BoardService#getMembersByBoard(java.lang.String)
-	 */
 	@Override
 	public List<Member> getMembersByBoard(String boardId, final String... filter) {
-		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_MEMBERS_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doGet(url));
+		return boardOperations.getMembersByBoard(boardId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.BoardService#getMembersInvitedByBoard(java.lang.String)
-	 */
 	@Override
 	public List<Member> getMembersInvitedByBoard(String boardId, final String... filter) {
-		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_MEMBERS_INVITED_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doGet(url));
+		return boardOperations.getMembersInvitedByBoard(boardId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.BoardService#getPrefsByBoard(java.lang.String)
-	 */
 	@Override
 	public Prefs getPrefsByBoard(String boardId) {
-		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_PREFS_URL, boardId).token(token).build();
-		return trelloObjFactory.createObject(new TypeToken<Prefs>() {
-		}, doGet(url));
+		return boardOperations.getPrefsByBoard(boardId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.BoardService#getOrganizationByBoard(java.lang.String)
-	 */
 	@Override
 	public Organization getOrganizationByBoard(String boardId, final String... filter) {
-		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_ORGANIZAION_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<Organization>() {
-		}, doGet(url));
+		return boardOperations.getOrganizationByBoard(boardId, filter);
 	}
 
 	@Override
