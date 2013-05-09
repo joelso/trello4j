@@ -19,7 +19,9 @@ import java.util.zip.GZIPInputStream;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.trello4j.core.ActionOperations;
+import org.trello4j.core.ChecklistOperations;
 import org.trello4j.core.DefaultActionOperations;
+import org.trello4j.core.DefaultChecklistOperations;
 import org.trello4j.core.DefaultListOperations;
 import org.trello4j.core.DefaultOrganizationOperations;
 import org.trello4j.core.ListOperations;
@@ -57,6 +59,7 @@ public class TrelloImpl implements Trello {
 	private final ActionOperations actionOperationsDelegate;
 	private final OrganizationOperations organizationOperationsDelegate;
 	private final ListOperations listOperationsDelegate;
+	private final ChecklistOperations checklistOperations;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -73,6 +76,7 @@ public class TrelloImpl implements Trello {
 		actionOperationsDelegate = new DefaultActionOperations(apiKey, token, trelloObjFactory);
 		organizationOperationsDelegate = new DefaultOrganizationOperations(apiKey, token, trelloObjFactory);
 		listOperationsDelegate = new DefaultListOperations(apiKey, token, trelloObjFactory);
+		checklistOperations = new DefaultChecklistOperations(apiKey, token, trelloObjFactory);
 	}
 
 	/*
@@ -562,26 +566,11 @@ public class TrelloImpl implements Trello {
 		}, doGet(url));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ChecklistService#getChecklist(java.lang.String)
-	 */
 	@Override
 	public Checklist getChecklist(String checklistId, final String... filter) {
-		validateObjectId(checklistId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CHECKLIST_URL, checklistId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Checklist>() {
-		}, doGet(url));
+		return checklistOperations.getChecklist(checklistId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.Trello#getType(java.lang.String)
-	 */
 	@Override
 	public Type getType(String idOrName) {
 		final String url = TrelloURL.create(apiKey, TrelloURL.TYPE_URL, idOrName).token(token).build();
@@ -773,57 +762,21 @@ public class TrelloImpl implements Trello {
 		}, doGet(url));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ChecklistService#getBoardByChecklist(java.lang.String)
-	 */
 	@Override
 	public Board getBoardByChecklist(String checklistId, final String... filter) {
-		validateObjectId(checklistId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CHECKLIST_BOARD_URL, checklistId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doGet(url));
+		return checklistOperations.getBoardByChecklist(checklistId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.ChecklistService#getCheckItemsByChecklist(java.lang.String)
-	 */
 	@Override
 	public List<CheckItem> getCheckItemsByChecklist(String checklistId) {
-		validateObjectId(checklistId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CHECKLIST_CHECKITEMS_URL, checklistId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<CheckItem>>() {
-		}, doGet(url));
+		return checklistOperations.getCheckItemsByChecklist(checklistId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.ChecklistService#getCardByChecklist(java.lang.String)
-	 */
 	@Override
 	public List<Card> getCardByChecklist(String checklistId, final String... filter) {
-		validateObjectId(checklistId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CHECKLIST_CARDS_URL, checklistId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
-		}, doGet(url));
+		return getCardByChecklist(checklistId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.TokenService#getToken(java.lang.String)
-	 */
 	@Override
 	public Token getToken(String tokenId, final String... filter) {
 		// validateObjectId(tokenId);
