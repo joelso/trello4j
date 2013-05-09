@@ -1,4 +1,4 @@
-package org.trello4j;
+package org.trello4j.core;
 
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
@@ -28,7 +28,7 @@ import org.trello4j.model.Notification;
  * 
  * @author joel
  */
-public interface NotificationService {
+public interface NotificationOperations {
 
 	/**
 	 * Gets the notification.

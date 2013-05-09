@@ -1,4 +1,4 @@
-package org.trello4j;
+package org.trello4j.core;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import org.trello4j.model.Organization;
  * 
  * @author joel
  */
-public interface MemberService {
+public interface MemberOperations {
 
 	/**
 	 * Get member of given username.

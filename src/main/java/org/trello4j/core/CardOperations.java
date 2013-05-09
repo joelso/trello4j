@@ -1,4 +1,4 @@
-package org.trello4j;
+package org.trello4j.core;
 
 import java.io.File;
 import java.net.URL;
@@ -18,7 +18,7 @@ import org.trello4j.model.Member;
  * 
  * @author 
  */
-public interface CardService {
+public interface CardOperations {
 
 	Card getCard(String cardId);
 

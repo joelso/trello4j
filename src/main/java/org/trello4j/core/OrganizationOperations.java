@@ -1,4 +1,4 @@
-package org.trello4j;
+package org.trello4j.core;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ import org.trello4j.model.Organization;
  * 
  * @author joel
  */
-public interface OrganizationService {
+public interface OrganizationOperations {
 
 	/**
 	 * Get organization of given ID or name.

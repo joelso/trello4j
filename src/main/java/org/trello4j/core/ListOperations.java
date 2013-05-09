@@ -1,4 +1,4 @@
-package org.trello4j;
+package org.trello4j.core;
 
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
@@ -10,7 +10,7 @@ import org.trello4j.model.List;
  * 
  * @author joel
  */
-public interface ListService {
+public interface ListOperations {
 
 	/**
 	 * Gets the list.

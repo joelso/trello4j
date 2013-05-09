@@ -1,4 +1,4 @@
-package org.trello4j;
+package org.trello4j.core;
 
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
@@ -10,7 +10,7 @@ import org.trello4j.model.Checklist.CheckItem;
  * 
  * @author joel
  */
-public interface ChecklistService {
+public interface ChecklistOperations {
 
 	/**
 	 * Get checklist by given id.

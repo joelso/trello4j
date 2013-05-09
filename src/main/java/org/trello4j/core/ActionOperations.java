@@ -1,4 +1,4 @@
-package org.trello4j;
+package org.trello4j.core;
 
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
@@ -12,7 +12,7 @@ import org.trello4j.model.Organization;
  * 
  * @author joel
  */
-public interface ActionService {
+public interface ActionOperations {
 
 	Action getAction(String actionId, String... filter);
 
