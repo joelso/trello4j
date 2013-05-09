@@ -26,9 +26,11 @@ import org.trello4j.core.DefaultBoardOperations;
 import org.trello4j.core.DefaultChecklistOperations;
 import org.trello4j.core.DefaultListOperations;
 import org.trello4j.core.DefaultMemberOperations;
+import org.trello4j.core.DefaultNotificationOperations;
 import org.trello4j.core.DefaultOrganizationOperations;
 import org.trello4j.core.ListOperations;
 import org.trello4j.core.MemberOperations;
+import org.trello4j.core.NotificationOperations;
 import org.trello4j.core.OrganizationOperations;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
@@ -66,6 +68,7 @@ public class TrelloImpl implements Trello {
 	private final ChecklistOperations checklistOperations;
 	private final MemberOperations memberOperations;
 	private final BoardOperations boardOperations;
+	private final NotificationOperations notificationOperations;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -85,6 +88,7 @@ public class TrelloImpl implements Trello {
 		checklistOperations = new DefaultChecklistOperations(apiKey, token, trelloObjFactory);
 		memberOperations = new DefaultMemberOperations(apiKey, token, trelloObjFactory);
 		boardOperations = new DefaultBoardOperations(apiKey, token, trelloObjFactory);
+		notificationOperations = new DefaultNotificationOperations(apiKey, token, trelloObjFactory);
 	}
 
 	@Override
@@ -461,19 +465,9 @@ public class TrelloImpl implements Trello {
 		return listOperationsDelegate.getList(listId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.NotificationService#getNotification(java.lang.String)
-	 */
 	@Override
 	public Notification getNotification(String notificationId, final String... filter) {
-		validateObjectId(notificationId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_URL, notificationId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Notification>() {
-		}, doGet(url));
+		return notificationOperations.getNotification(notificationId, filter);
 	}
 
 	@Override
@@ -489,103 +483,34 @@ public class TrelloImpl implements Trello {
 		}, doGet(url));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.NotificationService#getBoardByNotification(java.lang.String)
-	 */
 	@Override
 	public Board getBoardByNotification(String notificationId, final String... filter) {
-		validateObjectId(notificationId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_BOARDS_URL, notificationId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doGet(url));
+		return notificationOperations.getBoardByNotification(notificationId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.NotificationService#getCardByNotification(java.lang.String)
-	 */
 	@Override
 	public Card getCardByNotification(String notificationId, final String... filter) {
-		validateObjectId(notificationId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_CARDS_URL, notificationId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Card>() {
-		}, doGet(url));
+		return notificationOperations.getCardByNotification(notificationId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.NotificationService#getListByNotification(java.lang.String)
-	 */
 	@Override
 	public org.trello4j.model.List getListByNotification(String notificationId, final String... filter) {
-		validateObjectId(notificationId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_LIST_URL, notificationId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
-		}, doGet(url));
+		return notificationOperations.getListByNotification(notificationId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.NotificationService#getMemberByNotification(java.lang.String
-	 * )
-	 */
 	@Override
 	public Member getMemberByNotification(String notificationId, final String... filter) {
-		validateObjectId(notificationId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_MEMBERS_URL, notificationId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doGet(url));
+		return notificationOperations.getMemberByNotification(notificationId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.NotificationService#getMemberCreatorByNotification(java.
-	 * lang.String)
-	 */
 	@Override
 	public Member getMemberCreatorByNotification(String notificationId, final String... filter) {
-		validateObjectId(notificationId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_MEMBER_CREATOR_URL, notificationId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doGet(url));
+		return notificationOperations.getMemberCreatorByNotification(notificationId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.trello4j.NotificationService#getOrganizationCreatorByNotification
-	 * (java.lang.String)
-	 */
 	@Override
 	public Member getOrganizationCreatorByNotification(String notificationId, final String... filter) {
-		validateObjectId(notificationId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_ORGANIZATION_URL, notificationId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doGet(url));
+		return notificationOperations.getOrganizationCreatorByNotification(notificationId, filter);
 	}
 
 	@Override
