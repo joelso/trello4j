@@ -1,4 +1,4 @@
-package org.trello4j;
+package org.trello4j.core;
 
 import org.trello4j.model.Member;
 import org.trello4j.model.Token;
@@ -6,7 +6,7 @@ import org.trello4j.model.Token;
 /**
  * The Interface TokenService.
  */
-public interface TokenService {
+public interface TokenOperations {
 
 	/**
 	 * Gets the token.
