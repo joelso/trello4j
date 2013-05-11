@@ -109,21 +109,6 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public Card createCard(String idList, String name, Map<String, Object> keyValueMap, String... filter) {
-		validateObjectId(idList);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_URL).token(token).filter(filter).build();
-		if (keyValueMap == null)
-			keyValueMap = new HashMap<String, Object>();
-		// if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
-		keyValueMap.put("name", name);
-		keyValueMap.put("idList", idList);
-
-		return trelloObjFactory.createObject(new TypeToken<Card>() {
-		}, doPost(url, keyValueMap));
-	}
-
-	@Override
 	public Action commentOnCard(String idCard, String text, String... filter) {
 		validateObjectId(idCard);
 

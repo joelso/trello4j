@@ -3,7 +3,6 @@ package org.trello4j.core;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
@@ -35,8 +34,6 @@ public interface CardOperations {
 	org.trello4j.model.List getListByCard(String cardId, String... filter);
 
 	List<Member> getMembersByCard(String cardId);
-
-	Card createCard(String idList, String name, Map<String, Object> keyValueMap, String... filter);
 
 	Action commentOnCard(String idCard, String text, String... filter);
 

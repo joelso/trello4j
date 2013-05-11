@@ -1,6 +1,8 @@
 package org.trello4j.core;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.trello4j.TrelloObjectFactoryImpl;
 import org.trello4j.TrelloURL;
@@ -25,6 +27,21 @@ public class DefaultListOperations extends AbstractOperations implements ListOpe
 
 		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
 		}, doGet(url));
+	}
+
+	@Override
+	public Card createCard(String idList, String name, Map<String, Object> keyValueMap, String... filter) {
+		validateObjectId(idList);
+
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_URL).token(token).filter(filter).build();
+		if (keyValueMap == null)
+			keyValueMap = new HashMap<String, Object>();
+		// if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
+		keyValueMap.put("name", name);
+		keyValueMap.put("idList", idList);
+
+		return trelloObjFactory.createObject(new TypeToken<Card>() {
+		}, doPost(url, keyValueMap));
 	}
 
 	@Override
