@@ -16,7 +16,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class DefaultBoardOperations extends AbstractOperations implements BoardOperations {
 
-	public DefaultBoardOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
+	DefaultBoardOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
 	}
 

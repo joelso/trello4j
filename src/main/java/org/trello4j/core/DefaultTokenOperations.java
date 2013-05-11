@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class DefaultTokenOperations extends AbstractOperations implements TokenOperations {
 
-	public DefaultTokenOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
+	DefaultTokenOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
 	}
 

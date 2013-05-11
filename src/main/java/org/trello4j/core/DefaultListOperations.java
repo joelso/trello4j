@@ -14,7 +14,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class DefaultListOperations extends AbstractOperations implements ListOperations {
 
-	public DefaultListOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
+	DefaultListOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
 	}
 

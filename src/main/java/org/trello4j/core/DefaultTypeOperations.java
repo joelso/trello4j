@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class DefaultTypeOperations extends AbstractOperations implements TypeOperations {
 
-	public DefaultTypeOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
+	DefaultTypeOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
 	}
 

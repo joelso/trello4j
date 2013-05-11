@@ -23,7 +23,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class DefaultCardOperations extends AbstractOperations implements CardOperations {
 
-	public DefaultCardOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
+	DefaultCardOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
 	}
 

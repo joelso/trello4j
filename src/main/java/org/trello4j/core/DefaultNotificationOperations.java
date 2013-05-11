@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class DefaultNotificationOperations extends AbstractOperations implements NotificationOperations {
 
-	public DefaultNotificationOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
+	DefaultNotificationOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
 	}
 

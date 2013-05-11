@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class DefaultOrganizationOperations extends AbstractOperations implements OrganizationOperations {
 
-	public DefaultOrganizationOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
+	DefaultOrganizationOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
 	}
 

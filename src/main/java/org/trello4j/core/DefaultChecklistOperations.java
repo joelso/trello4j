@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class DefaultChecklistOperations extends AbstractOperations implements ChecklistOperations {
 
-	public DefaultChecklistOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
+	DefaultChecklistOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
 	}
 
