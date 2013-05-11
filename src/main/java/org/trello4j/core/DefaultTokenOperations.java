@@ -11,7 +11,6 @@ public class DefaultTokenOperations extends AbstractOperations implements TokenO
 
 	public DefaultTokenOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

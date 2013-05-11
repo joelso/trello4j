@@ -16,7 +16,6 @@ public class DefaultListOperations extends AbstractOperations implements ListOpe
 
 	public DefaultListOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

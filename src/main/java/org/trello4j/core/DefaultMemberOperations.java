@@ -17,7 +17,6 @@ public class DefaultMemberOperations extends AbstractOperations implements Membe
 
 	public DefaultMemberOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

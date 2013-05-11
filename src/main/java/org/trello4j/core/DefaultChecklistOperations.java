@@ -15,7 +15,6 @@ public class DefaultChecklistOperations extends AbstractOperations implements Ch
 
 	public DefaultChecklistOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

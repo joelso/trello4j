@@ -25,7 +25,6 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 
 	public DefaultCardOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

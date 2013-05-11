@@ -13,7 +13,6 @@ public class DefaultNotificationOperations extends AbstractOperations implements
 
 	public DefaultNotificationOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -18,7 +18,6 @@ public class DefaultBoardOperations extends AbstractOperations implements BoardO
 
 	public DefaultBoardOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		super(apiKey, token, trelloObjFactory);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
