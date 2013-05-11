@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Test;
+import org.trello4j.core.TrelloTemplate;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Board.PERMISSION_TYPE;

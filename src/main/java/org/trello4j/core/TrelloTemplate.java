@@ -1,25 +1,8 @@
-package org.trello4j;
+package org.trello4j.core;
 
-import org.trello4j.core.ActionOperations;
-import org.trello4j.core.BoardOperations;
-import org.trello4j.core.CardOperations;
-import org.trello4j.core.ChecklistOperations;
-import org.trello4j.core.DefaultActionOperations;
-import org.trello4j.core.DefaultBoardOperations;
-import org.trello4j.core.DefaultCardOperations;
-import org.trello4j.core.DefaultChecklistOperations;
-import org.trello4j.core.DefaultListOperations;
-import org.trello4j.core.DefaultMemberOperations;
-import org.trello4j.core.DefaultNotificationOperations;
-import org.trello4j.core.DefaultOrganizationOperations;
-import org.trello4j.core.DefaultTokenOperations;
-import org.trello4j.core.DefaultTypeOperations;
-import org.trello4j.core.ListOperations;
-import org.trello4j.core.MemberOperations;
-import org.trello4j.core.NotificationOperations;
-import org.trello4j.core.OrganizationOperations;
-import org.trello4j.core.TokenOperations;
-import org.trello4j.core.TypeOperations;
+import org.trello4j.TrelloException;
+import org.trello4j.TrelloObjectFactoryImpl;
+import org.trello4j.TrelloOperations;
 
 /**
  * The Class TrelloImpl.

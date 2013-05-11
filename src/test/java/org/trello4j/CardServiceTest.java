@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.trello4j.core.TrelloTemplate;
 import org.trello4j.model.Action;
 import org.trello4j.model.Card;
 import org.trello4j.model.Checklist;
