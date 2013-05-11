@@ -30,11 +30,13 @@ import org.trello4j.core.DefaultMemberOperations;
 import org.trello4j.core.DefaultNotificationOperations;
 import org.trello4j.core.DefaultOrganizationOperations;
 import org.trello4j.core.DefaultTokenOperations;
+import org.trello4j.core.DefaultTypeOperations;
 import org.trello4j.core.ListOperations;
 import org.trello4j.core.MemberOperations;
 import org.trello4j.core.NotificationOperations;
 import org.trello4j.core.OrganizationOperations;
 import org.trello4j.core.TokenOperations;
+import org.trello4j.core.TypeOperations;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Board.Prefs;
@@ -47,8 +49,6 @@ import org.trello4j.model.Notification;
 import org.trello4j.model.Organization;
 import org.trello4j.model.Token;
 import org.trello4j.model.Type;
-
-import com.google.gson.reflect.TypeToken;
 
 /**
  * The Class TrelloImpl.
@@ -74,6 +74,7 @@ public class TrelloImpl implements Trello {
 	private final NotificationOperations notificationOperations;
 	private final CardOperations cardOperations;
 	private final TokenOperations tokenOperations;
+	private final TypeOperations typeOperations;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -96,6 +97,7 @@ public class TrelloImpl implements Trello {
 		notificationOperations = new DefaultNotificationOperations(apiKey, token, trelloObjFactory);
 		cardOperations = new DefaultCardOperations(apiKey, token, trelloObjFactory);
 		tokenOperations = new DefaultTokenOperations(apiKey, token, trelloObjFactory);
+		typeOperations = new DefaultTypeOperations(apiKey, token, trelloObjFactory);
 	}
 
 	@Override
@@ -275,10 +277,7 @@ public class TrelloImpl implements Trello {
 
 	@Override
 	public Type getType(String idOrName) {
-		final String url = TrelloURL.create(apiKey, TrelloURL.TYPE_URL, idOrName).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Type>() {
-		}, doGet(url));
+		return typeOperations.getType(idOrName);
 	}
 
 	@Override
