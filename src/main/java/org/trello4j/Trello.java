@@ -14,7 +14,8 @@ import org.trello4j.model.Type;
 /**
  * The Interface Trello.
  */
-public interface Trello extends OrganizationOperations, NotificationOperations, BoardOperations, CardOperations, ListOperations, MemberOperations, ChecklistOperations, TokenOperations, ActionOperations {
+public interface Trello extends OrganizationOperations, NotificationOperations, BoardOperations, CardOperations, ListOperations, MemberOperations, ChecklistOperations, TokenOperations,
+		ActionOperations {
 
 	/**
 	 * Gets the type.

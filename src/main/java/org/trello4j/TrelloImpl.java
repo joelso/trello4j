@@ -29,10 +29,12 @@ import org.trello4j.core.DefaultListOperations;
 import org.trello4j.core.DefaultMemberOperations;
 import org.trello4j.core.DefaultNotificationOperations;
 import org.trello4j.core.DefaultOrganizationOperations;
+import org.trello4j.core.DefaultTokenOperations;
 import org.trello4j.core.ListOperations;
 import org.trello4j.core.MemberOperations;
 import org.trello4j.core.NotificationOperations;
 import org.trello4j.core.OrganizationOperations;
+import org.trello4j.core.TokenOperations;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Board.Prefs;
@@ -71,6 +73,7 @@ public class TrelloImpl implements Trello {
 	private final BoardOperations boardOperations;
 	private final NotificationOperations notificationOperations;
 	private final CardOperations cardOperations;
+	private final TokenOperations tokenOperations;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -92,6 +95,7 @@ public class TrelloImpl implements Trello {
 		boardOperations = new DefaultBoardOperations(apiKey, token, trelloObjFactory);
 		notificationOperations = new DefaultNotificationOperations(apiKey, token, trelloObjFactory);
 		cardOperations = new DefaultCardOperations(apiKey, token, trelloObjFactory);
+		tokenOperations = new DefaultTokenOperations(apiKey, token, trelloObjFactory);
 	}
 
 	@Override
@@ -364,27 +368,12 @@ public class TrelloImpl implements Trello {
 
 	@Override
 	public Token getToken(String tokenId, final String... filter) {
-		// validateObjectId(tokenId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.TOKENS_URL, tokenId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Token>() {
-		}, doGet(url));
+		return tokenOperations.getToken(tokenId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.TokenService#getMemberByToken(java.lang.String)
-	 */
 	@Override
 	public Member getMemberByToken(String tokenId, final String... filter) {
-		// validateObjectId(tokenId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.TOKENS_MEMBER_URL, tokenId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doGet(url));
+		return tokenOperations.getMemberByToken(tokenId, filter);
 	}
 
 	private InputStream doGet(String url) {
