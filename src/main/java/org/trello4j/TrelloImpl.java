@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -20,9 +19,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.trello4j.core.ActionOperations;
 import org.trello4j.core.BoardOperations;
+import org.trello4j.core.CardOperations;
 import org.trello4j.core.ChecklistOperations;
 import org.trello4j.core.DefaultActionOperations;
 import org.trello4j.core.DefaultBoardOperations;
+import org.trello4j.core.DefaultCardOperations;
 import org.trello4j.core.DefaultChecklistOperations;
 import org.trello4j.core.DefaultListOperations;
 import org.trello4j.core.DefaultMemberOperations;
@@ -69,6 +70,7 @@ public class TrelloImpl implements Trello {
 	private final MemberOperations memberOperations;
 	private final BoardOperations boardOperations;
 	private final NotificationOperations notificationOperations;
+	private final CardOperations cardOperations;
 
 	public TrelloImpl(String apiKey) {
 		this(apiKey, null);
@@ -89,6 +91,7 @@ public class TrelloImpl implements Trello {
 		memberOperations = new DefaultMemberOperations(apiKey, token, trelloObjFactory);
 		boardOperations = new DefaultBoardOperations(apiKey, token, trelloObjFactory);
 		notificationOperations = new DefaultNotificationOperations(apiKey, token, trelloObjFactory);
+		cardOperations = new DefaultCardOperations(apiKey, token, trelloObjFactory);
 	}
 
 	@Override
@@ -146,318 +149,109 @@ public class TrelloImpl implements Trello {
 		return memberOperations.getBoardsByMember(usernameOrId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.CardService#getCard(java.lang.String)
-	 */
 	@Override
 	public Card getCard(final String cardId) {
-		validateObjectId(cardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_URL, cardId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Card>() {
-		}, doGet(url));
+		return cardOperations.getCard(cardId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.CardService#getActionsByCard(java.lang.String)
-	 */
 	@Override
 	public List<Action> getActionsByCard(final String cardId) {
-		validateObjectId(cardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_ACTION_URL, cardId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doGet(url));
+		return cardOperations.getActionsByCard(cardId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.CardService#getAttachmentsByCard(java.lang.String)
-	 */
 	@Override
 	public List<Attachment> getAttachmentsByCard(final String cardId) {
-		validateObjectId(cardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_ATTACHEMENT_URL, cardId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Attachment>>() {
-		}, doGet(url));
+		return cardOperations.getAttachmentsByCard(cardId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.CardService#getBoardByCard(java.lang.String)
-	 */
 	@Override
 	public Board getBoardByCard(final String cardId, final String... filter) {
-		validateObjectId(cardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_BOARD_URL, cardId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doGet(url));
+		return cardOperations.getBoardByCard(cardId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.CardService#getCheckItemStatesByCard(java.lang.String)
-	 */
 	@Override
 	public List<CheckItem> getCheckItemStatesByCard(final String cardId) {
-		validateObjectId(cardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_CHECK_ITEM_STATES_URL, cardId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<CheckItem>>() {
-		}, doGet(url));
+		return cardOperations.getCheckItemStatesByCard(cardId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.CardService#getChecklistByCard(java.lang.String)
-	 */
 	@Override
 	public List<Checklist> getChecklistByCard(final String cardId) {
-		validateObjectId(cardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_CHECKLISTS_URL, cardId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Checklist>>() {
-		}, doGet(url));
+		return cardOperations.getChecklistByCard(cardId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.CardService#getListByCard(java.lang.String)
-	 */
 	@Override
 	public org.trello4j.model.List getListByCard(final String cardId, final String... filter) {
-		validateObjectId(cardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_LIST_URL, cardId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
-		}, doGet(url));
+		return cardOperations.getListByCard(cardId, filter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.trello4j.CardService#getMembersByCard(java.lang.String)
-	 */
 	@Override
 	public List<Member> getMembersByCard(final String cardId) {
-		validateObjectId(cardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_MEMBERS_URL, cardId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doGet(url));
+		return cardOperations.getMembersByCard(cardId);
 	}
 
 	@Override
 	public Card createCard(String idList, String name, Map<String, Object> keyValueMap, String... filter) {
-		validateObjectId(idList);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_URL).token(token).filter(filter).build();
-		if (keyValueMap == null)
-			keyValueMap = new HashMap<String, Object>();
-		// if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
-		keyValueMap.put("name", name);
-		keyValueMap.put("idList", idList);
-
-		return trelloObjFactory.createObject(new TypeToken<Card>() {
-		}, doPost(url, keyValueMap));
+		return cardOperations.createCard(idList, name, keyValueMap, filter);
 	}
 
 	@Override
 	public Action commentOnCard(String idCard, String text, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_COMMENTS, idCard).token(token).filter(filter).build();
-		Map<String, Object> keyValuMap = new HashMap<String, Object>();
-		keyValuMap.put("text", text);
-		return trelloObjFactory.createObject(new TypeToken<Action>() {
-		}, doPost(url, keyValuMap));
+		return cardOperations.commentOnCard(idCard, text, filter);
 	}
 
 	@Override
 	public List<Attachment> attachToCard(String idCard, File file, URL attachmentUrl, String name, String mimeType, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_ATTACHMENTS, idCard).token(token).filter(filter).build();
-
-		Map<String, Object> keyValueMap = new HashMap<String, Object>();
-		if (file != null)
-			keyValueMap.put("file", file);
-		if (attachmentUrl != null)
-			keyValueMap.put("url", attachmentUrl.toString());
-		if (name != null)
-			keyValueMap.put("name", name);
-		if (mimeType != null)
-			keyValueMap.put("mimeType", mimeType);
-
-		return trelloObjFactory.createObject(new TypeToken<List<Attachment>>() {
-		}, doPost(url, keyValueMap));
+		return cardOperations.attachToCard(idCard, file, attachmentUrl, name, mimeType, filter);
 	}
 
 	@Override
 	public Checklist addChecklist(String idCard, String idChecklist, String checklistName, String idChecklistSource, String... filter) {
-		validateObjectId(idCard);
-		if (idChecklist != null) {
-			validateObjectId(idChecklist);
-		}
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_CHECKLISTS, idCard).token(token).filter(filter).build();
-
-		Map<String, Object> keyValueMap = new HashMap<String, Object>();
-		keyValueMap.put("name", checklistName == null ? "Checklist" : checklistName);
-		if (idChecklist != null)
-			keyValueMap.put("value", idChecklist);
-		if (idChecklistSource != null)
-			keyValueMap.put("idChecklistSource", idChecklistSource);
-
-		return trelloObjFactory.createObject(new TypeToken<Checklist>() {
-		}, doPost(url, keyValueMap));
+		return cardOperations.addChecklist(idCard, idChecklist, checklistName, idChecklistSource, filter);
 	}
 
 	@Override
 	public List<Card.Label> addLabel(String idCard, String label, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_LABELS, idCard).token(token).filter(filter).build();
-
-		Map<String, Object> keyValueMap = new HashMap<String, Object>();
-		keyValueMap.put("value", label);
-		return trelloObjFactory.createObject(new TypeToken<List<Card.Label>>() {
-		}, doPost(url, keyValueMap));
+		return cardOperations.addLabel(idCard, label, filter);
 	}
 
 	@Override
 	public List<Member> addMember(String idCard, String memberId, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_ADD_MEMBER, idCard).token(token).filter(filter).build();
-
-		Map<String, Object> keyValueMap = new HashMap<String, Object>();
-		keyValueMap.put("value", memberId);
-
-		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doPost(url, keyValueMap));
+		return cardOperations.addMember(idCard, memberId, filter);
 	}
 
 	@Override
 	public boolean voteOnCard(String idCard, String memberId, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_VOTE_MEMBER, idCard).token(token).filter(filter).build();
-
-		Map<String, Object> keyValueMap = new HashMap<String, Object>();
-		keyValueMap.put("value", memberId);
-
-		Response response = doPostWithResponse(url, keyValueMap);
-
-		if (response.getCode() < 400) {
-			return true;
-		} else {
-			System.err.println(format("Could not vote on card: %s", response.getResponseBody()));
-			return false;
-		}
+		return voteOnCard(idCard, memberId, filter);
 	}
 
 	@Override
 	public List<Member> getMemberVotesOnCard(String idCard, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_GET_VOTES, idCard).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doGet(url));
+		return cardOperations.getMemberVotesOnCard(idCard, filter);
 	}
 
 	@Override
 	public boolean deleteCard(String idCard, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_CARD, idCard).token(token).filter(filter).build();
-
-		Response response = doDelete(url);
-		if (response.getCode() < 400) {
-			return true;
-		} else {
-			System.err.println(format("Could not delete card %s: %s", idCard, response.getResponseBody()));
-			return false;
-		}
+		return cardOperations.deleteCard(idCard, filter);
 	}
 
 	@Override
 	public boolean deleteChecklistFromCard(String idCard, String idList, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_CHECKLIST, idCard, idList).token(token).filter(filter).build();
-
-		Response response = doDelete(url);
-		if (response.getCode() < 400) {
-			return true;
-		} else {
-			System.err.printf(format("Could not remove checklist %s from card: %s", idList, response.getResponseBody()));
-			return false;
-		}
+		return cardOperations.deleteChecklistFromCard(idCard, idList, filter);
 	}
 
 	@Override
 	public boolean deleteLabelFromCard(String idCard, String color, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_LABEL, idCard, color).token(token).filter(filter).build();
-		Response response = doDelete(url);
-		if (response.getCode() < 400) {
-			return true;
-		} else {
-			System.err.println(format("Could not remove %s label from card: %s", color, response.getResponseBody()));
-			return false;
-		}
+		return cardOperations.deleteLabelFromCard(idCard, color, filter);
 	}
 
 	@Override
 	public boolean deleteMemberFromCard(String idCard, String idMember, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_MEMBER, idCard, idMember).token(token).filter(filter).build();
-		Response response = doDelete(url);
-		if (response.getCode() < 400) {
-			return true;
-		} else {
-			System.err.println(format("Could not remove member from card: %s", response.getResponseBody()));
-			return false;
-		}
+		return cardOperations.deleteMemberFromCard(idCard, idMember, filter);
 	}
 
 	@Override
 	public boolean deleteVoteFromCard(String idCard, String memberId, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_VOTE_MEMBER, idCard, memberId).token(token).filter(filter).build();
-
-		Response response = doDelete(url);
-
-		if (response.getCode() < 400) {
-			return true;
-		} else {
-			System.err.println(format("Could not remove vote from card: %s", response.getResponseBody()));
-			return false;
-		}
+		return deleteVoteFromCard(idCard, memberId, filter);
 	}
 
 	@Override
