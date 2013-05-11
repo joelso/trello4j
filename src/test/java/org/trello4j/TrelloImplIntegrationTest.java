@@ -1,13 +1,23 @@
 package org.trello4j;
 
-import org.junit.Test;
-import org.trello4j.model.*;
-import org.trello4j.model.Board.PERMISSION_TYPE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
+import org.junit.Test;
+import org.trello4j.model.Action;
+import org.trello4j.model.Board;
+import org.trello4j.model.Board.PERMISSION_TYPE;
+import org.trello4j.model.Card;
+import org.trello4j.model.Checklist;
+import org.trello4j.model.Member;
+import org.trello4j.model.Organization;
+import org.trello4j.model.TrelloType;
+import org.trello4j.model.Type;
 
 /**
  * The Class TrelloImplIntegrationTest.
@@ -19,29 +29,29 @@ public class TrelloImplIntegrationTest {
 
 	@Test(expected = TrelloException.class)
 	public void missingApiKey_shouldThrowException() {
-		new TrelloImpl(null);
+		new TrelloTemplate(null);
 	}
 
-	@Test(expected=TrelloException.class)
+	@Test(expected = TrelloException.class)
 	public void testInvalidObjectId() {
-		// GIVEN		
-		String boardId = "INVALID_ID"; 
-		
+		// GIVEN
+		String boardId = "INVALID_ID";
+
 		// WHEN
-		Board board = new TrelloImpl(API_KEY, null).getBoard(boardId);
-		
+		Board board = new TrelloTemplate(API_KEY, null).getBoardOperations().getBoard(boardId);
+
 		// THEN
 		assertNull("Oops, board is null", board);
 	}
 
 	@Test
 	public void test404_shouldReturnNull() {
-		// GIVEN		
-		String boardId = "00000000000000000000000c"; 
-		
+		// GIVEN
+		String boardId = "00000000000000000000000c";
+
 		// WHEN
-		Board board = new TrelloImpl(API_KEY, null).getBoard(boardId);
-		
+		Board board = new TrelloTemplate(API_KEY, null).getBoardOperations().getBoard(boardId);
+
 		// THEN
 		assertNull("Oops, board is null", board);
 	}
@@ -52,7 +62,7 @@ public class TrelloImplIntegrationTest {
 		String boardId = "4d5ea62fd76aa1136000000c"; // ID of Trello Development
 
 		// WHEN
-		Board board = new TrelloImpl(API_KEY, null).getBoard(boardId);
+		Board board = new TrelloTemplate(API_KEY, null).getBoardOperations().getBoard(boardId);
 
 		// THEN
 		assertNotNull("Oops, board is null", board);
@@ -72,7 +82,7 @@ public class TrelloImplIntegrationTest {
 		String actionId = "4f7fc98a31f53721037b7bdd";
 
 		// WHEN
-		Action action = new TrelloImpl(API_KEY, null).getAction(actionId);
+		Action action = new TrelloTemplate(API_KEY, null).getActionOperations().getAction(actionId);
 
 		// THEN
 		assertNotNull("Oops, action is null", action);
@@ -100,7 +110,7 @@ public class TrelloImplIntegrationTest {
 		String organizationName = "fogcreek";
 
 		// WHEN
-		Organization org = new TrelloImpl(API_KEY, null).getOrganization(organizationName);
+		Organization org = new TrelloTemplate(API_KEY, null).getOrganizationOperations().getOrganization(organizationName);
 
 		// THEN
 		assertNotNull("Oops, organization is null", org);
@@ -113,12 +123,12 @@ public class TrelloImplIntegrationTest {
 		String username = "joelsoderstrom";
 
 		// WHEN
-		Member member = new TrelloImpl(API_KEY, null).getMember(username);
+		Member member = new TrelloTemplate(API_KEY, null).getMemberOperations().getMember(username);
 
 		// THEN
 		assertNotNull("Oops, member is null", member);
 		assertNotNull("Avatar hash not set", member.getAvatarHash());
-		assertEquals("Incorrect full name", "Joel Söderström", 	member.getFullName());
+		assertEquals("Incorrect full name", "Joel Söderström", member.getFullName());
 		assertNotNull("ID not set", member.getId());
 		assertTrue("Invalid count of boards", member.getIdBoards().size() > 0);
 		assertTrue("Invalid count of organizations", member.getIdOrganizations().size() > 0);
@@ -132,10 +142,10 @@ public class TrelloImplIntegrationTest {
 	public void shouldReturnMemberById() {
 		// GIVEN
 		String memberId = "4e918355e52581aa44eb0754";
-		
+
 		// WHEN
-		Member member = new TrelloImpl(API_KEY, null).getMember(memberId);
-		
+		Member member = new TrelloTemplate(API_KEY, null).getMemberOperations().getMember(memberId);
+
 		// THEN
 		assertNotNull("Oops, member is null", member);
 		assertEquals("Incorrect username", "joelsoderstrom", member.getUsername());
@@ -148,7 +158,7 @@ public class TrelloImplIntegrationTest {
 		String trelloDevBoardId = "4d5ea62fd76aa1136000000c";
 
 		// WHEN
-		List<Board> boards = new TrelloImpl(API_KEY, null).getBoardsByOrganization(organizationName);
+		List<Board> boards = new TrelloTemplate(API_KEY, null).getOrganizationOperations().getBoardsByOrganization(organizationName);
 
 		// THEN
 		assertTrue("Organization should have at least one board", boards.size() > 0);
@@ -161,7 +171,7 @@ public class TrelloImplIntegrationTest {
 		String trelloDevBoardId = "4d5ea62fd76aa1136000000c";
 
 		// WHEN
-		List<Action> actions = new TrelloImpl(API_KEY, null).getActionsByBoard(trelloDevBoardId);
+		List<Action> actions = new TrelloTemplate(API_KEY, null).getBoardOperations().getActionsByBoard(trelloDevBoardId);
 
 		// THEN
 		assertTrue("Board should have at least one action", actions.size() > 0);
@@ -172,16 +182,17 @@ public class TrelloImplIntegrationTest {
 	public void shouldReturnCard() {
 		// GIVEN
 		String cardId = "4f6b93de58843df908f6266a";
-		
+
 		// WHEN
-		Card card = new TrelloImpl(API_KEY, null).getCard(cardId);
-		
+		Card card = new TrelloTemplate(API_KEY, null).getCardOperations().getCard(cardId);
+
 		// THEN
 		assertNotNull("Oops, card is null", card);
 		assertEquals("Card id should be equal", cardId, card.getId());
 
 		// if(!card.getAttachments().isEmpty()) {
-		// 	assertNotNull("Attachment should be set", card.getAttachments().get(0).get_id());
+		// assertNotNull("Attachment should be set",
+		// card.getAttachments().get(0).get_id());
 		// }
 	}
 
@@ -189,87 +200,88 @@ public class TrelloImplIntegrationTest {
 	public void shouldReturnList() {
 		// GIVEN
 		String listId = "4e7b86d7ce194786721560b8";
-		
+
 		// WHEN
-		org.trello4j.model.List list = new TrelloImpl(API_KEY, null).getList(listId);
-		
+		org.trello4j.model.List list = new TrelloTemplate(API_KEY, null).getListOperations().getList(listId);
+
 		// THEN
 		assertNotNull("Oops, list is null", list);
 		assertEquals("Card id should be equal", listId, list.getId());
 	}
 
-    @Test
-    public void shouldReturnBoardsByMember() {
-        // GIVEN
-        String userId = "userj";
+	@Test
+	public void shouldReturnBoardsByMember() {
+		// GIVEN
+		String userId = "userj";
 
-        // WHEN
-        List<Board> boards = new TrelloImpl(API_KEY, API_TOKEN).getBoardsByMember(userId);
+		// WHEN
+		List<Board> boards = new TrelloTemplate(API_KEY, API_TOKEN).getMemberOperations().getBoardsByMember(userId);
 
-        // THEN
-        assertNotNull("Oops, board list is null", boards);
-        assertTrue("Member should have at least one board", boards.size() > 0);
-    }
+		// THEN
+		assertNotNull("Oops, board list is null", boards);
+		assertTrue("Member should have at least one board", boards.size() > 0);
+	}
 
-    @Test
-    public void shouldReturnActionsByOrganization() {
-        // GIVEN
-        String organizationName = "fogcreek";
+	@Test
+	public void shouldReturnActionsByOrganization() {
+		// GIVEN
+		String organizationName = "fogcreek";
 
-        // WHEN
-        List<Action> actions = new TrelloImpl(API_KEY, API_TOKEN).getActionsByOrganization(organizationName);
+		// WHEN
+		List<Action> actions = new TrelloTemplate(API_KEY, API_TOKEN).getOrganizationOperations().getActionsByOrganization(organizationName);
 
-        // THEN
-        assertNotNull("Oops, action list is null", actions);
-        assertTrue("Organization should have at least one action", actions.size() > 0);
-    }
+		// THEN
+		assertNotNull("Oops, action list is null", actions);
+		assertTrue("Organization should have at least one action", actions.size() > 0);
+	}
 
-    @Test
-    public void shouldReturnChecklist() {
-        // GIVEN
-        String checklistId = "4f92b89ea73738db6cdd4ed7";
+	@Test
+	public void shouldReturnChecklist() {
+		// GIVEN
+		String checklistId = "4f92b89ea73738db6cdd4ed7";
 
-        // WHEN
-        Checklist checklist = new TrelloImpl(API_KEY, API_TOKEN).getChecklist(checklistId);
+		// WHEN
+		Checklist checklist = new TrelloTemplate(API_KEY, API_TOKEN).getChecklistOperations().getChecklist(checklistId);
 
-        // THEN
-        assertNotNull("Oops, checklist list is null", checklist);
-        assertEquals("Checklist id should match", checklistId, checklist.getId());
-    }
+		// THEN
+		assertNotNull("Oops, checklist list is null", checklist);
+		assertEquals("Checklist id should match", checklistId, checklist.getId());
+	}
 
-    @Test
-    public void shouldReturnTypeById() {
-        // GIVEN
-        String typeId = "4eb3f3f1e679eb839b4c594b";
+	@Test
+	public void shouldReturnTypeById() {
+		// GIVEN
+		String typeId = "4eb3f3f1e679eb839b4c594b";
 
-        // WHEN
-        Type type = new TrelloImpl(API_KEY, null).getType(typeId);
+		// WHEN
+		Type type = new TrelloTemplate(API_KEY, null).getTypeOperations().getType(typeId);
 
-        // THEN
-        assertNotNull("Oops, type is null", type);
-        assertEquals("Incorrect id", typeId, type.getId());
-        assertEquals("Incorrect trello type", TrelloType.ORGANIZATION, type.getType());
-    }
+		// THEN
+		assertNotNull("Oops, type is null", type);
+		assertEquals("Incorrect id", typeId, type.getId());
+		assertEquals("Incorrect trello type", TrelloType.ORGANIZATION, type.getType());
+	}
 
-    @Test
-    public void shouldReturnTypeByName() {
-        // GIVEN
-        String typeName = "fogcreek";
+	@Test
+	public void shouldReturnTypeByName() {
+		// GIVEN
+		String typeName = "fogcreek";
 
-        // WHEN
-        Type type = new TrelloImpl(API_KEY, null).getType(typeName);
+		// WHEN
+		Type type = new TrelloTemplate(API_KEY, null).getTypeOperations().getType(typeName);
 
-        // THEN
-        assertNotNull("Oops, type is null", type);
-        assertEquals("Incorrect trello type", TrelloType.ORGANIZATION, type.getType());
-    }
-
+		// THEN
+		assertNotNull("Oops, type is null", type);
+		assertEquals("Incorrect trello type", TrelloType.ORGANIZATION, type.getType());
+	}
 
 	/**
 	 * Checks for board with id.
-	 *
-	 * @param boards the boards
-	 * @param id the id
+	 * 
+	 * @param boards
+	 *            the boards
+	 * @param id
+	 *            the id
 	 * @return true, if successful
 	 */
 	private boolean hasBoardWithId(List<Board> boards, String id) {
