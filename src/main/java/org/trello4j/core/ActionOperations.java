@@ -7,25 +7,20 @@ import org.trello4j.model.List;
 import org.trello4j.model.Member;
 import org.trello4j.model.Organization;
 
-/**
- * The Interface ActionService.
- * 
- * @author joel
- */
 public interface ActionOperations {
 
-	Action getAction(String actionId, String... filter);
+	Action get(String... filter);
 
-	Board getBoardByAction(String actionId, String... filter);
+	Board getBoard(String... filter);
 
-	Card getCardByAction(String actionId, String... filter);
+	Card getCard(String... filter);
 
-	Member getMemberByAction(String actionId, String... filter);
+	Member getMember(String... filter);
 
-	Member getMemberCreatorByAction(String actionId, String... filter);
+	Member getMemberCreator(String... filter);
 
-	Organization getOrganizationByAction(String actionId, String... filter);
+	Organization getOrganization(String... filter);
 
-	List getListByAction(String actionId, String... filter);
+	List getList(String... filter);
 
 }

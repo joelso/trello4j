@@ -83,7 +83,7 @@ public class TrelloImplIntegrationTest {
 		String actionId = "4f7fc98a31f53721037b7bdd";
 
 		// WHEN
-		Action action = new TrelloTemplate(API_KEY, null).getActionOperations().getAction(actionId);
+		Action action = new TrelloTemplate(API_KEY, null).boundActionOperations(actionId).get();
 
 		// THEN
 		assertNotNull("Oops, action is null", action);

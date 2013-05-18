@@ -13,7 +13,7 @@ import org.trello4j.core.TypeOperations;
 
 public interface TrelloOperations {
 
-	ActionOperations getActionOperations();
+	ActionOperations boundActionOperations(String actionId);
 
 	OrganizationOperations getOrganizationOperations();
 

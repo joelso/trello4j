@@ -8,7 +8,6 @@ import org.trello4j.TrelloOperations;
  */
 public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 
-	private final ActionOperations actionOperations;
 	private final OrganizationOperations organizationOperations;
 	private final ListOperations listOperations;
 	private final ChecklistOperations checklistOperations;
@@ -17,6 +16,7 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 	private final CardOperations cardOperations;
 	private final TokenOperations tokenOperations;
 	private final TypeOperations typeOperations;
+	private final TrelloObjectFactoryImpl trelloObjFactory;
 
 	public TrelloTemplate(String apiKey) {
 		this(apiKey, null);
@@ -25,9 +25,8 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 	public TrelloTemplate(String apiKey, String token) {
 		super(apiKey, token);
 
-		final TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
+		trelloObjFactory = new TrelloObjectFactoryImpl();
 
-		actionOperations = new DefaultActionOperations(apiKey, token, trelloObjFactory);
 		organizationOperations = new DefaultOrganizationOperations(apiKey, token, trelloObjFactory);
 		listOperations = new DefaultListOperations(apiKey, token, trelloObjFactory);
 		checklistOperations = new DefaultChecklistOperations(apiKey, token, trelloObjFactory);
@@ -39,8 +38,8 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 	}
 
 	@Override
-	public ActionOperations getActionOperations() {
-		return actionOperations;
+	public ActionOperations boundActionOperations(String actionId) {
+		return new DefaultActionOperations(apiKey, token, trelloObjFactory, actionId);
 	}
 
 	@Override

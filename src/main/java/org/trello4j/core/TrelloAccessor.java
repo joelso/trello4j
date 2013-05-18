@@ -9,8 +9,9 @@ import org.trello4j.TrelloURL;
 
 class TrelloAccessor {
 
-	private final String apiKey;
-	private final String token;
+	// TODO: Reduce scope after refactoring
+	protected final String apiKey;
+	protected final String token;
 
 	private final RestTemplate restTemplate;
 
