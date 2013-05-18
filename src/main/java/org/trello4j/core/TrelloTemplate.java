@@ -13,7 +13,6 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 	private final ChecklistOperations checklistOperations;
 	private final MemberOperations memberOperations;
 	private final NotificationOperations notificationOperations;
-	private final CardOperations cardOperations;
 	private final TokenOperations tokenOperations;
 	private final TypeOperations typeOperations;
 	private final TrelloObjectFactoryImpl trelloObjFactory;
@@ -32,7 +31,6 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 		checklistOperations = new DefaultChecklistOperations(apiKey, token, trelloObjFactory);
 		memberOperations = new DefaultMemberOperations(apiKey, token, trelloObjFactory);
 		notificationOperations = new DefaultNotificationOperations(apiKey, token, trelloObjFactory);
-		cardOperations = new DefaultCardOperations(apiKey, token, trelloObjFactory);
 		tokenOperations = new DefaultTokenOperations(apiKey, token, trelloObjFactory);
 		typeOperations = new DefaultTypeOperations(apiKey, token, trelloObjFactory);
 	}
@@ -73,8 +71,8 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 	}
 
 	@Override
-	public CardOperations getCardOperations() {
-		return cardOperations;
+	public CardOperations boundCardOperations(String cardId) {
+		return new DefaultCardOperations(apiKey, token, trelloObjFactory, cardId);
 	}
 
 	@Override

@@ -1,21 +1,22 @@
 package org.trello4j;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import org.trello4j.gson.PermissionTypeDeserializer;
-import org.trello4j.gson.TrelloTypeDeserializer;
-import org.trello4j.model.Board.PERMISSION_TYPE;
-import org.trello4j.model.TrelloType;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
+
+import org.trello4j.gson.PermissionTypeDeserializer;
+import org.trello4j.gson.TrelloTypeDeserializer;
+import org.trello4j.model.Board.PERMISSION_TYPE;
+import org.trello4j.model.TrelloType;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * The Class TrelloObjectFactoryImpl.
@@ -57,16 +58,13 @@ public class TrelloObjectFactoryImpl {
 	 */
 	private JsonElement unmarshallToJson(InputStream jsonContent) {
 		try {
-			JsonElement element = parser.parse(new InputStreamReader(
-					jsonContent,
-					UTF_8_CHAR_SET));
+			JsonElement element = parser.parse(new InputStreamReader(jsonContent, UTF_8_CHAR_SET));
 			if (element.isJsonObject()) {
 				return element.getAsJsonObject();
 			} else if (element.isJsonArray()) {
 				return element.getAsJsonArray();
 			} else {
-				throw new IllegalStateException(
-						"Unknown content found in response." + element);
+				throw new IllegalStateException("Unknown content found in response." + element);
 			}
 		} catch (Exception e) {
 			throw new TrelloException(e.getMessage());
@@ -88,6 +86,7 @@ public class TrelloObjectFactoryImpl {
 	 */
 	@SuppressWarnings("unchecked")
 	private <T> T unmarshallToObj(TypeToken<T> typeToken, JsonElement response) {
+		System.out.println(response.toString());
 		return (T) getGson().fromJson(response, typeToken.getType());
 	}
 
@@ -98,15 +97,8 @@ public class TrelloObjectFactoryImpl {
 	 */
 	private Gson getGson() {
 		if (gson == null) {
-			gson = new GsonBuilder()
-					.setDateFormat(DATE_FORMAT)
-					.registerTypeAdapter(
-							PERMISSION_TYPE.class,
-							new PermissionTypeDeserializer())
-					.registerTypeAdapter(
-							TrelloType.class,
-							new TrelloTypeDeserializer())
-					.create();
+			gson = new GsonBuilder().setDateFormat(DATE_FORMAT).registerTypeAdapter(PERMISSION_TYPE.class, new PermissionTypeDeserializer())
+					.registerTypeAdapter(TrelloType.class, new TrelloTypeDeserializer()).create();
 		}
 		return gson;
 	}

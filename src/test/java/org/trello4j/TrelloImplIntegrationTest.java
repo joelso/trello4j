@@ -185,7 +185,7 @@ public class TrelloImplIntegrationTest {
 		String cardId = "4f6b93de58843df908f6266a";
 
 		// WHEN
-		Card card = new TrelloTemplate(API_KEY, null).getCardOperations().getCard(cardId);
+		Card card = new TrelloTemplate(API_KEY, null).boundCardOperations(cardId).get();
 
 		// THEN
 		assertNotNull("Oops, card is null", card);

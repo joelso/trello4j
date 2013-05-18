@@ -19,43 +19,43 @@ import org.trello4j.model.Member;
  */
 public interface CardOperations {
 
-	Card getCard(String cardId);
+	Card get();
 
-	List<Action> getActionsByCard(String cardId);
+	List<Action> getActions();
 
-	List<Attachment> getAttachmentsByCard(String cardId);
+	List<Attachment> getAttachments();
 
-	Board getBoardByCard(String cardId, String... filter);
+	Board getBoard(String... filter);
 
-	List<CheckItem> getCheckItemStatesByCard(String cardId);
+	List<CheckItem> getCheckItemStates();
 
-	List<Checklist> getChecklistByCard(String cardId);
+	List<Checklist> getChecklist();
 
-	org.trello4j.model.List getListByCard(String cardId, String... filter);
+	org.trello4j.model.List getList(String... filter);
 
-	List<Member> getMembersByCard(String cardId);
+	List<Member> getMembers();
 
-	Action commentOnCard(String idCard, String text, String... filter);
+	Action comment(String text, String... filter);
 
-	List<Attachment> attachToCard(String idCard, File file, URL attachmentUrl, String name, String mimeType, String... filter);
+	List<Attachment> attach(File file, URL attachmentUrl, String name, String mimeType, String... filter);
 
-	Checklist addChecklist(String idCard, String idChecklist, String checklistName, String idChecklistSource, String... filter);
+	Checklist addChecklist(String idChecklist, String checklistName, String idChecklistSource, String... filter);
 
-	List<Card.Label> addLabel(String idCard, String label, String... filter);
+	List<Card.Label> addLabel(String label, String... filter);
 
-	List<Member> addMember(String idCard, String memberId, String... filter);
+	List<Member> addMember(String memberId, String... filter);
 
-	boolean voteOnCard(String idCard, String memberId, String... filter);
+	boolean vote(String memberId, String... filter);
 
-	List<Member> getMemberVotesOnCard(String idCard, String... filter);
+	List<Member> getMemberVotes(String... filter);
 
-	boolean deleteCard(String idCard, String... filter);
+	boolean delete(String... filter);
 
-	boolean deleteChecklistFromCard(String idCard, String idList, String... filter);
+	boolean deleteChecklist(String idList, String... filter);
 
-	boolean deleteLabelFromCard(String idCard, String color, String... filter);
+	boolean deleteLabel(String color, String... filter);
 
-	boolean deleteMemberFromCard(String idCard, String idMember, String... filter);
+	boolean deleteMember(String idMember, String... filter);
 
-	boolean deleteVoteFromCard(String idCard, String memberId, String... filter);
+	boolean deleteVote(String memberId, String... filter);
 }

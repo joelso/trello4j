@@ -23,14 +23,16 @@ import com.google.gson.reflect.TypeToken;
 
 public class DefaultCardOperations extends AbstractOperations implements CardOperations {
 
-	DefaultCardOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
+	private final String cardId;
+
+	DefaultCardOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory, String cardId) {
 		super(apiKey, token, trelloObjFactory);
+		validateObjectId(cardId);
+		this.cardId = cardId;
 	}
 
 	@Override
-	public Card getCard(final String cardId) {
-		validateObjectId(cardId);
-
+	public Card get() {
 		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
@@ -38,9 +40,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public List<Action> getActionsByCard(final String cardId) {
-		validateObjectId(cardId);
-
+	public List<Action> getActions() {
 		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_ACTION_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
@@ -48,9 +48,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public List<Attachment> getAttachmentsByCard(final String cardId) {
-		validateObjectId(cardId);
-
+	public List<Attachment> getAttachments() {
 		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_ATTACHEMENT_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Attachment>>() {
@@ -58,9 +56,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public Board getBoardByCard(final String cardId, final String... filter) {
-		validateObjectId(cardId);
-
+	public Board getBoard(final String... filter) {
 		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_BOARD_URL, cardId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
@@ -68,9 +64,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public List<CheckItem> getCheckItemStatesByCard(final String cardId) {
-		validateObjectId(cardId);
-
+	public List<CheckItem> getCheckItemStates() {
 		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_CHECK_ITEM_STATES_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<CheckItem>>() {
@@ -78,9 +72,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public List<Checklist> getChecklistByCard(final String cardId) {
-		validateObjectId(cardId);
-
+	public List<Checklist> getChecklist() {
 		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_CHECKLISTS_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Checklist>>() {
@@ -88,9 +80,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public org.trello4j.model.List getListByCard(final String cardId, final String... filter) {
-		validateObjectId(cardId);
-
+	public org.trello4j.model.List getList(final String... filter) {
 		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_LIST_URL, cardId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
@@ -98,9 +88,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public List<Member> getMembersByCard(final String cardId) {
-		validateObjectId(cardId);
-
+	public List<Member> getMembers() {
 		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_MEMBERS_URL, cardId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
@@ -108,10 +96,8 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public Action commentOnCard(String idCard, String text, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_COMMENTS, idCard).token(token).filter(filter).build();
+	public Action comment(String text, String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_COMMENTS, cardId).token(token).filter(filter).build();
 		Map<String, Object> keyValuMap = new HashMap<String, Object>();
 		keyValuMap.put("text", text);
 		return trelloObjFactory.createObject(new TypeToken<Action>() {
@@ -119,10 +105,8 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public List<Attachment> attachToCard(String idCard, File file, URL attachmentUrl, String name, String mimeType, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_ATTACHMENTS, idCard).token(token).filter(filter).build();
+	public List<Attachment> attach(File file, URL attachmentUrl, String name, String mimeType, String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_ATTACHMENTS, cardId).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		if (file != null)
@@ -139,18 +123,17 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public Checklist addChecklist(String idCard, String idChecklist, String checklistName, String idChecklistSource, String... filter) {
-		validateObjectId(idCard);
-		if (idChecklist != null) {
-			validateObjectId(idChecklist);
+	public Checklist addChecklist(String checklistId, String checklistName, String idChecklistSource, String... filter) {
+		if (checklistId != null) {
+			validateObjectId(checklistId);
 		}
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_CHECKLISTS, idCard).token(token).filter(filter).build();
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_CHECKLISTS, cardId).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		keyValueMap.put("name", checklistName == null ? "Checklist" : checklistName);
-		if (idChecklist != null)
-			keyValueMap.put("value", idChecklist);
+		if (checklistId != null)
+			keyValueMap.put("value", checklistId);
 		if (idChecklistSource != null)
 			keyValueMap.put("idChecklistSource", idChecklistSource);
 
@@ -159,10 +142,8 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public List<Card.Label> addLabel(String idCard, String label, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_LABELS, idCard).token(token).filter(filter).build();
+	public List<Card.Label> addLabel(String label, String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_LABELS, cardId).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		keyValueMap.put("value", label);
@@ -171,10 +152,8 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public List<Member> addMember(String idCard, String memberId, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_ADD_MEMBER, idCard).token(token).filter(filter).build();
+	public List<Member> addMember(String memberId, String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_ADD_MEMBER, cardId).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		keyValueMap.put("value", memberId);
@@ -184,10 +163,8 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public boolean voteOnCard(String idCard, String memberId, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_VOTE_MEMBER, idCard).token(token).filter(filter).build();
+	public boolean vote(String memberId, String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_VOTE_MEMBER, cardId).token(token).filter(filter).build();
 
 		Map<String, Object> keyValueMap = new HashMap<String, Object>();
 		keyValueMap.put("value", memberId);
@@ -203,35 +180,29 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public List<Member> getMemberVotesOnCard(String idCard, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_GET_VOTES, idCard).token(token).filter(filter).build();
+	public List<Member> getMemberVotes(String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_GET_VOTES, cardId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
 		}, doGet(url));
 	}
 
 	@Override
-	public boolean deleteCard(String idCard, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_CARD, idCard).token(token).filter(filter).build();
+	public boolean delete(String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_CARD, cardId).token(token).filter(filter).build();
 
 		Response response = doDelete(url);
 		if (response.getCode() < 400) {
 			return true;
 		} else {
-			System.err.println(format("Could not delete card %s: %s", idCard, response.getResponseBody()));
+			System.err.println(format("Could not delete card %s: %s", cardId, response.getResponseBody()));
 			return false;
 		}
 	}
 
 	@Override
-	public boolean deleteChecklistFromCard(String idCard, String idList, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_CHECKLIST, idCard, idList).token(token).filter(filter).build();
+	public boolean deleteChecklist(String idList, String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_CHECKLIST, cardId, idList).token(token).filter(filter).build();
 
 		Response response = doDelete(url);
 		if (response.getCode() < 400) {
@@ -243,10 +214,8 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public boolean deleteLabelFromCard(String idCard, String color, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_LABEL, idCard, color).token(token).filter(filter).build();
+	public boolean deleteLabel(String color, String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_LABEL, cardId, color).token(token).filter(filter).build();
 		Response response = doDelete(url);
 		if (response.getCode() < 400) {
 			return true;
@@ -257,10 +226,8 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public boolean deleteMemberFromCard(String idCard, String idMember, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_MEMBER, idCard, idMember).token(token).filter(filter).build();
+	public boolean deleteMember(String memberId, String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_MEMBER, cardId, memberId).token(token).filter(filter).build();
 		Response response = doDelete(url);
 		if (response.getCode() < 400) {
 			return true;
@@ -271,10 +238,8 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
-	public boolean deleteVoteFromCard(String idCard, String memberId, String... filter) {
-		validateObjectId(idCard);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_VOTE_MEMBER, idCard, memberId).token(token).filter(filter).build();
+	public boolean deleteVote(String memberId, String... filter) {
+		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_DELETE_VOTE_MEMBER, cardId, memberId).token(token).filter(filter).build();
 
 		Response response = doDelete(url);
 
@@ -285,5 +250,4 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 			return false;
 		}
 	}
-
 }

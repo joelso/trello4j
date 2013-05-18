@@ -27,7 +27,7 @@ public interface TrelloOperations {
 
 	NotificationOperations getNotificationOperations();
 
-	CardOperations getCardOperations();
+	CardOperations boundCardOperations(String cardId);
 
 	TokenOperations getTokenOperations();
 
