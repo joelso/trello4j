@@ -18,18 +18,17 @@ public class DefaultBoardOperations extends AbstractOperations implements BoardO
 
 	DefaultBoardOperations(String boardId, TrelloAccessor trelloAccessor) {
 		super(trelloAccessor);
+		validateObjectId(boardId);
 		this.boardId = boardId;
 	}
 
 	@Override
 	public Board get() {
-		validateObjectId(boardId);
 		return getTrelloAccessor().doGet(Board.class, TrelloURL.BOARD_URL, boardId);
 	}
 
 	@Override
 	public List<Action> getActions(final String... filters) {
-		validateObjectId(boardId);
 		ParameterizedTypeReference<List<Action>> typeReference = new ParameterizedTypeReference<List<Action>>() {
 		};
 		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_ACTIONS_URL, boardId, filters);
@@ -37,8 +36,6 @@ public class DefaultBoardOperations extends AbstractOperations implements BoardO
 
 	@Override
 	public List<Card> getCards(final String... filters) {
-		validateObjectId(boardId);
-
 		ParameterizedTypeReference<List<Card>> typeReference = new ParameterizedTypeReference<List<Card>>() {
 		};
 		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_CARDS_URL, boardId, filters);
@@ -46,8 +43,6 @@ public class DefaultBoardOperations extends AbstractOperations implements BoardO
 
 	@Override
 	public List<Checklist> getChecklist() {
-		validateObjectId(boardId);
-
 		ParameterizedTypeReference<List<Checklist>> typeReference = new ParameterizedTypeReference<List<Checklist>>() {
 		};
 		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_CHECKLISTS_URL, boardId);
@@ -55,8 +50,6 @@ public class DefaultBoardOperations extends AbstractOperations implements BoardO
 
 	@Override
 	public List<org.trello4j.model.List> getList(final String... filters) {
-		validateObjectId(boardId);
-
 		ParameterizedTypeReference<List<org.trello4j.model.List>> typeReference = new ParameterizedTypeReference<List<org.trello4j.model.List>>() {
 		};
 		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_LISTS_URL, boardId, filters);
@@ -64,8 +57,6 @@ public class DefaultBoardOperations extends AbstractOperations implements BoardO
 
 	@Override
 	public List<Member> getMembers(final String... filters) {
-		validateObjectId(boardId);
-
 		ParameterizedTypeReference<List<Member>> typeReference = new ParameterizedTypeReference<List<Member>>() {
 		};
 		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_MEMBERS_URL, boardId, filters);
@@ -73,8 +64,6 @@ public class DefaultBoardOperations extends AbstractOperations implements BoardO
 
 	@Override
 	public List<Member> getInvitedMembers(final String... filters) {
-		validateObjectId(boardId);
-
 		ParameterizedTypeReference<List<Member>> typeReference = new ParameterizedTypeReference<List<Member>>() {
 		};
 		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_MEMBERS_INVITED_URL, boardId, filters);
@@ -82,7 +71,6 @@ public class DefaultBoardOperations extends AbstractOperations implements BoardO
 
 	@Override
 	public Prefs getPrefs() {
-		validateObjectId(boardId);
 		return getTrelloAccessor().doGet(Prefs.class, TrelloURL.BOARD_PREFS_URL, boardId);
 	}
 
