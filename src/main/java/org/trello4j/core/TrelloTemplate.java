@@ -39,7 +39,7 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 
 	@Override
 	public ActionOperations boundActionOperations(String actionId) {
-		return new DefaultActionOperations(apiKey, token, trelloObjFactory, actionId);
+		return new DefaultActionOperations(actionId, this);
 	}
 
 	@Override
