@@ -23,7 +23,7 @@ public interface TrelloOperations {
 
 	MemberOperations getMemberOperations();
 
-	BoardOperations getBoardOperations();
+	BoardOperations boundBoardOperations(String boardId);
 
 	NotificationOperations getNotificationOperations();
 

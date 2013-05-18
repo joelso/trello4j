@@ -2,7 +2,7 @@ package org.trello4j.core;
 
 import java.util.List;
 
-import org.trello4j.TrelloObjectFactoryImpl;
+import org.springframework.core.ParameterizedTypeReference;
 import org.trello4j.TrelloURL;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
@@ -12,95 +12,84 @@ import org.trello4j.model.Checklist;
 import org.trello4j.model.Member;
 import org.trello4j.model.Organization;
 
-import com.google.gson.reflect.TypeToken;
-
 public class DefaultBoardOperations extends AbstractOperations implements BoardOperations {
 
-	DefaultBoardOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
-		super(apiKey, token, trelloObjFactory);
+	private final String boardId;
+
+	DefaultBoardOperations(String boardId, TrelloAccessor trelloAccessor) {
+		super(trelloAccessor);
+		this.boardId = boardId;
 	}
 
 	@Override
-	public Board getBoard(final String boardId) {
+	public Board get() {
 		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_URL, boardId).token(token).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Board>() {
-		}, doGet(url));
+		return getTrelloAccessor().doGet(Board.class, TrelloURL.BOARD_URL, boardId);
 	}
 
 	@Override
-	public List<Action> getActionsByBoard(final String boardId, final String... filter) {
+	public List<Action> getActions(final String... filters) {
 		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_ACTIONS_URL, boardId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
-		}, doGet(url));
+		ParameterizedTypeReference<List<Action>> typeReference = new ParameterizedTypeReference<List<Action>>() {
+		};
+		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_ACTIONS_URL, boardId, filters);
 	}
 
 	@Override
-	public List<Card> getCardsByBoard(String boardId, final String... filter) {
+	public List<Card> getCards(final String... filters) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_CARDS_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
-		}, doGet(url));
+		ParameterizedTypeReference<List<Card>> typeReference = new ParameterizedTypeReference<List<Card>>() {
+		};
+		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_CARDS_URL, boardId, filters);
 	}
 
 	@Override
-	public List<Checklist> getChecklistByBoard(String boardId) {
+	public List<Checklist> getChecklist() {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_CHECKLISTS_URL, boardId).token(token).build();
-		return trelloObjFactory.createObject(new TypeToken<List<Checklist>>() {
-		}, doGet(url));
+		ParameterizedTypeReference<List<Checklist>> typeReference = new ParameterizedTypeReference<List<Checklist>>() {
+		};
+		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_CHECKLISTS_URL, boardId);
 	}
 
 	@Override
-	public List<org.trello4j.model.List> getListByBoard(String boardId, final String... filter) {
+	public List<org.trello4j.model.List> getList(final String... filters) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_LISTS_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<List<org.trello4j.model.List>>() {
-		}, doGet(url));
+		ParameterizedTypeReference<List<org.trello4j.model.List>> typeReference = new ParameterizedTypeReference<List<org.trello4j.model.List>>() {
+		};
+		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_LISTS_URL, boardId, filters);
 	}
 
 	@Override
-	public List<Member> getMembersByBoard(String boardId, final String... filter) {
+	public List<Member> getMembers(final String... filters) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_MEMBERS_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doGet(url));
+		ParameterizedTypeReference<List<Member>> typeReference = new ParameterizedTypeReference<List<Member>>() {
+		};
+		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_MEMBERS_URL, boardId, filters);
 	}
 
 	@Override
-	public List<Member> getMembersInvitedByBoard(String boardId, final String... filter) {
+	public List<Member> getInvitedMembers(final String... filters) {
 		validateObjectId(boardId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_MEMBERS_INVITED_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
-		}, doGet(url));
+		ParameterizedTypeReference<List<Member>> typeReference = new ParameterizedTypeReference<List<Member>>() {
+		};
+		return getTrelloAccessor().doGet(typeReference, TrelloURL.BOARD_MEMBERS_INVITED_URL, boardId, filters);
 	}
 
 	@Override
-	public Prefs getPrefsByBoard(String boardId) {
+	public Prefs getPrefs() {
 		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_PREFS_URL, boardId).token(token).build();
-		return trelloObjFactory.createObject(new TypeToken<Prefs>() {
-		}, doGet(url));
+		return getTrelloAccessor().doGet(Prefs.class, TrelloURL.BOARD_PREFS_URL, boardId);
 	}
 
 	@Override
-	public Organization getOrganizationByBoard(String boardId, final String... filter) {
+	public Organization getOrganization(final String... filters) {
 		validateObjectId(boardId);
-
-		final String url = TrelloURL.create(apiKey, TrelloURL.BOARD_ORGANIZAION_URL, boardId).token(token).filter(filter).build();
-		return trelloObjFactory.createObject(new TypeToken<Organization>() {
-		}, doGet(url));
+		return getTrelloAccessor().doGet(Organization.class, TrelloURL.BOARD_ORGANIZAION_URL, boardId, filters);
 	}
 
 }

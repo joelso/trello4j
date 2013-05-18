@@ -1,20 +1,18 @@
 package org.trello4j.core;
 
-import org.trello4j.TrelloException;
 import org.trello4j.TrelloObjectFactoryImpl;
 import org.trello4j.TrelloOperations;
 
 /**
  * The Class TrelloImpl.
  */
-public class TrelloTemplate implements TrelloOperations {
+public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 
 	private final ActionOperations actionOperations;
 	private final OrganizationOperations organizationOperations;
 	private final ListOperations listOperations;
 	private final ChecklistOperations checklistOperations;
 	private final MemberOperations memberOperations;
-	private final BoardOperations boardOperations;
 	private final NotificationOperations notificationOperations;
 	private final CardOperations cardOperations;
 	private final TokenOperations tokenOperations;
@@ -25,9 +23,7 @@ public class TrelloTemplate implements TrelloOperations {
 	}
 
 	public TrelloTemplate(String apiKey, String token) {
-		if (apiKey == null) {
-			throw new TrelloException("API key must be set, get one here: https://trello.com/1/appKey/generate");
-		}
+		super(apiKey, token);
 
 		final TrelloObjectFactoryImpl trelloObjFactory = new TrelloObjectFactoryImpl();
 
@@ -36,7 +32,6 @@ public class TrelloTemplate implements TrelloOperations {
 		listOperations = new DefaultListOperations(apiKey, token, trelloObjFactory);
 		checklistOperations = new DefaultChecklistOperations(apiKey, token, trelloObjFactory);
 		memberOperations = new DefaultMemberOperations(apiKey, token, trelloObjFactory);
-		boardOperations = new DefaultBoardOperations(apiKey, token, trelloObjFactory);
 		notificationOperations = new DefaultNotificationOperations(apiKey, token, trelloObjFactory);
 		cardOperations = new DefaultCardOperations(apiKey, token, trelloObjFactory);
 		tokenOperations = new DefaultTokenOperations(apiKey, token, trelloObjFactory);
@@ -69,8 +64,8 @@ public class TrelloTemplate implements TrelloOperations {
 	}
 
 	@Override
-	public BoardOperations getBoardOperations() {
-		return boardOperations;
+	public BoardOperations boundBoardOperations(String boardId) {
+		return new DefaultBoardOperations(boardId, this);
 	}
 
 	@Override

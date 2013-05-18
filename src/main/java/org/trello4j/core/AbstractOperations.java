@@ -23,22 +23,32 @@ import org.trello4j.TrelloUtil;
 
 abstract class AbstractOperations {
 
-    private static final String METHOD_DELETE   = "DELETE";
-    private static final String METHOD_GET      = "GET";
-    private static final String METHOD_POST     = "POST";
-    private static final String METHOD_PUT      = "PUT";
-	private static final String GZIP_ENCODING   = "gzip";
-	
+	private static final String METHOD_DELETE = "DELETE";
+	private static final String METHOD_GET = "GET";
+	private static final String METHOD_POST = "POST";
+	private static final String METHOD_PUT = "PUT";
+	private static final String GZIP_ENCODING = "gzip";
+
 	String apiKey;
 	String token;
 	TrelloObjectFactoryImpl trelloObjFactory;
-	
+
+	private TrelloAccessor trelloAccessor;
+
+	AbstractOperations(TrelloAccessor trelloAccessor) {
+		this.trelloAccessor = trelloAccessor;
+	}
+
+	TrelloAccessor getTrelloAccessor() {
+		return trelloAccessor;
+	}
+
 	AbstractOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
 		this.apiKey = apiKey;
 		this.token = token;
 		this.trelloObjFactory = trelloObjFactory;
 	}
-	
+
 	InputStream doGet(String url) {
 		return doRequest(url, METHOD_GET);
 	}
@@ -60,22 +70,23 @@ abstract class AbstractOperations {
 	}
 
 	private InputStream doRequest(String url, String requestMethod) {
-        final Response response = doRequest(url, requestMethod, null);
-        return response != null ? response.getInputStream() : null;
+		final Response response = doRequest(url, requestMethod, null);
+		return response != null ? response.getInputStream() : null;
 	}
 
 	/**
-	 * Execute a POST request with URL-encoded key-value parameter pairs.
-	 * For a POST having an attachment, multipart/form-data will be used.
-	 *
-	 * @param url Trello API URL.
-	 * @param map Key-value map.
+	 * Execute a POST request with URL-encoded key-value parameter pairs. For a
+	 * POST having an attachment, multipart/form-data will be used.
+	 * 
+	 * @param url
+	 *            Trello API URL.
+	 * @param map
+	 *            Key-value map.
 	 * @return the response input stream.
 	 */
 	private Response doRequest(String url, String requestMethod, Map<String, Object> map) {
 		try {
-			HttpsURLConnection conn = (HttpsURLConnection) new URL(url)
-					.openConnection();
+			HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
 			conn.setDoOutput(requestMethod.equals(METHOD_POST) || requestMethod.equals(METHOD_PUT));
 			conn.setRequestMethod(requestMethod);
@@ -83,16 +94,14 @@ abstract class AbstractOperations {
 			if (map != null && !map.isEmpty()) {
 				boolean bAllStringValues = true;
 				for (Object value : map.values()) {
-					if (!(value instanceof String)) bAllStringValues = false;
+					if (!(value instanceof String))
+						bAllStringValues = false;
 				}
 
 				if (bAllStringValues) {
 					StringBuilder sb = new StringBuilder();
 					for (String key : map.keySet()) {
-						sb.append(sb.length() > 0 ? "&" : "")
-								.append(key)
-								.append("=")
-								.append(URLEncoder.encode((String) map.get(key), "UTF-8"));
+						sb.append(sb.length() > 0 ? "&" : "").append(key).append("=").append(URLEncoder.encode((String) map.get(key), "UTF-8"));
 					}
 					conn.getOutputStream().write(sb.toString().getBytes());
 					conn.getOutputStream().close();
@@ -139,28 +148,20 @@ abstract class AbstractOperations {
 				}
 			}
 
-            final int responseCode = conn.getResponseCode();
-            if (responseCode == 404) {
-                return null;
-            } else if (responseCode > 399) {
-                return new Response(conn.getErrorStream(), conn.getResponseMessage(), responseCode);
+			final int responseCode = conn.getResponseCode();
+			if (responseCode == 404) {
+				return null;
+			} else if (responseCode > 399) {
+				return new Response(conn.getErrorStream(), conn.getResponseMessage(), responseCode);
 			} else {
-				return new Response(
-						getWrappedInputStream(
-								conn.getInputStream(),
-								GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding())
-						),
-						conn.getResponseMessage(),
-                        responseCode
-				);
+				return new Response(getWrappedInputStream(conn.getInputStream(), GZIP_ENCODING.equalsIgnoreCase(conn.getContentEncoding())), conn.getResponseMessage(), responseCode);
 			}
 		} catch (IOException e) {
 			throw new TrelloException(e.getMessage());
 		}
 	}
-	
-	private InputStream getWrappedInputStream(InputStream is, boolean gzip)
-			throws IOException {
+
+	private InputStream getWrappedInputStream(InputStream is, boolean gzip) throws IOException {
 		/*
 		 * TODO: What about this? ---------------------- "Java clients which use
 		 * java.util.zip.GZIPInputStream() and wrap it with a
@@ -178,11 +179,11 @@ abstract class AbstractOperations {
 			return new BufferedInputStream(is);
 		}
 	}
-	
+
 	void validateObjectId(String id) {
 		if (!TrelloUtil.isObjectIdValid(id)) {
 			throw new TrelloException("Invalid object id: " + id);
 		}
 	}
-	
+
 }

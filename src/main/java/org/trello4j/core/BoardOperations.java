@@ -16,23 +16,22 @@ import org.trello4j.model.Organization;
  */
 public interface BoardOperations {
 
-	Board getBoard(String boardId);
+	Board get();
 
-	List<Action> getActionsByBoard(String boardId, String... filter);
+	List<Action> getActions(String... filter);
 
-	Organization getOrganizationByBoard(String boardId, String... filter);
+	Organization getOrganization(String... filter);
 
-	List<Member> getMembersInvitedByBoard(String boardId, String... filter);
+	List<Member> getInvitedMembers(String... filter);
 
-	List<Member> getMembersByBoard(String boardId, String... filter);
+	List<Member> getMembers(String... filter);
 
-	List<org.trello4j.model.List> getListByBoard(String boardId,
-			String... filter);
+	List<org.trello4j.model.List> getList(String... filter);
 
-	List<Checklist> getChecklistByBoard(String boardId);
+	List<Checklist> getChecklist();
 
-	List<Card> getCardsByBoard(String boardId, String... filter);
+	List<Card> getCards(String... filter);
 
-	Prefs getPrefsByBoard(String boardId);
+	Prefs getPrefs();
 
 }

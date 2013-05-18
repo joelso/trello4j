@@ -39,7 +39,7 @@ public class TrelloImplIntegrationTest {
 		String boardId = "INVALID_ID";
 
 		// WHEN
-		Board board = new TrelloTemplate(API_KEY, null).getBoardOperations().getBoard(boardId);
+		Board board = new TrelloTemplate(API_KEY, null).boundBoardOperations(boardId).get();
 
 		// THEN
 		assertNull("Oops, board is null", board);
@@ -51,7 +51,7 @@ public class TrelloImplIntegrationTest {
 		String boardId = "00000000000000000000000c";
 
 		// WHEN
-		Board board = new TrelloTemplate(API_KEY, null).getBoardOperations().getBoard(boardId);
+		Board board = new TrelloTemplate(API_KEY, null).boundBoardOperations(boardId).get();
 
 		// THEN
 		assertNull("Oops, board is null", board);
@@ -63,7 +63,7 @@ public class TrelloImplIntegrationTest {
 		String boardId = "4d5ea62fd76aa1136000000c"; // ID of Trello Development
 
 		// WHEN
-		Board board = new TrelloTemplate(API_KEY, null).getBoardOperations().getBoard(boardId);
+		Board board = new TrelloTemplate(API_KEY, null).boundBoardOperations(boardId).get();
 
 		// THEN
 		assertNotNull("Oops, board is null", board);
@@ -172,7 +172,7 @@ public class TrelloImplIntegrationTest {
 		String trelloDevBoardId = "4d5ea62fd76aa1136000000c";
 
 		// WHEN
-		List<Action> actions = new TrelloTemplate(API_KEY, null).getBoardOperations().getActionsByBoard(trelloDevBoardId);
+		List<Action> actions = new TrelloTemplate(API_KEY, null).boundBoardOperations(trelloDevBoardId).getActions();
 
 		// THEN
 		assertTrue("Board should have at least one action", actions.size() > 0);
