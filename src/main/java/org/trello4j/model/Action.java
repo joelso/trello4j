@@ -32,116 +32,139 @@ import java.util.Date;
  * }
  * }
  * </code>
- *
+ * 
  * @author joel
  */
-public class Action extends TrelloObject {
+public class Action {
 
-    private String idMemberCreator;
-    private String type;
-    private Date date;
-    private Member memberCreator;
-    private Data data;
+	private String idMemberCreator;
+	private String type;
+	private Date date;
+	private Member memberCreator;
+	private Data data;
 
-    public String getIdMemberCreator() {
-        return idMemberCreator;
-    }
+	private String id;
 
-    public void setIdMemberCreator(String idMemberCreator) {
-        this.idMemberCreator = idMemberCreator;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	@Override
+	public String toString() {
+		return new StringBuilder(getClass().getSimpleName()).append(" ").append(id).toString();
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public String getIdMemberCreator() {
+		return idMemberCreator;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	public void setIdMemberCreator(String idMemberCreator) {
+		this.idMemberCreator = idMemberCreator;
+	}
 
-    public Member getMemberCreator() {
-        return memberCreator;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setMemberCreator(Member memberCreator) {
-        this.memberCreator = memberCreator;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public Data getData() {
-        return data;
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    public void setData(Data data) {
-        this.data = data;
-    }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-    public class Data {
+	public Member getMemberCreator() {
+		return memberCreator;
+	}
 
-        private String text;
-        private Board board;
-        private Card card;
+	public void setMemberCreator(Member memberCreator) {
+		this.memberCreator = memberCreator;
+	}
 
-        public String getText() {
-            return text;
-        }
+	public Data getData() {
+		return data;
+	}
 
-        public void setText(String text) {
-            this.text = text;
-        }
+	public void setData(Data data) {
+		this.data = data;
+	}
 
-        public Board getBoard() {
-            return board;
-        }
+	public class Data {
 
-        public void setBoard(Board board) {
-            this.board = board;
-        }
+		private String dateLastEdited;
+		private String text;
+		private Board board;
+		private Card card;
 
-        public Card getCard() {
-            return card;
-        }
+		public String getDateLastEdited() {
+			return dateLastEdited;
+		}
 
-        public void setCard(Card card) {
-            this.card = card;
-        }
-    }
+		public void setDateLastEdited(String dateLastEdited) {
+			this.dateLastEdited = dateLastEdited;
+		}
 
+		public String getText() {
+			return text;
+		}
 
-    public static class TYPE {
+		public void setText(String text) {
+			this.text = text;
+		}
 
-        public static final String CREATE_CARD = "createCard";
-        public static final String COMMENT_CARD = "commentCard";
-        public static final String UPDATE_CARD = "updateCard";
-        public static final String UPDATE_CARD_ID_LIST = "updateCard:idList";
-        public static final String UPDATE_CARD_CLOSED = "updateCard:closed";
-        public static final String UPDATE_CARD_DESC = "updateCard:desc";
-        public static final String UPDATE_CARD_NAME = "updateCard:name";
-        public static final String ADD_MEMBER_TO_CARD = "addMemberToCard";
-        public static final String REMOVE_MEMBER_FROM_CARD = "removeMemberFromCard";
-        public static final String UPDATE_CHECK_ITEM = "updateCheckItemStateOnCard";
-        public static final String ADD_ATTACHMENT = "addAttachmentToCard";
-        public static final String REMOVE_ATTACHMENT = "removeAttachmentFromCard";
-        public static final String ADD_CHECKLIST = "addChecklistToCard";
-        public static final String REMOVE_CHECKLIST = "removeChecklistFromCard";
-        public static final String CREATE_LIST = "createList";
-        public static final String UPDATE_LIST = "updateList";
-        public static final String CREATE_BOARD = "createBoard";
-        public static final String UPDATE_BOARD = "updateBoard";
-        public static final String ADD_MEMBER_TO_BOARD = "addMemberToBoard";
-        public static final String REMOVE_MEMBER_FROM_BOARD = "removeMemberFromBoard";
-        public static final String ADD_TO_ORGANIZATION_BOARD = "addToOrganizationBoard";
-        public static final String REMOVE_FROM_ORGANIZATION_BOARD = "removeFromOrganizationBoard";
-        public static final String CREATE_ORGANIZATION = "createOrganization";
-        public static final String UPDATE_ORGANIZATION = "updateOrganization";
+		public Board getBoard() {
+			return board;
+		}
 
-    }
+		public void setBoard(Board board) {
+			this.board = board;
+		}
+
+		public Card getCard() {
+			return card;
+		}
+
+		public void setCard(Card card) {
+			this.card = card;
+		}
+	}
+
+	public static class TYPE {
+
+		public static final String CREATE_CARD = "createCard";
+		public static final String COMMENT_CARD = "commentCard";
+		public static final String UPDATE_CARD = "updateCard";
+		public static final String UPDATE_CARD_ID_LIST = "updateCard:idList";
+		public static final String UPDATE_CARD_CLOSED = "updateCard:closed";
+		public static final String UPDATE_CARD_DESC = "updateCard:desc";
+		public static final String UPDATE_CARD_NAME = "updateCard:name";
+		public static final String ADD_MEMBER_TO_CARD = "addMemberToCard";
+		public static final String REMOVE_MEMBER_FROM_CARD = "removeMemberFromCard";
+		public static final String UPDATE_CHECK_ITEM = "updateCheckItemStateOnCard";
+		public static final String ADD_ATTACHMENT = "addAttachmentToCard";
+		public static final String REMOVE_ATTACHMENT = "removeAttachmentFromCard";
+		public static final String ADD_CHECKLIST = "addChecklistToCard";
+		public static final String REMOVE_CHECKLIST = "removeChecklistFromCard";
+		public static final String CREATE_LIST = "createList";
+		public static final String UPDATE_LIST = "updateList";
+		public static final String CREATE_BOARD = "createBoard";
+		public static final String UPDATE_BOARD = "updateBoard";
+		public static final String ADD_MEMBER_TO_BOARD = "addMemberToBoard";
+		public static final String REMOVE_MEMBER_FROM_BOARD = "removeMemberFromBoard";
+		public static final String ADD_TO_ORGANIZATION_BOARD = "addToOrganizationBoard";
+		public static final String REMOVE_FROM_ORGANIZATION_BOARD = "removeFromOrganizationBoard";
+		public static final String CREATE_ORGANIZATION = "createOrganization";
+		public static final String UPDATE_ORGANIZATION = "updateOrganization";
+
+	}
 
 }

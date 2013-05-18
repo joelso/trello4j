@@ -1,6 +1,5 @@
 package org.trello4j;
 
-
 import java.text.MessageFormat;
 
 /**
@@ -93,9 +92,7 @@ public class TrelloURL {
 
 	private String[] filters = null;
 
-
-    public static TrelloURL create(String apiKey, String url,
-			String... pathParams) {
+	public static TrelloURL create(String apiKey, String url, String... pathParams) {
 		return new TrelloURL(apiKey, url, pathParams);
 	}
 
@@ -117,15 +114,13 @@ public class TrelloURL {
 
 	public String build() {
 		if (apiKey == null || url == null) {
-			throw new NullPointerException(
-					"Cannot build trello URL: API key and URL must be set");
+			throw new NullPointerException("Cannot build trello URL: API key and URL must be set");
 		}
 
-		return new StringBuilder()
-				.append(createUrlWithPathParams())
-				.append(createAuthQueryString())
-				.append(createFilterQuery())
-				.toString();
+		StringBuilder urlBuilder = new StringBuilder().append(createUrlWithPathParams()).append(createAuthQueryString()).append(createFilterQuery());
+
+		System.out.println(urlBuilder.toString());
+		return urlBuilder.toString();
 	}
 
 	private String createFilterQuery() {
@@ -150,7 +145,8 @@ public class TrelloURL {
 	}
 
 	private String createUrlWithPathParams() {
-		if (pathParams == null || pathParams.length == 0) return url;
+		if (pathParams == null || pathParams.length == 0)
+			return url;
 		return MessageFormat.format(url, pathParams);
 		// boardUrl += authQueryString;
 	}
