@@ -19,7 +19,7 @@ public interface TrelloOperations {
 
 	ListOperations getListOperations();
 
-	ChecklistOperations getChecklistOperations();
+	ChecklistOperations boundChecklistOperations(String checklistId);
 
 	MemberOperations getMemberOperations();
 

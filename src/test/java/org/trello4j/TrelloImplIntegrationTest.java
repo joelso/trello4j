@@ -242,7 +242,7 @@ public class TrelloImplIntegrationTest {
 		String checklistId = "4f92b89ea73738db6cdd4ed7";
 
 		// WHEN
-		Checklist checklist = new TrelloTemplate(API_KEY, API_TOKEN).getChecklistOperations().getChecklist(checklistId);
+		Checklist checklist = new TrelloTemplate(API_KEY, API_TOKEN).boundChecklistOperations(checklistId).get();
 
 		// THEN
 		assertNotNull("Oops, checklist list is null", checklist);
