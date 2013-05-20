@@ -88,22 +88,29 @@ public class TrelloURL {
 
 	private final String apiKey;
 
-	private String token = null;
+	private String accessToken = null;
 
 	private String[] filters = null;
 
+	@Deprecated
 	public static TrelloURL create(String apiKey, String url, String... pathParams) {
 		return new TrelloURL(apiKey, url, pathParams);
 	}
 
 	private TrelloURL(String apiKey, String url, String... pathParams) {
+		this(apiKey, null, url, pathParams);
+	}
+
+	public TrelloURL(String apiKey, String accessToken, String url, String... pathParams) {
 		this.apiKey = apiKey;
+		this.accessToken = accessToken;
 		this.url = url;
 		this.pathParams = pathParams;
 	}
 
+	@Deprecated
 	public TrelloURL token(String token) {
-		this.token = token;
+		this.accessToken = token;
 		return this;
 	}
 
@@ -118,8 +125,6 @@ public class TrelloURL {
 		}
 
 		StringBuilder urlBuilder = new StringBuilder().append(createUrlWithPathParams()).append(createAuthQueryString()).append(createFilterQuery());
-
-		System.out.println(urlBuilder.toString());
 		return urlBuilder.toString();
 	}
 
@@ -138,8 +143,8 @@ public class TrelloURL {
 	private String createAuthQueryString() {
 		StringBuilder sb = new StringBuilder(KEY_QUERY_PARAM).append(apiKey);
 
-		if (this.token != null) {
-			sb.append(TOKEN_QUERY_PARAM).append(this.token);
+		if (this.accessToken != null) {
+			sb.append(TOKEN_QUERY_PARAM).append(this.accessToken);
 		}
 		return sb.toString();
 	}
