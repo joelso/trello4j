@@ -7,7 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 import org.trello4j.TrelloException;
-import org.trello4j.TrelloURL;
+import org.trello4j.TrelloURI;
 
 //TODO Remove class and move methods to TrelloTemplate
 class TrelloAccessor {
@@ -99,7 +99,7 @@ class TrelloAccessor {
 		}
 	}
 
-	public TrelloURL createTrelloUri(String uriTemplate, String... resources) {
-		return new TrelloURL(apiKey, accessToken, uriTemplate, resources);
+	public TrelloURI createTrelloUri(String uriTemplate, String... resources) {
+		return new TrelloURI(apiKey, accessToken, uriTemplate, resources);
 	}
 }

@@ -3,7 +3,7 @@ package org.trello4j.core;
 import java.util.List;
 
 import org.trello4j.TrelloObjectFactoryImpl;
-import org.trello4j.TrelloURL;
+import org.trello4j.TrelloURI;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Member;
@@ -19,21 +19,21 @@ public class DefaultOrganizationOperations extends AbstractOperations implements
 
 	@Override
 	public Organization getOrganization(String organizationName, final String... filter) {
-		final String url = TrelloURL.create(apiKey, TrelloURL.ORGANIZATION_URL, organizationName).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.ORGANIZATION_URL, organizationName).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<Organization>() {
 		}, doGet(url));
 	}
 
 	@Override
 	public List<Board> getBoardsByOrganization(String organizationName, final String... filter) {
-		final String url = TrelloURL.create(apiKey, TrelloURL.ORGANIZATION_BOARDS_URL, organizationName).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.ORGANIZATION_BOARDS_URL, organizationName).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>() {
 		}, doGet(url));
 	}
 
 	@Override
 	public List<Action> getActionsByOrganization(String organizationNameOrId) {
-		final String url = TrelloURL.create(apiKey, TrelloURL.ORGANIZATION_ACTIONS_URL, organizationNameOrId).token(token).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.ORGANIZATION_ACTIONS_URL, organizationNameOrId).token(token).build();
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
 		}, doGet(url));
 	}
@@ -41,7 +41,7 @@ public class DefaultOrganizationOperations extends AbstractOperations implements
 	@Override
 	public List<Member> getMembersByOrganization(String organizationNameOrId, final String... filter) {
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.ORGANIZATION_MEMBERS_URL, organizationNameOrId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.ORGANIZATION_MEMBERS_URL, organizationNameOrId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Member>>() {
 		}, doGet(url));

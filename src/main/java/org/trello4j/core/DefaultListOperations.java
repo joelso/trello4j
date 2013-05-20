@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.trello4j.TrelloObjectFactoryImpl;
-import org.trello4j.TrelloURL;
+import org.trello4j.TrelloURI;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
@@ -22,7 +22,7 @@ public class DefaultListOperations extends AbstractOperations implements ListOpe
 	public org.trello4j.model.List getList(final String listId) {
 		validateObjectId(listId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_URL, listId).token(token).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.LIST_URL, listId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
 		}, doGet(url));
@@ -32,7 +32,7 @@ public class DefaultListOperations extends AbstractOperations implements ListOpe
 	public Card createCard(String idList, String name, Map<String, Object> keyValueMap, String... filter) {
 		validateObjectId(idList);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.CARD_POST_URL).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.CARD_POST_URL).token(token).filter(filter).build();
 		if (keyValueMap == null)
 			keyValueMap = new HashMap<String, Object>();
 		// if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
@@ -47,7 +47,7 @@ public class DefaultListOperations extends AbstractOperations implements ListOpe
 	public List<Action> getActionsByList(String listId) {
 		validateObjectId(listId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_ACTIONS_URL, listId).token(token).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.LIST_ACTIONS_URL, listId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
 		}, doGet(url));
@@ -57,7 +57,7 @@ public class DefaultListOperations extends AbstractOperations implements ListOpe
 	public Board getBoardByList(String listId, final String... filter) {
 		validateObjectId(listId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_BOARD_URL, listId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.LIST_BOARD_URL, listId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
 		}, doGet(url));
@@ -67,7 +67,7 @@ public class DefaultListOperations extends AbstractOperations implements ListOpe
 	public List<Card> getCardsByList(String listId, final String... filter) {
 		validateObjectId(listId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.LIST_CARDS_URL, listId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.LIST_CARDS_URL, listId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
 		}, doGet(url));

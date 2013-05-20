@@ -3,7 +3,7 @@ package org.trello4j.core;
 import java.util.List;
 
 import org.trello4j.TrelloObjectFactoryImpl;
-import org.trello4j.TrelloURL;
+import org.trello4j.TrelloURI;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
@@ -21,14 +21,14 @@ public class DefaultMemberOperations extends AbstractOperations implements Membe
 
 	@Override
 	public Member getMember(String usernameOrId, final String... filter) {
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_URL, usernameOrId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.MEMBER_URL, usernameOrId).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
 		}, doGet(url));
 	}
 
 	@Override
 	public List<Board> getBoardsByMember(String usernameOrId, final String... filter) {
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_BOARDS_URL, usernameOrId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.MEMBER_BOARDS_URL, usernameOrId).token(token).filter(filter).build();
 		return trelloObjFactory.createObject(new TypeToken<List<Board>>() {
 		}, doGet(url));
 	}
@@ -36,7 +36,7 @@ public class DefaultMemberOperations extends AbstractOperations implements Membe
 	@Override
 	public List<Action> getActionsByMember(String usernameOrId) {
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_ACTIONS_URL, usernameOrId).token(token).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.MEMBER_ACTIONS_URL, usernameOrId).token(token).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Action>>() {
 		}, doGet(url));
@@ -45,7 +45,7 @@ public class DefaultMemberOperations extends AbstractOperations implements Membe
 	@Override
 	public List<Card> getCardsByMember(String usernameOrId, final String... filter) {
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_CARDS_URL, usernameOrId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.MEMBER_CARDS_URL, usernameOrId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Card>>() {
 		}, doGet(url));
@@ -54,7 +54,7 @@ public class DefaultMemberOperations extends AbstractOperations implements Membe
 	@Override
 	public List<Notification> getNotificationsByMember(String usernameOrId, final String... filter) {
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_NOTIFIACTIONS_URL, usernameOrId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.MEMBER_NOTIFIACTIONS_URL, usernameOrId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Notification>>() {
 		}, doGet(url));
@@ -63,7 +63,7 @@ public class DefaultMemberOperations extends AbstractOperations implements Membe
 	@Override
 	public List<Organization> getOrganizationsByMember(String usernameOrId, final String... filter) {
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_ORGANIZATION_URL, usernameOrId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.MEMBER_ORGANIZATION_URL, usernameOrId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Organization>>() {
 		}, doGet(url));
@@ -72,7 +72,7 @@ public class DefaultMemberOperations extends AbstractOperations implements Membe
 	@Override
 	public List<Organization> getOrganizationsInvitedByMember(String usernameOrId, final String... filter) {
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.MEMBER_ORGANIZATION_INVITED_URL, usernameOrId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.MEMBER_ORGANIZATION_INVITED_URL, usernameOrId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<List<Organization>>() {
 		}, doGet(url));

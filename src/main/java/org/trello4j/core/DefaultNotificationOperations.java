@@ -1,7 +1,7 @@
 package org.trello4j.core;
 
 import org.trello4j.TrelloObjectFactoryImpl;
-import org.trello4j.TrelloURL;
+import org.trello4j.TrelloURI;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
 import org.trello4j.model.Member;
@@ -19,7 +19,7 @@ public class DefaultNotificationOperations extends AbstractOperations implements
 	public Notification getNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_URL, notificationId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.NOTIFICATION_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Notification>() {
 		}, doGet(url));
@@ -29,7 +29,7 @@ public class DefaultNotificationOperations extends AbstractOperations implements
 	public Board getBoardByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_BOARDS_URL, notificationId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.NOTIFICATION_BOARDS_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Board>() {
 		}, doGet(url));
@@ -39,7 +39,7 @@ public class DefaultNotificationOperations extends AbstractOperations implements
 	public Card getCardByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_CARDS_URL, notificationId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.NOTIFICATION_CARDS_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
 		}, doGet(url));
@@ -49,7 +49,7 @@ public class DefaultNotificationOperations extends AbstractOperations implements
 	public org.trello4j.model.List getListByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_LIST_URL, notificationId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.NOTIFICATION_LIST_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<org.trello4j.model.List>() {
 		}, doGet(url));
@@ -59,7 +59,7 @@ public class DefaultNotificationOperations extends AbstractOperations implements
 	public Member getMemberByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_MEMBERS_URL, notificationId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.NOTIFICATION_MEMBERS_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
 		}, doGet(url));
@@ -69,7 +69,7 @@ public class DefaultNotificationOperations extends AbstractOperations implements
 	public Member getMemberCreatorByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_MEMBER_CREATOR_URL, notificationId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.NOTIFICATION_MEMBER_CREATOR_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
 		}, doGet(url));
@@ -79,7 +79,7 @@ public class DefaultNotificationOperations extends AbstractOperations implements
 	public Member getOrganizationCreatorByNotification(String notificationId, final String... filter) {
 		validateObjectId(notificationId);
 
-		final String url = TrelloURL.create(apiKey, TrelloURL.NOTIFICATION_ORGANIZATION_URL, notificationId).token(token).filter(filter).build();
+		final String url = TrelloURI.create(apiKey, TrelloURI.NOTIFICATION_ORGANIZATION_URL, notificationId).token(token).filter(filter).build();
 
 		return trelloObjFactory.createObject(new TypeToken<Member>() {
 		}, doGet(url));

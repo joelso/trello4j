@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.FileSystemResource;
-import org.trello4j.TrelloURL;
+import org.trello4j.TrelloURI;
 import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
@@ -31,13 +31,13 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 
 	@Override
 	public Card get() {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_URL, cardId);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_URL, cardId);
 		return getTrelloAccessor().doGet(uri.build(), Card.class);
 	}
 
 	@Override
 	public List<Action> getActions() {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_ACTION_URL, cardId);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_ACTION_URL, cardId);
 		ParameterizedTypeReference<List<Action>> typeReference = new ParameterizedTypeReference<List<Action>>() {
 		};
 		return getTrelloAccessor().doGet(uri.build(), typeReference);
@@ -45,7 +45,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 
 	@Override
 	public List<Attachment> getAttachments() {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_ATTACHEMENT_URL, cardId);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_ATTACHEMENT_URL, cardId);
 		ParameterizedTypeReference<List<Attachment>> typeReference = new ParameterizedTypeReference<List<Attachment>>() {
 		};
 		return getTrelloAccessor().doGet(uri.build(), typeReference);
@@ -53,13 +53,13 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 
 	@Override
 	public Board getBoard(final String... filters) {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_BOARD_URL, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_BOARD_URL, cardId).filter(filters);
 		return getTrelloAccessor().doGet(uri.build(), Board.class);
 	}
 
 	@Override
 	public List<CheckItem> getCheckItemStates() {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_CHECK_ITEM_STATES_URL, cardId);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_CHECK_ITEM_STATES_URL, cardId);
 		ParameterizedTypeReference<List<CheckItem>> typeReference = new ParameterizedTypeReference<List<CheckItem>>() {
 		};
 		return getTrelloAccessor().doGet(uri.build(), typeReference);
@@ -67,7 +67,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 
 	@Override
 	public List<Checklist> getChecklist() {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_CHECKLISTS_URL, cardId);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_CHECKLISTS_URL, cardId);
 		ParameterizedTypeReference<List<Checklist>> typeReference = new ParameterizedTypeReference<List<Checklist>>() {
 		};
 		return getTrelloAccessor().doGet(uri.build(), typeReference);
@@ -75,13 +75,13 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 
 	@Override
 	public org.trello4j.model.List getList(final String... filters) {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_LIST_URL, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_LIST_URL, cardId).filter(filters);
 		return getTrelloAccessor().doGet(uri.build(), org.trello4j.model.List.class);
 	}
 
 	@Override
 	public List<Member> getMembers() {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_MEMBERS_URL, cardId);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_MEMBERS_URL, cardId);
 		ParameterizedTypeReference<List<Member>> typeReference = new ParameterizedTypeReference<List<Member>>() {
 		};
 		return getTrelloAccessor().doGet(uri.build(), typeReference);
@@ -90,7 +90,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	@Override
 	public Action comment(String text, String... filters) {
 		Map<String, String> keyValueMap = Collections.singletonMap("text", text);
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_POST_COMMENTS, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_POST_COMMENTS, cardId).filter(filters);
 		return getTrelloAccessor().doPut(uri.build(), keyValueMap, Action.class);
 	}
 
@@ -106,7 +106,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 		if (mimeType != null)
 			keyValueMap.put("mimeType", mimeType);
 
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_POST_ATTACHMENTS, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_POST_ATTACHMENTS, cardId).filter(filters);
 		ParameterizedTypeReference<List<Attachment>> typeReference = new ParameterizedTypeReference<List<Attachment>>() {
 		};
 		return getTrelloAccessor().doPost(uri.build(), keyValueMap, typeReference);
@@ -127,14 +127,14 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 			keyValueMap.put("idChecklistSource", checklistSource);
 		}
 
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_POST_CHECKLISTS, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_POST_CHECKLISTS, cardId).filter(filters);
 		return getTrelloAccessor().doPost(uri.build(), keyValueMap, Checklist.class);
 	}
 
 	@Override
 	public List<Label> addLabel(String label, String... filters) {
 		Map<String, String> keyValueMap = Collections.singletonMap("value", label);
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_POST_LABELS, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_POST_LABELS, cardId).filter(filters);
 		ParameterizedTypeReference<List<Label>> typeReference = new ParameterizedTypeReference<List<Label>>() {
 		};
 		return getTrelloAccessor().doPost(uri.build(), keyValueMap, typeReference);
@@ -143,7 +143,7 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	@Override
 	public List<Member> addMember(String memberId, String... filters) {
 		Map<String, String> keyValueMap = Collections.singletonMap("value", memberId);
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_POST_ADD_MEMBER, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_POST_ADD_MEMBER, cardId).filter(filters);
 		ParameterizedTypeReference<List<Member>> typeReference = new ParameterizedTypeReference<List<Member>>() {
 		};
 		return getTrelloAccessor().doPost(uri.build(), keyValueMap, typeReference);
@@ -152,13 +152,13 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	@Override
 	public boolean vote(String memberId, String... filters) {
 		Map<String, String> keyValueMap = Collections.singletonMap("value", memberId);
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_POST_VOTE_MEMBER, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_POST_VOTE_MEMBER, cardId).filter(filters);
 		return getTrelloAccessor().doPost(uri.build(), keyValueMap);
 	}
 
 	@Override
 	public List<Member> getMemberVotes(String... filters) {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_GET_VOTES, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_GET_VOTES, cardId).filter(filters);
 		ParameterizedTypeReference<List<Member>> typeReference = new ParameterizedTypeReference<List<Member>>() {
 		};
 		return getTrelloAccessor().doGet(uri.build(), typeReference);
@@ -166,31 +166,31 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 
 	@Override
 	public boolean delete(String... filters) {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_DELETE_CARD, cardId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_DELETE_CARD, cardId).filter(filters);
 		return getTrelloAccessor().doDelete(uri.build());
 	}
 
 	@Override
 	public boolean deleteChecklist(String listId, String... filters) {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_DELETE_CHECKLIST, cardId, listId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_DELETE_CHECKLIST, cardId, listId).filter(filters);
 		return getTrelloAccessor().doDelete(uri.build());
 	}
 
 	@Override
 	public boolean deleteLabel(String color, String... filters) {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_DELETE_LABEL, cardId, color).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_DELETE_LABEL, cardId, color).filter(filters);
 		return getTrelloAccessor().doDelete(uri.build());
 	}
 
 	@Override
 	public boolean deleteMember(String memberId, String... filters) {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_DELETE_MEMBER, cardId, memberId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_DELETE_MEMBER, cardId, memberId).filter(filters);
 		return getTrelloAccessor().doDelete(uri.build());
 	}
 
 	@Override
 	public boolean deleteVote(String memberId, String... filters) {
-		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.CARD_DELETE_VOTE_MEMBER, cardId, memberId).filter(filters);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_DELETE_VOTE_MEMBER, cardId, memberId).filter(filters);
 		return getTrelloAccessor().doDelete(uri.build());
 	}
 }

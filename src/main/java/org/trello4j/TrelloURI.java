@@ -5,7 +5,7 @@ import java.text.MessageFormat;
 /**
  * The Class TrelloURL.
  */
-public class TrelloURL {
+public class TrelloURI {
 
 	public static final String BOARD_URL = "https://api.trello.com/1/boards/{0}";
 	public static final String BOARD_ACTIONS_URL = "https://api.trello.com/1/boards/{0}/actions";
@@ -93,15 +93,15 @@ public class TrelloURL {
 	private String[] filters = null;
 
 	@Deprecated
-	public static TrelloURL create(String apiKey, String url, String... pathParams) {
-		return new TrelloURL(apiKey, url, pathParams);
+	public static TrelloURI create(String apiKey, String url, String... pathParams) {
+		return new TrelloURI(apiKey, url, pathParams);
 	}
 
-	private TrelloURL(String apiKey, String url, String... pathParams) {
+	private TrelloURI(String apiKey, String url, String... pathParams) {
 		this(apiKey, null, url, pathParams);
 	}
 
-	public TrelloURL(String apiKey, String accessToken, String url, String... pathParams) {
+	public TrelloURI(String apiKey, String accessToken, String url, String... pathParams) {
 		this.apiKey = apiKey;
 		this.accessToken = accessToken;
 		this.url = url;
@@ -109,12 +109,12 @@ public class TrelloURL {
 	}
 
 	@Deprecated
-	public TrelloURL token(String token) {
+	public TrelloURI token(String token) {
 		this.accessToken = token;
 		return this;
 	}
 
-	public TrelloURL filter(String... filters) {
+	public TrelloURI filter(String... filters) {
 		this.filters = isArrayEmpty(filters) ? null : filters;
 		return this;
 	}
@@ -153,7 +153,6 @@ public class TrelloURL {
 		if (pathParams == null || pathParams.length == 0)
 			return url;
 		return MessageFormat.format(url, pathParams);
-		// boardUrl += authQueryString;
 	}
 
 	private static boolean isArrayEmpty(String[] arr) {
