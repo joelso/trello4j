@@ -86,7 +86,6 @@ public class TrelloObjectFactoryImpl {
 	 */
 	@SuppressWarnings("unchecked")
 	private <T> T unmarshallToObj(TypeToken<T> typeToken, JsonElement response) {
-		System.out.println(response.toString());
 		return (T) getGson().fromJson(response, typeToken.getType());
 	}
 
