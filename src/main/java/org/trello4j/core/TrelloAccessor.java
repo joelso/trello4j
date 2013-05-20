@@ -27,62 +27,44 @@ class TrelloAccessor {
 		this.restTemplate = new RestTemplate();
 	}
 
-	<T> T doGet(Class<T> responseType, String urlTemplate, String param, String... filters) {
-		final String url = TrelloURL.create(apiKey, urlTemplate, param).filter(filters).token(accessToken).build();
+	<T> T doGet(String uri, Class<T> responseType) {
 		try {
-			return restTemplate.exchange(url, HttpMethod.GET, HttpEntity.EMPTY, responseType).getBody();
+			return restTemplate.exchange(uri, HttpMethod.GET, HttpEntity.EMPTY, responseType).getBody();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	<T> T doGet(String uri, ParameterizedTypeReference<T> typeReference) {
+		try {
+			return restTemplate.exchange(uri, HttpMethod.GET, HttpEntity.EMPTY, typeReference).getBody();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	boolean doPost(String uri, Map<String, ?> data) {
+		try {
+			restTemplate.exchange(uri, HttpMethod.POST, HttpEntity.EMPTY, Object.class, data).getBody();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	<T> T doPost(String uri, Map<String, ?> data, Class<T> responseType) {
+		try {
+			return restTemplate.exchange(uri, HttpMethod.POST, HttpEntity.EMPTY, responseType, data).getBody();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	<T> T doGet(ParameterizedTypeReference<T> typeReference, String urlTemplate, String param, String... filters) {
-		final String url = TrelloURL.create(apiKey, urlTemplate, param).filter(filters).token(accessToken).build();
+	<T> T doPost(String uri, Map<String, ?> data, ParameterizedTypeReference<T> typeReference) {
 		try {
-			return restTemplate.exchange(url, HttpMethod.GET, HttpEntity.EMPTY, typeReference).getBody();
-		} catch (Exception e) {
-			System.out.println(url);
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	<T> T doPost(Class<T> responseType, String urlTemplate, String param, Map<String, ?> data, String... filters) {
-		final String url = TrelloURL.create(apiKey, urlTemplate, param).token(accessToken).filter(filters).build();
-		try {
-			return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, responseType, data).getBody();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	<T> T doPost(ParameterizedTypeReference<T> typeReference, String urlTemplate, String param, Map<String, ?> data, String... filters) {
-		final String url = TrelloURL.create(apiKey, urlTemplate, param).token(accessToken).filter(filters).build();
-		try {
-			return restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, typeReference, data).getBody();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	void doPost(String urlTemplate, String param, Map<String, ?> data, String... filters) {
-		final String url = TrelloURL.create(apiKey, urlTemplate, param).token(accessToken).filter(filters).build();
-		try {
-			// restTemplate.poexchange(url, HttpMethod.POST, HttpEntity.EMPTY,
-			// typeReference, data).getBody();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Deprecated
-	<T> T doPut(Class<T> responseType, String urlTemplate, String param, Map<String, ?> data, String... filters) {
-		final String url = TrelloURL.create(apiKey, urlTemplate, param).token(accessToken).filter(filters).build();
-		try {
-			return restTemplate.exchange(url, HttpMethod.PUT, HttpEntity.EMPTY, responseType, data).getBody();
+			return restTemplate.exchange(uri, HttpMethod.POST, HttpEntity.EMPTY, typeReference, data).getBody();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -90,7 +72,6 @@ class TrelloAccessor {
 	}
 
 	<T> T doPut(String uri, Map<String, ?> data, Class<T> responseType) {
-		System.out.println(uri);
 		try {
 			return restTemplate.exchange(uri, HttpMethod.PUT, HttpEntity.EMPTY, responseType, data).getBody();
 		} catch (Exception e) {
@@ -99,28 +80,13 @@ class TrelloAccessor {
 		}
 	}
 
-	@Deprecated
-	<T> T doPut(ParameterizedTypeReference<T> typeReference, String urlTemplate, String param, Map<String, ?> data, String... filters) {
-		final String url = TrelloURL.create(apiKey, urlTemplate, param).token(accessToken).filter(filters).build();
+	<T> T doPut(String uri, Map<String, ?> data, ParameterizedTypeReference<T> typeReference) {
 		try {
-			return restTemplate.exchange(url, HttpMethod.PUT, HttpEntity.EMPTY, typeReference, data).getBody();
+			return restTemplate.exchange(uri, HttpMethod.PUT, HttpEntity.EMPTY, typeReference, data).getBody();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-	}
-
-	@Deprecated
-	boolean doDelete(String urlTemplate, String param, String... filters) {
-		final String url = TrelloURL.create(apiKey, urlTemplate, param).token(accessToken).filter(filters).build();
-		try {
-			restTemplate.delete(url);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-
 	}
 
 	boolean doDelete(String uri) {

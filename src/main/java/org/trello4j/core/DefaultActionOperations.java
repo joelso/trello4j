@@ -20,36 +20,43 @@ public class DefaultActionOperations extends AbstractOperations implements Actio
 
 	@Override
 	public Action get(final String... filters) {
-		return getTrelloAccessor().doGet(Action.class, TrelloURL.ACTION_URL, actionId, filters);
+		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.ACTION_URL, actionId).filter(filters);
+		return getTrelloAccessor().doGet(uri.build(), Action.class);
 	}
 
 	@Override
 	public Board getBoard(final String... filters) {
-		return getTrelloAccessor().doGet(Board.class, TrelloURL.ACTION_BOARD_URL, actionId, filters);
+		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.ACTION_BOARD_URL, actionId).filter(filters);
+		return getTrelloAccessor().doGet(uri.build(), Board.class);
 	}
 
 	@Override
 	public Card getCard(final String... filters) {
-		return getTrelloAccessor().doGet(Card.class, TrelloURL.ACTION_CARD_URL, actionId, filters);
+		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.ACTION_CARD_URL, actionId).filter(filters);
+		return getTrelloAccessor().doGet(uri.build(), Card.class);
 	}
 
 	@Override
 	public Member getMember(final String... filters) {
-		return getTrelloAccessor().doGet(Member.class, TrelloURL.ACTION_MEMBER_URL, actionId, filters);
+		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.ACTION_MEMBER_URL, actionId).filter(filters);
+		return getTrelloAccessor().doGet(uri.build(), Member.class);
 	}
 
 	@Override
 	public List getList(final String... filters) {
-		return getTrelloAccessor().doGet(List.class, TrelloURL.ACTION_LIST_URL, actionId, filters);
+		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.ACTION_LIST_URL, actionId).filter(filters);
+		return getTrelloAccessor().doGet(uri.build(), List.class);
 	}
 
 	@Override
 	public Member getMemberCreator(final String... filters) {
-		return getTrelloAccessor().doGet(Member.class, TrelloURL.ACTION_MEMBERCREATOR_URL, actionId, filters);
+		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.ACTION_MEMBERCREATOR_URL, actionId).filter(filters);
+		return getTrelloAccessor().doGet(uri.build(), Member.class);
 	}
 
 	@Override
 	public Organization getOrganization(final String... filters) {
-		return getTrelloAccessor().doGet(Organization.class, TrelloURL.ACTION_ORGANIZATION_URL, actionId, filters);
+		TrelloURL uri = getTrelloAccessor().createTrelloUri(TrelloURL.ACTION_ORGANIZATION_URL, actionId).filter(filters);
+		return getTrelloAccessor().doGet(uri.build(), Organization.class);
 	}
 }
