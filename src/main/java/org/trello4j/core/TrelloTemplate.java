@@ -21,18 +21,18 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 		this(apiKey, null);
 	}
 
-	public TrelloTemplate(String apiKey, String token) {
-		super(apiKey, token);
+	public TrelloTemplate(String apiKey, String accessToken) {
+		super(apiKey, accessToken);
 
 		trelloObjFactory = new TrelloObjectFactoryImpl();
 
-		organizationOperations = new DefaultOrganizationOperations(apiKey, token, trelloObjFactory);
-		listOperations = new DefaultListOperations(apiKey, token, trelloObjFactory);
-		checklistOperations = new DefaultChecklistOperations(apiKey, token, trelloObjFactory);
-		memberOperations = new DefaultMemberOperations(apiKey, token, trelloObjFactory);
-		notificationOperations = new DefaultNotificationOperations(apiKey, token, trelloObjFactory);
-		tokenOperations = new DefaultTokenOperations(apiKey, token, trelloObjFactory);
-		typeOperations = new DefaultTypeOperations(apiKey, token, trelloObjFactory);
+		organizationOperations = new DefaultOrganizationOperations(apiKey, accessToken, trelloObjFactory);
+		listOperations = new DefaultListOperations(apiKey, accessToken, trelloObjFactory);
+		checklistOperations = new DefaultChecklistOperations(apiKey, accessToken, trelloObjFactory);
+		memberOperations = new DefaultMemberOperations(apiKey, accessToken, trelloObjFactory);
+		notificationOperations = new DefaultNotificationOperations(apiKey, accessToken, trelloObjFactory);
+		tokenOperations = new DefaultTokenOperations(apiKey, accessToken, trelloObjFactory);
+		typeOperations = new DefaultTypeOperations(apiKey, accessToken, trelloObjFactory);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 
 	@Override
 	public CardOperations boundCardOperations(String cardId) {
-		return new DefaultCardOperations(apiKey, token, trelloObjFactory, cardId);
+		return new DefaultCardOperations(cardId, this);
 	}
 
 	@Override
