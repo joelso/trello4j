@@ -186,4 +186,11 @@ abstract class AbstractOperations {
 		}
 	}
 
+	void validateNotNull(String... values) {
+		for (String value : values) {
+			if (value == null) {
+				throw new IllegalArgumentException("Value must not be null.");
+			}
+		}
+	}
 }

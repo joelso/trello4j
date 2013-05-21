@@ -43,7 +43,7 @@ public class CardServiceTest {
 		map.put("desc", description);
 
 		// WHEN
-		Card card = new TrelloTemplate(API_KEY, API_TOKEN).getListOperations().createCard(listId, name, map);
+		Card card = new TrelloTemplate(API_KEY, API_TOKEN).boundListOperations(listId).createCard(name, description, null, null, null, null, null, null);
 
 		// THEN
 		assertNotNull(card);
@@ -205,7 +205,7 @@ public class CardServiceTest {
 
 		// GIVEN
 		String idList = "4f82ed4f1903bae43e66f5fd";
-		Card card = trello.getListOperations().createCard(idList, "jUnitCard", null);
+		Card card = trello.boundListOperations(idList).createCard("jUnitCard", null, null, null, null, null, null, null);
 
 		// WHEN
 		boolean deletedCard = trello.boundCardOperations(card.getId()).delete();

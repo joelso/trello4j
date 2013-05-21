@@ -203,7 +203,7 @@ public class TrelloImplIntegrationTest {
 		String listId = "4e7b86d7ce194786721560b8";
 
 		// WHEN
-		org.trello4j.model.List list = new TrelloTemplate(API_KEY, null).getListOperations().getList(listId);
+		org.trello4j.model.List list = new TrelloTemplate(API_KEY, null).boundListOperations(listId).get();
 
 		// THEN
 		assertNotNull("Oops, list is null", list);

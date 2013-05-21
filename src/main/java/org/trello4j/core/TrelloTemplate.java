@@ -9,7 +9,6 @@ import org.trello4j.TrelloOperations;
 public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 
 	private final OrganizationOperations organizationOperations;
-	private final ListOperations listOperations;
 	private final MemberOperations memberOperations;
 	private final NotificationOperations notificationOperations;
 	private final TokenOperations tokenOperations;
@@ -26,7 +25,6 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 		trelloObjFactory = new TrelloObjectFactoryImpl();
 
 		organizationOperations = new DefaultOrganizationOperations(apiKey, accessToken, trelloObjFactory);
-		listOperations = new DefaultListOperations(apiKey, accessToken, trelloObjFactory);
 		memberOperations = new DefaultMemberOperations(apiKey, accessToken, trelloObjFactory);
 		notificationOperations = new DefaultNotificationOperations(apiKey, accessToken, trelloObjFactory);
 		tokenOperations = new DefaultTokenOperations(apiKey, accessToken, trelloObjFactory);
@@ -44,8 +42,8 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 	}
 
 	@Override
-	public ListOperations getListOperations() {
-		return listOperations;
+	public ListOperations boundListOperations(String listId) {
+		return new DefaultListOperations(listId, this);
 	}
 
 	@Override
