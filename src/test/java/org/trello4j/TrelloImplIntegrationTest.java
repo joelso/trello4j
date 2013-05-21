@@ -124,7 +124,7 @@ public class TrelloImplIntegrationTest {
 		String username = "joelsoderstrom";
 
 		// WHEN
-		Member member = new TrelloTemplate(API_KEY, null).getMemberOperations().getMember(username);
+		Member member = new TrelloTemplate(API_KEY, null).boundMemberOperations(username).get();
 
 		// THEN
 		assertNotNull("Oops, member is null", member);
@@ -145,7 +145,7 @@ public class TrelloImplIntegrationTest {
 		String memberId = "4e918355e52581aa44eb0754";
 
 		// WHEN
-		Member member = new TrelloTemplate(API_KEY, null).getMemberOperations().getMember(memberId);
+		Member member = new TrelloTemplate(API_KEY, null).boundMemberOperations(memberId).get();
 
 		// THEN
 		assertNotNull("Oops, member is null", member);
@@ -216,7 +216,7 @@ public class TrelloImplIntegrationTest {
 		String userId = "userj";
 
 		// WHEN
-		List<Board> boards = new TrelloTemplate(API_KEY, API_TOKEN).getMemberOperations().getBoardsByMember(userId);
+		List<Board> boards = new TrelloTemplate(API_KEY, API_TOKEN).boundMemberOperations(userId).getBoards();
 
 		// THEN
 		assertNotNull("Oops, board list is null", boards);

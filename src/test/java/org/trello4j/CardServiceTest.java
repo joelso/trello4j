@@ -156,7 +156,7 @@ public class CardServiceTest {
 		String cardId = "50429779e215b4e45d7aef24";
 
 		TrelloTemplate trello = new TrelloTemplate(API_KEY, API_TOKEN);
-		Member boardUser = trello.getMemberOperations().getMember("userj");
+		Member boardUser = trello.boundMemberOperations("userj").get();
 
 		// PREPARE CARD
 		List<Member> cardMembers = trello.boundCardOperations(cardId).getMembers();
@@ -182,7 +182,7 @@ public class CardServiceTest {
 
 		// GIVEN
 		String cardId = "50429779e215b4e45d7aef24";
-		Member boardUser = trello.getMemberOperations().getMember("userj");
+		Member boardUser = trello.boundMemberOperations("userj").get();
 		assertNotNull(boardUser);
 
 		// CLEANUP
@@ -235,7 +235,7 @@ public class CardServiceTest {
 
 		// GIVEN
 		String cardId = "50429779e215b4e45d7aef24";
-		Member member = trello.getMemberOperations().getMember("userj");
+		Member member = trello.boundMemberOperations("userj").get();
 
 		// PREPARATION
 		trello.boundCardOperations(cardId).deleteLabel("blue");
@@ -254,7 +254,7 @@ public class CardServiceTest {
 
 		// GIVEN
 		String cardId = "50429779e215b4e45d7aef24";
-		Member member = trello.getMemberOperations().getMember("userj");
+		Member member = trello.boundMemberOperations("userj").get();
 
 		// PREPARATION
 		List<Member> members = trello.boundCardOperations(cardId).getMembers();
@@ -279,7 +279,7 @@ public class CardServiceTest {
 
 		// GIVEN
 		String cardId = "50429779e215b4e45d7aef24";
-		Member boardUser = trello.getMemberOperations().getMember("userj");
+		Member boardUser = trello.boundMemberOperations("userj").get();
 		assertNotNull(boardUser);
 
 		List<Member> membersVoted = trello.boundCardOperations(cardId).getMemberVotes();
