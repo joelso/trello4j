@@ -9,7 +9,6 @@ import org.trello4j.core.MemberOperations;
 import org.trello4j.core.NotificationOperations;
 import org.trello4j.core.OrganizationOperations;
 import org.trello4j.core.TokenOperations;
-import org.trello4j.core.TypeOperations;
 
 public interface TrelloOperations {
 
@@ -30,7 +29,4 @@ public interface TrelloOperations {
 	CardOperations boundCardOperations(String cardId);
 
 	TokenOperations getTokenOperations();
-
-	TypeOperations getTypeOperations();
-
 }
