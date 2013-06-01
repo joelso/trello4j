@@ -10,7 +10,6 @@ import org.trello4j.model.Type;
  */
 public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 
-	private final OrganizationOperations organizationOperations;
 	private final TokenOperations tokenOperations;
 	private final TrelloObjectFactoryImpl trelloObjFactory;
 
@@ -22,8 +21,6 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 		super(apiKey, accessToken);
 
 		trelloObjFactory = new TrelloObjectFactoryImpl();
-
-		organizationOperations = new DefaultOrganizationOperations(apiKey, accessToken, trelloObjFactory);
 		tokenOperations = new DefaultTokenOperations(apiKey, accessToken, trelloObjFactory);
 	}
 
@@ -33,8 +30,8 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 	}
 
 	@Override
-	public OrganizationOperations getOrganizationOperations() {
-		return organizationOperations;
+	public OrganizationOperations boundOrganizationOperations(String organizationNameOrId) {
+		return new DefaultOrganizationOperations(organizationNameOrId, this);
 	}
 
 	@Override

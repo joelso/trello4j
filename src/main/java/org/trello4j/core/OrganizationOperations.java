@@ -29,48 +29,16 @@ import org.trello4j.model.Organization;
  * <li>PUT /1/organizations/[org_id or name]/website</li>
  * <li>POST /1/organizations DELETE /1/organizations/[org_id or name]</li>
  * </ul>
- * .
- * 
- * @author joel
  */
+
 public interface OrganizationOperations {
 
-	/**
-	 * Get organization of given ID or name.
-	 * 
-	 * @param organizationNameOrId
-	 *            the organization name or id
-	 * @return the organization
-	 */
-	Organization getOrganization(String organizationNameOrId, String... filter);
+	Organization get(String... filters);
 
-	/**
-	 * Get list of boards that belong to organization.
-	 * 
-	 * @param organizationNameOrId
-	 *            the organization name or id
-	 * @return list of boards
-	 */
-	List<Board> getBoardsByOrganization(String organizationNameOrId,
-			String... filter);
+	List<Board> getBoards(String... filters);
 
-	/**
-	 * Get list of actions related to given organization.
-	 * 
-	 * @param organizationNameOrId
-	 *            the organization name or id
-	 * @return the actions by organization
-	 */
-	List<Action> getActionsByOrganization(String organizationNameOrId);
+	List<Action> getActions();
 
-	/**
-	 * Gets the members by organization.
-	 * 
-	 * @param organizationNameOrId
-	 *            the organization name or id
-	 * @return the members by organization
-	 */
-	List<Member> getMembersByOrganization(String organizationNameOrId,
-			String... filter);
+	List<Member> getMembers(String... filters);
 
 }

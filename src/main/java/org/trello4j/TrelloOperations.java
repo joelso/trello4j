@@ -14,7 +14,7 @@ public interface TrelloOperations {
 
 	ActionOperations boundActionOperations(String actionId);
 
-	OrganizationOperations getOrganizationOperations();
+	OrganizationOperations boundOrganizationOperations(String organizationNameOrId);
 
 	ListOperations boundListOperations(String listId);
 
