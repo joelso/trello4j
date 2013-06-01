@@ -1,7 +1,6 @@
 package org.trello4j.core;
 
 import org.trello4j.TrelloException;
-import org.trello4j.TrelloUtil;
 
 abstract class AbstractOperations {
 
@@ -16,9 +15,34 @@ abstract class AbstractOperations {
 	}
 
 	void validateObjectId(String id) {
-		if (!TrelloUtil.isObjectIdValid(id)) {
+		if (!isObjectIdValid(id)) {
 			throw new TrelloException("Invalid object id: " + id);
 		}
+	}
+
+	boolean isObjectIdValid(String s) {
+		if (s == null)
+			return false;
+
+		final int len = s.length();
+		if (len != 24)
+			return false;
+
+		for (int i = 0; i < len; i++) {
+			char c = s.charAt(i);
+			if (c >= '0' && c <= '9') {
+				continue;
+			}
+			if (c >= 'a' && c <= 'f') {
+				continue;
+			}
+			if (c >= 'A' && c <= 'F') {
+				continue;
+			}
+			return false;
+		}
+
+		return true;
 	}
 
 	void validateNotNull(String... values) {
