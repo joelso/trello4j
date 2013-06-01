@@ -1,36 +1,28 @@
 package org.trello4j.core;
 
-import org.trello4j.TrelloObjectFactoryImpl;
 import org.trello4j.TrelloURI;
 import org.trello4j.model.Member;
 import org.trello4j.model.Token;
 
-import com.google.gson.reflect.TypeToken;
-
 public class DefaultTokenOperations extends AbstractOperations implements TokenOperations {
 
-	DefaultTokenOperations(String apiKey, String token, TrelloObjectFactoryImpl trelloObjFactory) {
-		super(apiKey, token, trelloObjFactory);
+	private final String tokenId;
+
+	DefaultTokenOperations(String tokenId, TrelloAccessor trelloAccessor) {
+		super(trelloAccessor);
+		this.tokenId = tokenId;
 	}
 
 	@Override
-	public Token getToken(String tokenId, final String... filter) {
-		// validateObjectId(tokenId);
-
-		final String url = TrelloURI.create(apiKey, TrelloURI.TOKENS_URL, tokenId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Token>() {
-		}, doGet(url));
+	public Token get(final String... filters) {
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.TOKENS_URL, tokenId).filter(filters);
+		return getTrelloAccessor().doGet(uri.build(), Token.class);
 	}
 
 	@Override
-	public Member getMemberByToken(String tokenId, final String... filter) {
-		// validateObjectId(tokenId);
-
-		final String url = TrelloURI.create(apiKey, TrelloURI.TOKENS_MEMBER_URL, tokenId).token(token).filter(filter).build();
-
-		return trelloObjFactory.createObject(new TypeToken<Member>() {
-		}, doGet(url));
+	public Member getMember(final String... filters) {
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.TOKENS_MEMBER_URL, tokenId).filter(filters);
+		return getTrelloAccessor().doGet(uri.build(), Member.class);
 	}
 
 }

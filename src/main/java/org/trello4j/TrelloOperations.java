@@ -28,5 +28,5 @@ public interface TrelloOperations {
 
 	CardOperations boundCardOperations(String cardId);
 
-	TokenOperations getTokenOperations();
+	TokenOperations boundTokenOperations(String tokenId);
 }

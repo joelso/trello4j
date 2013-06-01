@@ -1,17 +1,10 @@
 package org.trello4j.core;
 
-import org.trello4j.TrelloObjectFactoryImpl;
 import org.trello4j.TrelloOperations;
 import org.trello4j.TrelloURI;
 import org.trello4j.model.Type;
 
-/**
- * The Class TrelloImpl.
- */
 public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
-
-	private final TokenOperations tokenOperations;
-	private final TrelloObjectFactoryImpl trelloObjFactory;
 
 	public TrelloTemplate(String apiKey) {
 		this(apiKey, null);
@@ -19,9 +12,6 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 
 	public TrelloTemplate(String apiKey, String accessToken) {
 		super(apiKey, accessToken);
-
-		trelloObjFactory = new TrelloObjectFactoryImpl();
-		tokenOperations = new DefaultTokenOperations(apiKey, accessToken, trelloObjFactory);
 	}
 
 	@Override
@@ -65,8 +55,8 @@ public class TrelloTemplate extends TrelloAccessor implements TrelloOperations {
 	}
 
 	@Override
-	public TokenOperations getTokenOperations() {
-		return tokenOperations;
+	public TokenOperations boundTokenOperations(String tokenId) {
+		return new DefaultTokenOperations(tokenId, this);
 	}
 
 	public Type getType(String idOrName) {
