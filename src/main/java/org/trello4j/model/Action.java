@@ -141,7 +141,7 @@ public class Action extends TrelloObject {
         public static final String ADD_CHECKLIST = "addChecklistToCard";
         public static final String REMOVE_CHECKLIST = "removeChecklistFromCard";
         public static final String CREATE_LIST = "createList";
-        public static final String UPDATE_LIST = "updateList";
+        public static final String UPDATE_LIST = "updateChecklist";
         public static final String CREATE_BOARD = "createBoard";
         public static final String UPDATE_BOARD = "updateBoard";
         public static final String ADD_MEMBER_TO_BOARD = "addMemberToBoard";
