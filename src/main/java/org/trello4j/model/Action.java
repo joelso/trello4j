@@ -88,6 +88,7 @@ public class Action extends TrelloObject {
         private String text;
         private Board board;
         private Card card;
+        private Checklist checklist;
 
         public String getText() {
             return text;
@@ -111,6 +112,14 @@ public class Action extends TrelloObject {
 
         public void setCard(Card card) {
             this.card = card;
+        }
+
+        public Checklist getChecklist() {
+            return checklist;
+        }
+
+        public void setChecklist(Checklist checklist) {
+            this.checklist = checklist;
         }
     }
 
