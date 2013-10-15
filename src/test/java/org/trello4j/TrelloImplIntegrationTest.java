@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -70,7 +71,8 @@ public class TrelloImplIntegrationTest {
 		assertEquals("Incorrect board id", boardId, board.getId());
 		assertEquals("Incorrect name of board", "Trello Development", board.getName());
 		assertEquals("Incorrect organization id", "4e1452614e4b8698470000e0", board.getIdOrganization());
-		assertEquals("Incorrect url", "https://trello.com/board/trello-development/4d5ea62fd76aa1136000000c", board.getUrl());
+		assertTrue("Incorrect url", board.getUrl().equals("https://trello.com/b/nC8QJJoZ/trello-development") ||
+			board.getUrl().equals("https://trello.com/board/trello-development/4d5ea62fd76aa1136000000c"));
 		assertFalse("This should be an open board", board.isClosed());
 		assertNotNull(board.getDesc());
 		assertNotNull(board.getPrefs());
@@ -190,6 +192,11 @@ public class TrelloImplIntegrationTest {
 		// THEN
 		assertNotNull("Oops, card is null", card);
 		assertEquals("Card id should be equal", cardId, card.getId());
+		// If this fails, change the assert to time < card.getDateLastActivity(). The exact date doesn't matter
+		// as long as it's not null and after the day the test failed.
+		assertEquals("Card's dateLastActivity should be ok",
+			new GregorianCalendar(2012, 7, 24, 17, 13, 24).getTimeInMillis() / 1000,
+			card.getDateLastActivity().getTime() / 1000);
 
 		// if(!card.getAttachments().isEmpty()) {
 		// assertNotNull("Attachment should be set",

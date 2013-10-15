@@ -1,0 +1,33 @@
+{
+  "badges": {
+    "attachments": 0,
+    "checkItems": 0,
+    "checkItemsChecked": 0,
+    "comments": 0,
+    "description": true,
+    "due": null,
+    "fogbugz": "",
+    "subscribed": false,
+    "viewingMemberVoted": false,
+    "votes": 0
+  },
+  "checkItemStates": [],
+  "closed": false,
+  "dateLastActivity": "2013-01-04T08:31:35.934Z",
+  "desc": "my desc",
+  "descData": null,
+  "due": null,
+  "id": "50e69223d6be66ff370015b4",
+  "idAttachmentCover": null,
+  "idBoard": "50b9de76bf9246b510010447",
+  "idChecklists": [],
+  "idList": "50b9df22bf9246b51001047d",
+  "idMembers": [],
+  "idShort": 20,
+  "labels": [],
+  "manualCoverAttachment": false,
+  "name": "my name",
+  "pos": 294911,
+  "shortUrl": "https://trello.com/c/OVxwySyZ",
+  "url": "https://trello.com/c/OVxwySyZ/1-test-test-test"
+}

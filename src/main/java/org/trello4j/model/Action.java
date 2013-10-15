@@ -1,5 +1,7 @@
 package org.trello4j.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 
 /**
@@ -35,6 +37,7 @@ import java.util.Date;
  * 
  * @author joel
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Action {
 
 	private String idMemberCreator;
@@ -98,6 +101,7 @@ public class Action {
 		this.data = data;
 	}
 
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	public class Data {
 
 		private String dateLastEdited;
