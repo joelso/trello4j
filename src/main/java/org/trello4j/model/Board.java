@@ -1,5 +1,6 @@
 package org.trello4j.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.trello4j.gson.CopyOfPermissionTypeDeserializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -152,6 +153,7 @@ public class Board extends TrelloObject {
 
 	}
 
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	public class Prefs {
 
 		private PERMISSION_TYPE voting;
