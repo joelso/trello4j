@@ -1,10 +1,11 @@
 package org.trello4j;
 
+import java.text.MessageFormat;
 
 /**
  * The Class TrelloURL.
  */
-public class TrelloURL {
+public class TrelloURI {
 
 	public static final String BOARD_URL = "https://api.trello.com/1/boards/{0}";
 	public static final String BOARD_ACTIONS_URL = "https://api.trello.com/1/boards/{0}/actions";
@@ -40,7 +41,19 @@ public class TrelloURL {
 	public static final String CARD_CHECKLISTS_URL = "https://api.trello.com/1/cards/{0}/checklists";
 	public static final String CARD_LIST_URL = "https://api.trello.com/1/cards/{0}/list";
 	public static final String CARD_MEMBERS_URL = "https://api.trello.com/1/cards/{0}/members";
+	public static final String CARD_GET_VOTES = "https://api.trello.com/1/cards/{0}/membersVoted";
 	public static final String CARD_POST_URL = "https://api.trello.com/1/cards";
+	public static final String CARD_POST_COMMENTS = "https://api.trello.com/1/cards/{0}/actions/comments";
+	public static final String CARD_POST_ATTACHMENTS = "https://api.trello.com/1/cards/{0}/attachments";
+	public static final String CARD_POST_CHECKLISTS = "https://api.trello.com/1/cards/{0}/checklists";
+	public static final String CARD_POST_LABELS = "https://api.trello.com/1/cards/{0}/labels";
+	public static final String CARD_POST_ADD_MEMBER = "https://api.trello.com/1/cards/{0}/members";
+	public static final String CARD_POST_VOTE_MEMBER = "https://api.trello.com/1/cards/{0}/membersVoted";
+	public static final String CARD_DELETE_CARD = "https://api.trello.com/1/cards/{0}";
+	public static final String CARD_DELETE_LABEL = "https://api.trello.com/1/cards/{0}/labels/{1}";
+	public static final String CARD_DELETE_MEMBER = "https://api.trello.com/1/cards/{0}/members/{1}";
+	public static final String CARD_DELETE_VOTE_MEMBER = "https://api.trello.com/1/cards/{0}/membersVoted/{1}";
+	public static final String CARD_DELETE_CHECKLIST = "https://api.trello.com/1/cards/{0}/checklists/{1}";
 	public static final String LIST_ACTIONS_URL = "https://api.trello.com/1/lists/{0}/action";
 	public static final String LIST_BOARD_URL = "https://api.trello.com/1/lists/{0}/board";
 	public static final String LIST_CARDS_URL = "https://api.trello.com/1/lists/{0}/cards";
@@ -75,43 +88,44 @@ public class TrelloURL {
 
 	private final String apiKey;
 
-	private String token = null;
+	private String accessToken = null;
 
 	private String[] filters = null;
 
-
-    public static TrelloURL create(String apiKey, String url,
-			String... pathParams) {
-		return new TrelloURL(apiKey, url, pathParams);
+	@Deprecated
+	public static TrelloURI create(String apiKey, String url, String... pathParams) {
+		return new TrelloURI(apiKey, url, pathParams);
 	}
 
-	private TrelloURL(String apiKey, String url, String... pathParams) {
+	private TrelloURI(String apiKey, String url, String... pathParams) {
+		this(apiKey, null, url, pathParams);
+	}
+
+	public TrelloURI(String apiKey, String accessToken, String url, String... pathParams) {
 		this.apiKey = apiKey;
+		this.accessToken = accessToken;
 		this.url = url;
 		this.pathParams = pathParams;
 	}
 
-	public TrelloURL token(String token) {
-		this.token = token;
+	@Deprecated
+	public TrelloURI token(String token) {
+		this.accessToken = token;
 		return this;
 	}
 
-	public TrelloURL filter(String... filters) {
+	public TrelloURI filter(String... filters) {
 		this.filters = isArrayEmpty(filters) ? null : filters;
 		return this;
 	}
 
 	public String build() {
 		if (apiKey == null || url == null) {
-			throw new NullPointerException(
-					"Cannot build trello URL: API key and URL must be set");
+			throw new NullPointerException("Cannot build trello URL: API key and URL must be set");
 		}
 
-		return new StringBuilder()
-				.append(createUrlWithPathParams())
-				.append(createAuthQueryString())
-				.append(createFilterQuery())
-				.toString();
+		StringBuilder urlBuilder = new StringBuilder().append(createUrlWithPathParams()).append(createAuthQueryString()).append(createFilterQuery());
+		return urlBuilder.toString();
 	}
 
 	private String createFilterQuery() {
@@ -129,21 +143,16 @@ public class TrelloURL {
 	private String createAuthQueryString() {
 		StringBuilder sb = new StringBuilder(KEY_QUERY_PARAM).append(apiKey);
 
-		if (this.token != null) {
-			sb.append(TOKEN_QUERY_PARAM).append(this.token);
+		if (this.accessToken != null) {
+			sb.append(TOKEN_QUERY_PARAM).append(this.accessToken);
 		}
 		return sb.toString();
 	}
 
 	private String createUrlWithPathParams() {
-		if (pathParams == null || pathParams.length == 0) return url;
-		String compiledUrl = null;
-		for (int i = 0; i < pathParams.length; i++) {
-			compiledUrl = url.replaceAll(PATH_PARAM_ARG_PREFIX + i
-					+ PATH_PARAM_ARG_SUFFIX, pathParams[i]);
-		}
-		// boardUrl += authQueryString;
-		return compiledUrl;
+		if (pathParams == null || pathParams.length == 0)
+			return url;
+		return MessageFormat.format(url, pathParams);
 	}
 
 	private static boolean isArrayEmpty(String[] arr) {

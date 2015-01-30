@@ -21,7 +21,7 @@ public class TrelloURLTest {
      */
     @Test
     public void shouldBuildURLWithFilter() throws Exception {
-        String url = TrelloURL.create("API_KEY", TrelloURL.ACTION_URL, "ID")
+        String url = TrelloURI.create("API_KEY", TrelloURI.ACTION_URL, "ID")
                 .token("TOKEN")
                 .filter(Action.TYPE.ADD_ATTACHMENT, Action.TYPE.ADD_CHECKLIST)
                 .build();
@@ -33,8 +33,8 @@ public class TrelloURLTest {
 
 	@Test
 	public void shouldNotReturnNullBaseURL() {
-		String url = TrelloURL
-				.create("API_KEY", TrelloURL.CARD_POST_URL)
+		String url = TrelloURI
+				.create("API_KEY", TrelloURI.CARD_POST_URL)
 				.token("TOKEN")
 				.build();
 
