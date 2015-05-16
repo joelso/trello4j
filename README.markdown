@@ -81,7 +81,7 @@ Now you got two options:
 <tr><td>GET /1/boards/[board_id]/organization          </td><td>IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/organization/[field]  </td><td>IMPLEMENTED</td></tr>
 <tr><td>PUT /1/boards/[board_id]                       </td><td>TODO</td></tr>
-<tr><td>PUT /1/boards/[board_id]/closed                </td><td>TODO</td></tr>
+<tr><td>PUT /1/boards/[board_id]/closed                </td><td>IMPLEMENTED</td></tr>
 <tr><td>PUT /1/boards/[board_id]/desc                  </td><td>TODO</td></tr>
 <tr><td>PUT /1/boards/[board_id]/name                  </td><td>TODO</td></tr>
 <tr><td>POST /1/boards                                 </td><td>TODO</td></tr>
