@@ -81,7 +81,7 @@ Now you got two options:
 <tr><td>GET /1/boards/[board_id]/organization          </td><td>IMPLEMENTED</td></tr>
 <tr><td>GET /1/boards/[board_id]/organization/[field]  </td><td>IMPLEMENTED</td></tr>
 <tr><td>PUT /1/boards/[board_id]                       </td><td>TODO</td></tr>
-<tr><td>PUT /1/boards/[board_id]/closed                </td><td>TODO</td></tr>
+<tr><td>PUT /1/boards/[board_id]/closed                </td><td>IMPLEMENTED</td></tr>
 <tr><td>PUT /1/boards/[board_id]/desc                  </td><td>TODO</td></tr>
 <tr><td>PUT /1/boards/[board_id]/name                  </td><td>TODO</td></tr>
 <tr><td>POST /1/boards                                 </td><td>TODO</td></tr>
@@ -108,17 +108,17 @@ Now you got two options:
 <tr><td>PUT /1/cards/[card_id]/idList                      </td><td>TODO</td></tr>
 <tr><td>PUT /1/cards/[card_id]/name                        </td><td>TODO</td></tr>
 <tr><td>POST /1/cards                                      </td><td>IMPLEMENTED</td></tr>
-<tr><td>POST /1/cards/[card_id]/actions/comments           </td><td>TODO</td></tr>
-<tr><td>POST /1/cards/[card_id]/attachments                </td><td>TODO</td></tr>
-<tr><td>POST /1/cards/[card_id]/checklists                 </td><td>TODO</td></tr>
-<tr><td>POST /1/cards/[card_id]/labels                     </td><td>TODO</td></tr>
-<tr><td>POST /1/cards/[card_id]/members                    </td><td>TODO</td></tr>
-<tr><td>POST /1/cards/[card_id]/membersVoted               </td><td>TODO</td></tr>
-<tr><td>DELETE /1/cards/[card_id]                          </td><td>TODO</td></tr>
-<tr><td>DELETE /1/cards/[card_id]/checklists/[idChecklist] </td><td>TODO</td></tr>
-<tr><td>DELETE /1/cards/[card_id]/labels/[color]           </td><td>TODO</td></tr>
-<tr><td>DELETE /1/cards/[card_id]/members/[idMember]       </td><td>TODO</td></tr>
-<tr><td>DELETE /1/cards/[card_id]/membersVoted/[idMember]  </td><td>TODO</td></tr>
+<tr><td>POST /1/cards/[card_id]/actions/comments           </td><td>IMPLEMENTED</td></tr>
+<tr><td>POST /1/cards/[card_id]/attachments                </td><td>IMPLEMENTED</td></tr>
+<tr><td>POST /1/cards/[card_id]/checklists                 </td><td>IMPLEMENTED</td></tr>
+<tr><td>POST /1/cards/[card_id]/labels                     </td><td>IMPLEMENTED</td></tr>
+<tr><td>POST /1/cards/[card_id]/members                    </td><td>IMPLEMENTED</td></tr>
+<tr><td>POST /1/cards/[card_id]/membersVoted               </td><td>IMPLEMENTED</td></tr>
+<tr><td>DELETE /1/cards/[card_id]                          </td><td>IMPLEMENTED</td></tr>
+<tr><td>DELETE /1/cards/[card_id]/checklists/[idChecklist] </td><td>IMPLEMENTED</td></tr>
+<tr><td>DELETE /1/cards/[card_id]/labels/[color]           </td><td>IMPLEMENTED</td></tr>
+<tr><td>DELETE /1/cards/[card_id]/members/[idMember]       </td><td>IMPLEMENTED</td></tr>
+<tr><td>DELETE /1/cards/[card_id]/membersVoted/[idMember]  </td><td>IMPLEMENTED</td></tr>
 
 <tr><th colspan="2">Checklists</th></tr>
 <tr><td>GET /1/checklists/[checklist_id]                                      </td><td>IMPLEMENTED</td></tr>
@@ -215,15 +215,4 @@ Now you got two options:
 ## Contributors
 
 [skydjol](https://github.com/skydjol)
-
-
-	
-
-	
-	
-
-
-
-
-
-
+[ForNeVeR](https://github.com/ForNeVeR)

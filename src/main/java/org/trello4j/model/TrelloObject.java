@@ -1,8 +1,11 @@
 package org.trello4j.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Base class for a Trello object.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class TrelloObject {
 
 	private String id;

@@ -1,5 +1,7 @@
 package org.trello4j.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class Card extends TrelloObject {
 	private List<Label> labels;
 	private String url;
 	private double pos;
+	private Date dateLastActivity;
 
     public String getName() {
 		return name;
@@ -93,6 +96,14 @@ public class Card extends TrelloObject {
 		this.pos = pos;
 	}
 
+	public Date getDateLastActivity() {
+		return dateLastActivity;
+	}
+
+	public void setDateLastActivity(Date dateLastActivity) {
+		this.dateLastActivity = dateLastActivity;
+	}
+
 	public List<Attachment> getAttachments() {
 		return attachments;
 	}
@@ -109,7 +120,8 @@ public class Card extends TrelloObject {
 		this.labels = labels;
 	}
 
-	public class Attachment {
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static class Attachment {
 
 		private String _id;
 		private String bytes;
@@ -167,7 +179,8 @@ public class Card extends TrelloObject {
 		}
 	}
 
-	public class Label {
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static class Label {
 
 		private String color;
 		private String name;
