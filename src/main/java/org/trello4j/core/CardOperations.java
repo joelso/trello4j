@@ -49,6 +49,13 @@ public interface CardOperations {
 
 	List<Member> getMemberVotes(String... filter);
 
+	/**
+	 * Archives the card.
+	 * @param value true to archive, false to remove from archive.
+	 * @return true if action was successful.
+	 */
+	boolean setClosed(boolean value);
+
 	boolean delete(String... filter);
 
 	boolean deleteChecklist(String idList, String... filter);

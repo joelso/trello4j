@@ -165,6 +165,13 @@ public class DefaultCardOperations extends AbstractOperations implements CardOpe
 	}
 
 	@Override
+	public boolean setClosed(boolean value) {
+		Map<String, Boolean> arguments = Collections.singletonMap("value", value);
+		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_CLOSE_CARD, cardId);
+		return getTrelloAccessor().doPut(uri.build(), arguments);
+	}
+
+	@Override
 	public boolean delete(String... filters) {
 		TrelloURI uri = getTrelloAccessor().createTrelloUri(TrelloURI.CARD_DELETE_CARD, cardId).filter(filters);
 		return getTrelloAccessor().doDelete(uri.build());
