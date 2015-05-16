@@ -215,15 +215,4 @@ Now you got two options:
 ## Contributors
 
 [skydjol](https://github.com/skydjol)
-
-
-	
-
-	
-	
-
-
-
-
-
-
+[ForNeVeR](https://github.com/ForNeVeR)

@@ -1,11 +1,13 @@
 package org.trello4j.core;
 
+import java.net.URI;
 import java.util.Map;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.trello4j.TrelloException;
 import org.trello4j.TrelloURI;
 
@@ -45,7 +47,7 @@ class TrelloAccessor {
 
 	boolean doPost(String uri, Map<String, ?> data) {
 		try {
-			restTemplate.exchange(uri, HttpMethod.POST, HttpEntity.EMPTY, Object.class, data).getBody();
+			restTemplate.exchange(buildUri(uri, data), HttpMethod.POST, HttpEntity.EMPTY, Object.class).getBody();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,7 +57,7 @@ class TrelloAccessor {
 
 	<T> T doPost(String uri, Map<String, ?> data, Class<T> responseType) {
 		try {
-			return restTemplate.exchange(uri, HttpMethod.POST, HttpEntity.EMPTY, responseType, data).getBody();
+			return restTemplate.exchange(buildUri(uri, data), HttpMethod.POST, HttpEntity.EMPTY, responseType).getBody();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -71,9 +73,19 @@ class TrelloAccessor {
 		}
 	}
 
+	boolean doPut(String uri, Map<String, ?> data) {
+		try {
+			restTemplate.exchange(buildUri(uri, data), HttpMethod.POST, HttpEntity.EMPTY, Object.class).getBody();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	<T> T doPut(String uri, Map<String, ?> data, Class<T> responseType) {
 		try {
-			return restTemplate.exchange(uri, HttpMethod.PUT, HttpEntity.EMPTY, responseType, data).getBody();
+			return restTemplate.exchange(buildUri(uri, data), HttpMethod.PUT, HttpEntity.EMPTY, responseType).getBody();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -82,7 +94,7 @@ class TrelloAccessor {
 
 	<T> T doPut(String uri, Map<String, ?> data, ParameterizedTypeReference<T> typeReference) {
 		try {
-			return restTemplate.exchange(uri, HttpMethod.PUT, HttpEntity.EMPTY, typeReference, data).getBody();
+			return restTemplate.exchange(buildUri(uri, data), HttpMethod.PUT, HttpEntity.EMPTY, typeReference).getBody();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -101,5 +113,14 @@ class TrelloAccessor {
 
 	public TrelloURI createTrelloUri(String uriTemplate, String... resources) {
 		return new TrelloURI(apiKey, accessToken, uriTemplate, resources);
+	}
+
+	private static URI buildUri(String uri, Map<String, ?> params) {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri);
+		for (Map.Entry<String, ?> entry : params.entrySet()) {
+			builder = builder.queryParam(entry.getKey(), entry.getValue());
+		}
+
+		return builder.build().encode().toUri();
 	}
 }
