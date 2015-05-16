@@ -71,6 +71,16 @@ class TrelloAccessor {
 		}
 	}
 
+	boolean doPut(String uri, Map<String, ?> data) {
+		try {
+			restTemplate.exchange(uri, HttpMethod.POST, HttpEntity.EMPTY, Object.class, data).getBody();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	<T> T doPut(String uri, Map<String, ?> data, Class<T> responseType) {
 		try {
 			return restTemplate.exchange(uri, HttpMethod.PUT, HttpEntity.EMPTY, responseType, data).getBody();

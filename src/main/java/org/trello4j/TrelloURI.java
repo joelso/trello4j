@@ -49,6 +49,7 @@ public class TrelloURI {
 	public static final String CARD_POST_LABELS = "https://api.trello.com/1/cards/{0}/labels";
 	public static final String CARD_POST_ADD_MEMBER = "https://api.trello.com/1/cards/{0}/members";
 	public static final String CARD_POST_VOTE_MEMBER = "https://api.trello.com/1/cards/{0}/membersVoted";
+	public static final String CARD_CLOSE_CARD = "https://api.trello.com/1/cards/{0}/closed";
 	public static final String CARD_DELETE_CARD = "https://api.trello.com/1/cards/{0}";
 	public static final String CARD_DELETE_LABEL = "https://api.trello.com/1/cards/{0}/labels/{1}";
 	public static final String CARD_DELETE_MEMBER = "https://api.trello.com/1/cards/{0}/members/{1}";
