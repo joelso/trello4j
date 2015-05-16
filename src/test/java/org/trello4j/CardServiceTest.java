@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.trello4j.core.CardOperations;
+import org.trello4j.core.ListOperations;
 import org.trello4j.core.TrelloTemplate;
 import org.trello4j.model.Action;
 import org.trello4j.model.Card;
@@ -31,6 +33,7 @@ public class CardServiceTest {
 
 	private static final String API_KEY = "23ec668887f03d4c71c7f74fb0ae30a4";
 	private static final String API_TOKEN = "cfb1df98cbde193b3181e02a8bca9871eaeb8aed0659391f887631055b0b774d";
+	private static final String LIST_ID = "TODO";
 
 	@Test
 	public void testCreateCard() {
@@ -197,6 +200,25 @@ public class CardServiceTest {
 
 		// THEN
 		assertTrue(voted);
+	}
+
+	@Test
+	public void closeCard() {
+		TrelloTemplate trello = new TrelloTemplate(API_KEY, API_TOKEN);
+
+		ListOperations listOperations = trello.boundListOperations(LIST_ID);
+		Card card = listOperations.createCard("CardServiceTest_closeCard", "", "", "", "", "", "", "");
+
+		CardOperations cardOperations = trello.boundCardOperations(card.getId());
+
+		try {
+			cardOperations.setClosed(true);
+
+			card = cardOperations.get();
+			assertTrue(card.isClosed());
+		} finally {
+			cardOperations.delete();
+		}
 	}
 
 	@Test
