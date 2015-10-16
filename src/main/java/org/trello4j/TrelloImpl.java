@@ -50,6 +50,24 @@ public class TrelloImpl implements Trello {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see org.trello4j.WebhookService#getWebhook(java.lang.String)
+	 */
+	@Override
+	public Webhook getWebhooks(final String webhookId) {
+		validateObjectId(webhookId);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.WEBHOOKS_URL, webhookId)
+				.token(token)
+				.build();
+
+		return trelloObjFactory.createObject(new TypeToken<Webhook>() {
+		}, doGet(url));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.trello4j.BoardService#getBoard(java.lang.String)
 	 */
 	@Override
