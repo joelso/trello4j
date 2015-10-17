@@ -11,7 +11,7 @@ import org.trello4j.model.Webhook;
  * @author 
  */
 public interface WebhookService {
-	Webhook getWebhook(String webhookId);
+	List<Webhook> getWebhooks();
 
-	Webhook createWebhook(String description, String callbackUrl);
+	Webhook createWebhook(String description, String callbackUrl, String idModel);
 }

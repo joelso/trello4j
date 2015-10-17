@@ -1,12 +1,14 @@
 package org.trello4j;
 
 import com.google.gson.reflect.TypeToken;
+
 import org.trello4j.model.*;
 import org.trello4j.model.Board.Prefs;
 import org.trello4j.model.Card.Attachment;
 import org.trello4j.model.Checklist.CheckItem;
 
 import javax.net.ssl.HttpsURLConnection;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,16 +55,36 @@ public class TrelloImpl implements Trello {
 	 * @see org.trello4j.WebhookService#getWebhook(java.lang.String)
 	 */
 	@Override
-	public Webhook getWebhooks(final String webhookId) {
-		validateObjectId(webhookId);
+	public List<Webhook> getWebhooks() {
 
 		final String url = TrelloURL
-				.create(apiKey, TrelloURL.WEBHOOKS_URL, webhookId)
+				.create(apiKey, TrelloURL.TOKEN_WEBHOOKS_URL, token)
 				.token(token)
 				.build();
 
-		return trelloObjFactory.createObject(new TypeToken<Webhook>() {
+		return trelloObjFactory.createObject(new TypeToken<List<Webhook>>() {
 		}, doGet(url));
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.trello4j.WebhookService#createWebhook(java.lang.String)
+	 */
+	@Override
+	public Webhook createWebhook(String description, String callbackUrl, String idModel) {
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.WEBHOOKS_URL)
+				.token(token)
+				.build();
+		HashMap<String, String> keyValueMap = new HashMap<String, String>();
+		//if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
+		keyValueMap.put("description", description);
+		keyValueMap.put("callbackURL", callbackUrl);
+		keyValueMap.put("idModel", idModel);
+		
+		return trelloObjFactory.createObject(new TypeToken<Webhook>() {
+		}, doPost(url, keyValueMap));
 	}
 
 	/*
@@ -1183,7 +1205,7 @@ public class TrelloImpl implements Trello {
                 conn.getOutputStream().write(sb.toString().getBytes());
                 conn.getOutputStream().close();
             }
-
+            
 			if (conn.getResponseCode() > 399) {
 				return null;
 			} else {
@@ -1221,5 +1243,4 @@ public class TrelloImpl implements Trello {
 			return new BufferedInputStream(is);
 		}
 	}
-
 }

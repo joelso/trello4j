@@ -63,6 +63,7 @@ public class TrelloURL {
 	public static final String TOKENS_URL = "https://api.trello.com/1/tokens/{0}";
 	public static final String TOKENS_MEMBER_URL = "https://api.trello.com/1/tokens/{0}/member";
 	public static final String ORGANIZATION_MEMBERS_URL = "https://api.trello.com/1/organizations/{0}/members";
+	public static final String TOKEN_WEBHOOKS_URL = "https://api.trello.com/1/tokens/{0}/webhooks";
     public static final String WEBHOOKS_URL = "https://api.trello.com/1/webhooks/";
 	private static final String PATH_PARAM_ARG_PREFIX = "\\{";
 	private static final String PATH_PARAM_ARG_SUFFIX = "\\}";
