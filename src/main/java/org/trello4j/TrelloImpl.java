@@ -86,6 +86,37 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(new TypeToken<Webhook>() {
 		}, doPost(url, keyValueMap));
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.trello4j.WebhookService#deleteWebhook(java.lang.String)
+	 */
+	@Override
+	public void deleteWebhook(String idWebhook) {
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.WEBHOOKS_ID_URL, idWebhook)
+				.token(token)
+				.build();
+		
+		doDelete(url);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.trello4j.WebhookService#getWebhook(java.lang.String)
+	 */
+	@Override
+	public Webhook getWebhook(String idWebhook) {
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.WEBHOOKS_ID_URL, idWebhook)
+				.token(token)
+				.build();
+		
+		return trelloObjFactory.createObject(new TypeToken<Webhook>() {
+		}, doGet(url));
+	}
 
 	/*
 	 * (non-Javadoc)

@@ -221,7 +221,7 @@ Now you got two options:
 <tr><td>PUT /1/webhooks/[idWebhook]/description                               </td><td>TODO</td></tr>
 <tr><td>PUT /1/webhooks/[idWebhook]/idModel                                   </td><td>TODO</td></tr>
 <tr><td>POST /1/webhooks                                                      </td><td>IMPLEMENTED</td></tr>
-<tr><td>DELETE /1/webhooks/[idWebhook]                                        </td><td>TODO</td></tr>
+<tr><td>DELETE /1/webhooks/[idWebhook]                                        </td><td>IMPLEMENTED</td></tr>
 
 </table>                                                                     
 
