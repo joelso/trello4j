@@ -1205,7 +1205,7 @@ public class TrelloImpl implements Trello {
                 conn.getOutputStream().write(sb.toString().getBytes());
                 conn.getOutputStream().close();
             }
-            
+
 			if (conn.getResponseCode() > 399) {
 				return null;
 			} else {
