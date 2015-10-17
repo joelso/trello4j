@@ -206,9 +206,22 @@ Now you got two options:
 <tr><td>GET /1/tokens/[token]/[field]                                         </td><td>TODO</td></tr>
 <tr><td>GET /1/tokens/[token]/member                                          </td><td>IMPLEMENTED</td></tr>
 <tr><td>GET /1/tokens/[token]/member/[field]                                  </td><td>TODO</td></tr>
+<tr><td>GET /1/tokens/[token]/webhooks                                        </td><td>IMPLEMENTED</td></tr>
 
 <tr><th colspan="2">Types</th></tr>
 <tr><td>GET /1/types/[id]                                                     </td><td>IMPLEMENTED</td></tr>
+
+<tr><th colspan="2">Webhooks</th></tr>
+<tr><td>GET /1/webhooks/[idWebhook]                                           </td><td>TODO</td></tr>
+<tr><td>GET /1/webhooks/[idWebhook]/[field]                                   </td><td>TODO</td></tr>
+<tr><td>PUT /1/webhooks/[idWebhook]                                           </td><td>TODO</td></tr>
+<tr><td>PUT /1/webhooks                                                       </td><td>TODO</td></tr>
+<tr><td>PUT /1/webhooks/[idWebhook]/active                                    </td><td>TODO</td></tr>
+<tr><td>PUT /1/webhooks/[idWebhook]/callbackURL                               </td><td>TODO</td></tr>
+<tr><td>PUT /1/webhooks/[idWebhook]/description                               </td><td>TODO</td></tr>
+<tr><td>PUT /1/webhooks/[idWebhook]/idModel                                   </td><td>TODO</td></tr>
+<tr><td>POST /1/webhooks                                                      </td><td>IMPLEMENTED</td></tr>
+<tr><td>DELETE /1/webhooks/[idWebhook]                                        </td><td>TODO</td></tr>
 
 </table>                                                                     
 
