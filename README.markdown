@@ -212,7 +212,7 @@ Now you got two options:
 <tr><td>GET /1/types/[id]                                                     </td><td>IMPLEMENTED</td></tr>
 
 <tr><th colspan="2">Webhooks</th></tr>
-<tr><td>GET /1/webhooks/[idWebhook]                                           </td><td>TODO</td></tr>
+<tr><td>GET /1/webhooks/[idWebhook]                                           </td><td>IMPLEMENTED</td></tr>
 <tr><td>GET /1/webhooks/[idWebhook]/[field]                                   </td><td>TODO</td></tr>
 <tr><td>PUT /1/webhooks/[idWebhook]                                           </td><td>TODO</td></tr>
 <tr><td>PUT /1/webhooks                                                       </td><td>TODO</td></tr>
