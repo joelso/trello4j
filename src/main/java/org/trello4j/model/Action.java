@@ -88,6 +88,7 @@ public class Action extends TrelloObject {
         private String text;
         private Board board;
         private Card card;
+        private Checklist checklist;
 
         public String getText() {
             return text;
@@ -112,6 +113,14 @@ public class Action extends TrelloObject {
         public void setCard(Card card) {
             this.card = card;
         }
+
+        public Checklist getChecklist() {
+            return checklist;
+        }
+
+        public void setChecklist(Checklist checklist) {
+            this.checklist = checklist;
+        }
     }
 
 
@@ -132,7 +141,7 @@ public class Action extends TrelloObject {
         public static final String ADD_CHECKLIST = "addChecklistToCard";
         public static final String REMOVE_CHECKLIST = "removeChecklistFromCard";
         public static final String CREATE_LIST = "createList";
-        public static final String UPDATE_LIST = "updateList";
+        public static final String UPDATE_LIST = "updateChecklist";
         public static final String CREATE_BOARD = "createBoard";
         public static final String UPDATE_BOARD = "updateBoard";
         public static final String ADD_MEMBER_TO_BOARD = "addMemberToBoard";
