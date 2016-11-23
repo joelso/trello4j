@@ -1,12 +1,14 @@
 package org.trello4j;
 
 import com.google.gson.reflect.TypeToken;
+
 import org.trello4j.model.*;
 import org.trello4j.model.Board.Prefs;
 import org.trello4j.model.Card.Attachment;
 import org.trello4j.model.Checklist.CheckItem;
 
 import javax.net.ssl.HttpsURLConnection;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +47,75 @@ public class TrelloImpl implements Trello {
 			throw new TrelloException(
 					"API key must be set, get one here: https://trello.com/1/appKey/generate");
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.trello4j.WebhookService#getWebhook(java.lang.String)
+	 */
+	@Override
+	public List<Webhook> getWebhooks() {
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.TOKEN_WEBHOOKS_URL, token)
+				.token(token)
+				.build();
+
+		return trelloObjFactory.createObject(new TypeToken<List<Webhook>>() {
+		}, doGet(url));
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.trello4j.WebhookService#createWebhook(java.lang.String)
+	 */
+	@Override
+	public Webhook createWebhook(String description, String callbackUrl, String idModel) {
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.WEBHOOKS_URL)
+				.token(token)
+				.build();
+		HashMap<String, String> keyValueMap = new HashMap<String, String>();
+		//if (keyValueMap.containsKey("name")) keyValueMap.remove("name");
+		keyValueMap.put("description", description);
+		keyValueMap.put("callbackURL", callbackUrl);
+		keyValueMap.put("idModel", idModel);
+		
+		return trelloObjFactory.createObject(new TypeToken<Webhook>() {
+		}, doPost(url, keyValueMap));
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.trello4j.WebhookService#deleteWebhook(java.lang.String)
+	 */
+	@Override
+	public void deleteWebhook(String idWebhook) {
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.WEBHOOKS_ID_URL, idWebhook)
+				.token(token)
+				.build();
+		
+		doDelete(url);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.trello4j.WebhookService#getWebhook(java.lang.String)
+	 */
+	@Override
+	public Webhook getWebhook(String idWebhook) {
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.WEBHOOKS_ID_URL, idWebhook)
+				.token(token)
+				.build();
+		
+		return trelloObjFactory.createObject(new TypeToken<Webhook>() {
+		}, doGet(url));
 	}
 
 	/*
@@ -1203,5 +1274,4 @@ public class TrelloImpl implements Trello {
 			return new BufferedInputStream(is);
 		}
 	}
-
 }
