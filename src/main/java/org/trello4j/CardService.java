@@ -13,8 +13,8 @@ import org.trello4j.model.Member;
 
 /**
  * The Interface CardService.
- * 
- * @author 
+ *
+ * @author
  */
 public interface CardService {
 
@@ -33,6 +33,8 @@ public interface CardService {
 	org.trello4j.model.List getListByCard(String cardId, String... filter);
 
 	List<Member> getMembersByCard(String cardId);
+
+	Card updateCard(String id, Map<String,String> keyValMap);
 
 	/**
 	 * Add a new {@link Card} with the optional keyValue pairs.
