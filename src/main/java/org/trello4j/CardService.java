@@ -44,4 +44,6 @@ public interface CardService {
 	 * @param keyValeMap Map of the optional key-value-pairs.
 	 */
 	Card createCard(String idList, String name, Map<String, String> keyValeMap);
+
+	List<String> addLabelToCard(String idCard, String idLabel);
 }

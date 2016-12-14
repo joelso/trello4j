@@ -3,6 +3,7 @@ package org.trello4j;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -572,6 +573,21 @@ public class TrelloImpl implements Trello {
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
 		}, doPost(url, keyValueMap));
 	}
+	@Override
+	public List<String> addLabelToCard(String idCard, String idLabel) {
+		validateObjectId(idCard);
+		validateObjectId(idLabel);
+
+		final String url = TrelloURL
+				.create(apiKey, TrelloURL.CARD_LABELS_URL, idCard)
+				.token(token)
+				.build();
+		Map<String, String> keyValueMap = new HashMap<String, String>();
+		keyValueMap.put("value", idLabel);
+
+		return trelloObjFactory.createObject(new TypeToken<List<String>>() {
+		}, doPost(url, keyValueMap));
+	}
 
 	@Override
 	public Card updateCard(String id, Map<String, String> keyValueMap) {
@@ -579,10 +595,9 @@ public class TrelloImpl implements Trello {
 			return getCard(id);
 		}
 		final String url = TrelloURL
-				.create(apiKey, TrelloURL.CARD_URL)
+				.create(apiKey, TrelloURL.CARD_URL, id)
 				.token(token)
 				.build();
-		keyValueMap.put("id", id);
 		return trelloObjFactory.createObject(new TypeToken<Card>() {
 			}, doPut(url, keyValueMap));
 	}
@@ -1260,7 +1275,7 @@ public class TrelloImpl implements Trello {
 	}
 
 	private InputStream doPut(String url, Map<String, String> map) {
-		return doRequest(url, METHOD_PUT, map);
+		return doRequest(String.format("%s&%s", url, createParameterString(map)), METHOD_PUT, null);
 	}
 
 	private InputStream doPost(String url, Map<String, String> map) {
@@ -1274,6 +1289,22 @@ public class TrelloImpl implements Trello {
 	private InputStream doRequest(String url, String requestMethod) {
         return doRequest(url, requestMethod, null);
 	}
+	private String createParameterString(Map<String, String> map){
+		StringBuilder sb = new StringBuilder();
+		try {
+			for (String key : map.keySet()) {
+            	if(map.get(key) != null){
+            		sb.append(sb.length() > 0 ? "&" : "")
+					    .append(key)
+					    .append("=")
+					    .append(URLEncoder.encode(map.get(key), "UTF-8").replace("+", "%20"));
+            	}
+        	}
+		} catch (UnsupportedEncodingException e) {
+			throw new TrelloException(e.getMessage(), e);
+		}
+        return sb.toString();
+	}
 
 	/**
 	 * Execute a POST request with URL-encoded key-value parameter pairs.
@@ -1286,18 +1317,11 @@ public class TrelloImpl implements Trello {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(url)
 					.openConnection();
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
-            conn.setDoOutput(requestMethod.equals(METHOD_POST) || requestMethod.equals(METHOD_PUT));
-            conn.setRequestMethod(requestMethod);
+			conn.setDoOutput(requestMethod.equals(METHOD_POST));
+			conn.setRequestMethod(requestMethod);
 
             if(map != null && !map.isEmpty()) {
-                StringBuilder sb = new StringBuilder();
-                for (String key : map.keySet()) {
-                    sb.append(sb.length() > 0 ? "&" : "")
-                        .append(key)
-                        .append("=")
-                        .append(URLEncoder.encode(map.get(key), "UTF-8"));
-                }
-                conn.getOutputStream().write(sb.toString().getBytes());
+                conn.getOutputStream().write(createParameterString(map).toString().getBytes());
                 conn.getOutputStream().close();
             }
 
@@ -1309,7 +1333,7 @@ public class TrelloImpl implements Trello {
                 );
 			}
 		} catch (IOException e) {
-			throw new TrelloException(e.getMessage());
+			throw new TrelloException(e.getMessage(), e);
 		}
 	}
 

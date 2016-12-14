@@ -1,21 +1,22 @@
 package org.trello4j;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import org.trello4j.gson.PermissionTypeDeserializer;
-import org.trello4j.gson.TrelloTypeDeserializer;
-import org.trello4j.model.Board.PERMISSION_TYPE;
-import org.trello4j.model.TrelloType;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
+
+import org.trello4j.gson.PermissionTypeDeserializer;
+import org.trello4j.gson.TrelloTypeDeserializer;
+import org.trello4j.model.Board.PERMISSION_TYPE;
+import org.trello4j.model.TrelloType;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * The Class TrelloObjectFactoryImpl.
@@ -31,7 +32,7 @@ public class TrelloObjectFactoryImpl {
 
 	/**
 	 * Creates the object.
-	 * 
+	 *
 	 * @param <T>
 	 *            the generic type
 	 * @param typeToken
@@ -45,12 +46,13 @@ public class TrelloObjectFactoryImpl {
 		if (jsonContent == null) {
 			return isList(typeToken) ? (T) Collections.emptyList() : null;
 		}
-		return unmarshallToObj(typeToken, unmarshallToJson(jsonContent));
+		T object = unmarshallToObj(typeToken, unmarshallToJson(jsonContent));
+		return object;
 	}
 
 	/**
 	 * Unmarshall to json.
-	 * 
+	 *
 	 * @param jsonContent
 	 *            the json content
 	 * @return the json element
@@ -77,7 +79,7 @@ public class TrelloObjectFactoryImpl {
 
 	/**
 	 * Unmarshall to obj.
-	 * 
+	 *
 	 * @param <T>
 	 *            the generic type
 	 * @param typeToken
@@ -93,7 +95,7 @@ public class TrelloObjectFactoryImpl {
 
 	/**
 	 * Gets the gson.
-	 * 
+	 *
 	 * @return the gson
 	 */
 	private Gson getGson() {
@@ -113,7 +115,7 @@ public class TrelloObjectFactoryImpl {
 
 	/**
 	 * Close stream.
-	 * 
+	 *
 	 * @param is
 	 *            the is
 	 */
@@ -129,7 +131,7 @@ public class TrelloObjectFactoryImpl {
 
 	/**
 	 * Checks if is list.
-	 * 
+	 *
 	 * @param typeToken
 	 *            the type token
 	 * @return true, if is list
