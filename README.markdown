@@ -120,6 +120,9 @@ Now you got two options:
 <tr><td>DELETE /1/cards/[card_id]/members/[idMember]       </td><td>TODO</td></tr>
 <tr><td>DELETE /1/cards/[card_id]/membersVoted/[idMember]  </td><td>TODO</td></tr>
 
+<tr><th colspan="2">Comments</th></tr>
+<tr><td>POST /1/cards/[card_id]/actions/comments           </td><td>IMPLEMENTED</td></tr>
+
 <tr><th colspan="2">Checklists</th></tr>
 <tr><td>GET /1/checklists/[checklist_id]                                      </td><td>IMPLEMENTED</td></tr>
 <tr><td>GET /1/checklists/[checklist_id]/[field]                              </td><td>TODO</td></tr>
