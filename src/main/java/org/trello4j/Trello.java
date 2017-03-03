@@ -7,7 +7,7 @@ import org.trello4j.model.Type;
  */
 public interface Trello extends OrganizationService, NotificationService,
 		BoardService, CardService, ActionService, ListService, MemberService,
-		ChecklistService, TokenService, WebhookService {
+		ChecklistService, TokenService, WebhookService, CommentService {
 
 	/**
 	 * Gets the type.

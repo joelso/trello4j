@@ -564,6 +564,19 @@ public class TrelloImpl implements Trello {
 		}, doPost(url, keyValueMap));
 	}
 
+    @Override
+    public Comment createComment(String cardId, String text) {
+        final String url = TrelloURL
+                .create(apiKey, TrelloURL.COMMENT_POST_URL, cardId)
+                .token(token)
+                .build();
+        Map<String, String> keyValueMap = new HashMap<String, String>();
+        keyValueMap.put("text", text);
+
+        return trelloObjFactory.createObject(new TypeToken<Comment>() {
+        }, doPost(url, keyValueMap));
+    }
+
 	/*
 	 * (non-Javadoc)
 	 *
