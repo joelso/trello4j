@@ -20,8 +20,17 @@ public class Card extends TrelloObject {
 	private List<Label> labels;
 	private String url;
 	private double pos;
+	private Date due;
 
-    public String getName() {
+    public Date getDue() {
+		return due;
+	}
+
+	public void setDue(Date due) {
+		this.due = due;
+	}
+
+	public String getName() {
 		return name;
 	}
 
