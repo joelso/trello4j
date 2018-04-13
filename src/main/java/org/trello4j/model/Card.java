@@ -1,5 +1,6 @@
 package org.trello4j.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class Card extends TrelloObject {
 	private List<Label> labels;
 	private String url;
 	private double pos;
+	private LocalDate due;
 
     public String getName() {
 		return name;
@@ -107,6 +109,14 @@ public class Card extends TrelloObject {
 
 	public void setLabels(List<Label> labels) {
 		this.labels = labels;
+	}
+
+	public LocalDate getDue() {
+		return due;
+	}
+
+	public void setDue(LocalDate due) {
+		this.due = due;
 	}
 
 	public class Attachment {
