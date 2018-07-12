@@ -63,12 +63,22 @@ public class Checklist extends TrelloObject {
 
 	public class CheckItem extends TrelloObject {
 
+		private String state;
 		private String name;
         private String type;
         private double pos;
 
 
-        public String getName() {
+		public String getState() {
+			return state;
+		}
+
+		public CheckItem setState(String state) {
+			this.state = state;
+			return this;
+		}
+
+		public String getName() {
 			return name;
 		}
 
