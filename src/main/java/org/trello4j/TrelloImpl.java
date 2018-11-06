@@ -39,6 +39,7 @@ public class TrelloImpl implements Trello {
     private static final String METHOD_POST     = "POST";
     private static final String METHOD_PUT      = "PUT";
 	private static final String GZIP_ENCODING   = "gzip";
+	private static final int HTTP_TIMEOUT = Integer.valueOf(System.getProperty("org.trello4j.https.timeout", "60000"));
 
 	private String apiKey = null;
 	private String token = null;
@@ -1319,7 +1320,7 @@ public class TrelloImpl implements Trello {
 			conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
 			conn.setDoOutput(requestMethod.equals(METHOD_POST));
 			conn.setRequestMethod(requestMethod);
-
+			conn.setConnectTimeout(HTTP_TIMEOUT);
             if(map != null && !map.isEmpty()) {
                 conn.getOutputStream().write(createParameterString(map).toString().getBytes());
                 conn.getOutputStream().close();
