@@ -39,11 +39,14 @@ public class TrelloURL {
 	public static final String CARD_CHECK_ITEM_STATES_URL = "https://api.trello.com/1/cards/{0}/checkItemStates";
 	public static final String CARD_CHECKLISTS_URL = "https://api.trello.com/1/cards/{0}/checklists";
 	public static final String CARD_LIST_URL = "https://api.trello.com/1/cards/{0}/list";
+	public static final String CARD_LABELS_URL = "https://api.trello.com/1/cards/{0}/idLabels";
 	public static final String CARD_MEMBERS_URL = "https://api.trello.com/1/cards/{0}/members";
 	public static final String CARD_POST_URL = "https://api.trello.com/1/cards";
 	public static final String LIST_ACTIONS_URL = "https://api.trello.com/1/lists/{0}/action";
 	public static final String LIST_BOARD_URL = "https://api.trello.com/1/lists/{0}/board";
 	public static final String LIST_CARDS_URL = "https://api.trello.com/1/lists/{0}/cards";
+	public static final String LABELS_URL = "https://api.trello.com/1/labels/{0}";
+	public static final String LABELS_POST_URL = "https://api.trello.com/1/labels";
 	public static final String MEMBER_ACTIONS_URL = "https://api.trello.com/1/members/{0}/actions";
 	public static final String MEMBER_BOARD_INVITED_URL = "https://api.trello.com/1/members/{0}/boardInvited";
 	public static final String MEMBER_CARDS_URL = "https://api.trello.com/1/members/{0}/cards";

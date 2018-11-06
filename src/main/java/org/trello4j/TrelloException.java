@@ -17,12 +17,21 @@ public class TrelloException extends RuntimeException {
 
 	/**
 	 * Instantiates a new trello exception.
-	 * 
+	 *
 	 * @param msg
 	 *            the msg
 	 */
 	public TrelloException(String msg) {
 		super(msg);
+	}
+	/**
+	 * Instantiates a new trello exception.
+	 *
+	 * @param msg
+	 *            the msg
+	 */
+	public TrelloException(String msg, Throwable e) {
+		super(msg, e);
 	}
 
 }
