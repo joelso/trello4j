@@ -223,11 +223,16 @@ Now you got two options:
 <tr><td>POST /1/webhooks                                                      </td><td>IMPLEMENTED</td></tr>
 <tr><td>DELETE /1/webhooks/[idWebhook]                                        </td><td>IMPLEMENTED</td></tr>
 
+<tr><th colspan="2">Labels</th></tr>
+<tr><td>GET /1/labels/[label]                                                     </td><td>IMPLEMENTED</td></tr>
+<tr><td>POST /1/labels/[label]                                                     </td><td>IMPLEMENTED</td></tr>
+
 </table>                                                                     
 
 ## Contributors
 
 [skydjol](https://github.com/skydjol)
+
 
 
 	
