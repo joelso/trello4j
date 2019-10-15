@@ -1321,6 +1321,7 @@ public class TrelloImpl implements Trello {
 			conn.setDoOutput(requestMethod.equals(METHOD_POST));
 			conn.setRequestMethod(requestMethod);
 			conn.setConnectTimeout(HTTP_TIMEOUT);
+			conn.setReadTimeout(HTTP_TIMEOUT);
             if(map != null && !map.isEmpty()) {
                 conn.getOutputStream().write(createParameterString(map).toString().getBytes());
                 conn.getOutputStream().close();
